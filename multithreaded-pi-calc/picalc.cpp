@@ -2,9 +2,7 @@
 // Created by oz21652 on 9/22/24.
 //
 
-#include "helloTest.h"
-
-#include <chrono>
+#include "picalc.h"
 #include <cmath>
 #include <iostream>
 #include <omp.h>
@@ -29,9 +27,9 @@ double multiThreadedCalc() {
     constexpr double dx = 1.0 / iterations;
     int i;
 
-    #pragma omp parallel private(i)
+#pragma omp parallel private(i)
     {
-        #pragma omp for reduction(+:piByFour)
+#pragma omp for reduction(+:piByFour)
         {
             for (i = 0; i < iterations; i++) {
                 piByFour += sqrt(1-pow(i*dx, 2));
