@@ -1,10 +1,4 @@
-/user/home/oz21652/.cache/JetBrains/RemoteDev/dist/a7332f4099b99_CLion-243.12818.61/bin/cmake/linux/x64/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/user/home/oz21652/.cache/JetBrains/RemoteDev/dist/a7332f4099b99_CLion-243.12818.61/bin/ninja/linux/x64/ninja -G Ninja -S /user/home/oz21652/Comp401 -B /user/home/oz21652/Comp401/cmake-build-debug
--- Found OpenMP_C: -fopenmp (found version "4.5")
--- Found OpenMP_CXX: -fopenmp (found version "4.5")
--- Found OpenMP: TRUE (found version "4.5")
-CMake Error at CMakeLists.txt:10 (target_link_libraries):
-  Cannot specify link libraries for target "MyTarget" which is not built by
-  this project.
-
-
--- Configuring incomplete, errors occurred!
+/user/home/oz21652/.cache/JetBrains/RemoteDev/dist/a7332f4099b99_CLion-243.12818.61/bin/cmake/linux/x64/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "Unix Makefiles" -S /user/home/oz21652/Comp401 -B /user/home/oz21652/Comp401/cmake-build-debug
+-- Configuring done (0.0s)
+-- Generating done (0.0s)
+-- Build files have been written to: /user/home/oz21652/Comp401/cmake-build-debug

@@ -87,9 +87,9 @@ endif()
 
 
 
-set(CMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES "/usr/include/c++/8;/usr/include/c++/8/x86_64-redhat-linux;/usr/include/c++/8/backward;/usr/lib/gcc/x86_64-redhat-linux/8/include;/usr/local/include;/usr/include")
+set(CMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES "/software/local/languages/Intel-OneAPI/tbb/2021.11/include;/software/local/languages/Intel-OneAPI/mpi/2021.11/include;/software/local/languages/Intel-OneAPI/mkl/2024.0/include;/software/local/languages/Intel-OneAPI/ippcp/2021.9/include;/software/local/languages/Intel-OneAPI/ipp/2021.10/include;/software/local/languages/Intel-OneAPI/dpl/2022.3/include;/software/local/languages/Intel-OneAPI/dpcpp-ct/2024.0/include;/software/local/languages/Intel-OneAPI/dnnl/2024.0/include;/software/local/languages/Intel-OneAPI/dev-utilities/2024.0/include;/software/local/languages/Intel-OneAPI/dal/2024.0/include/dal;/software/local/languages/Intel-OneAPI/compiler/2024.0/opt/oclfpga/include;/software/local/languages/Intel-OneAPI/ccl/2021.11/include;/usr/include/c++/8;/usr/include/c++/8/x86_64-redhat-linux;/usr/include/c++/8/backward;/usr/lib/gcc/x86_64-redhat-linux/8/include;/usr/local/include;/usr/include")
 set(CMAKE_CXX_IMPLICIT_LINK_LIBRARIES "stdc++;m;gcc_s;gcc;c;gcc_s;gcc")
-set(CMAKE_CXX_IMPLICIT_LINK_DIRECTORIES "/usr/lib/gcc/x86_64-redhat-linux/8;/usr/lib64;/lib64;/usr/lib")
+set(CMAKE_CXX_IMPLICIT_LINK_DIRECTORIES "/usr/lib/gcc/x86_64-redhat-linux/8;/usr/lib64;/lib64;/software/local/languages/Intel-OneAPI/tbb/2021.11/lib/intel64/gcc4.8;/software/local/languages/Intel-OneAPI/mpi/2021.11/lib;/software/local/languages/Intel-OneAPI/mkl/2024.0/lib;/software/local/languages/Intel-OneAPI/ippcp/2021.9/lib32;/software/local/languages/Intel-OneAPI/ipp/2021.10/lib;/software/local/languages/Intel-OneAPI/dpl/2022.3/lib;/software/local/languages/Intel-OneAPI/dnnl/2024.0/lib;/software/local/languages/Intel-OneAPI/dal/2024.0/lib;/software/local/languages/Intel-OneAPI/compiler/2024.0/lib;/software/local/languages/Intel-OneAPI/ccl/2021.11/lib;/usr/lib")
 set(CMAKE_CXX_IMPLICIT_LINK_FRAMEWORK_DIRECTORIES "")
 set(CMAKE_CXX_COMPILER_CLANG_RESOURCE_DIR "")
 

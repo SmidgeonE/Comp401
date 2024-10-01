@@ -61,8 +61,8 @@ events:
     checks:
       - "Detecting C compiler ABI info"
     directories:
-      source: "/user/home/oz21652/Comp401/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-0J6ZRb"
-      binary: "/user/home/oz21652/Comp401/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-0J6ZRb"
+      source: "/user/home/oz21652/Comp401/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-ML5R0m"
+      binary: "/user/home/oz21652/Comp401/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-ML5R0m"
     cmakeVariables:
       CMAKE_C_FLAGS: ""
       CMAKE_C_FLAGS_DEBUG: "-g"
@@ -71,10 +71,13 @@ events:
       variable: "CMAKE_C_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: '/user/home/oz21652/Comp401/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-0J6ZRb'
+        Change Dir: '/user/home/oz21652/Comp401/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-ML5R0m'
         
-        Run Build Command(s): /user/home/oz21652/.cache/JetBrains/RemoteDev/dist/a7332f4099b99_CLion-243.12818.61/bin/ninja/linux/x64/ninja -v cmTC_6f73a
-        [1/2] /usr/bin/cc   -fdiagnostics-color=always   -v -o CMakeFiles/cmTC_6f73a.dir/CMakeCCompilerABI.c.o -c /user/home/oz21652/.cache/JetBrains/RemoteDev/dist/a7332f4099b99_CLion-243.12818.61/bin/cmake/linux/x64/share/cmake-3.30/Modules/CMakeCCompilerABI.c
+        Run Build Command(s): /user/home/oz21652/.cache/JetBrains/RemoteDev/dist/a7332f4099b99_CLion-243.12818.61/bin/cmake/linux/x64/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_24ce3/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_24ce3.dir/build.make CMakeFiles/cmTC_24ce3.dir/build
+        gmake[1]: Entering directory '/user/home/oz21652/Comp401/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-ML5R0m'
+        Building C object CMakeFiles/cmTC_24ce3.dir/CMakeCCompilerABI.c.o
+        /usr/bin/cc   -fdiagnostics-color=always   -v -o CMakeFiles/cmTC_24ce3.dir/CMakeCCompilerABI.c.o -c /user/home/oz21652/.cache/JetBrains/RemoteDev/dist/a7332f4099b99_CLion-243.12818.61/bin/cmake/linux/x64/share/cmake-3.30/Modules/CMakeCCompilerABI.c
         Using built-in specs.
         COLLECT_GCC=/usr/bin/cc
         OFFLOAD_TARGET_NAMES=nvptx-none
@@ -83,8 +86,8 @@ events:
         Configured with: ../configure --enable-bootstrap --enable-languages=c,c++,fortran,lto --prefix=/usr --mandir=/usr/share/man --infodir=/usr/share/info --with-bugurl=https://bugs.rockylinux.org/ --enable-shared --enable-threads=posix --enable-checking=release --enable-multilib --with-system-zlib --enable-__cxa_atexit --disable-libunwind-exceptions --enable-gnu-unique-object --enable-linker-build-id --with-gcc-major-version-only --with-linker-hash-style=gnu --enable-plugin --enable-initfini-array --with-isl --disable-libmpx --enable-offload-targets=nvptx-none --without-cuda-driver --enable-gnu-indirect-function --enable-cet --with-tune=generic --with-arch_32=x86-64 --build=x86_64-redhat-linux
         Thread model: posix
         gcc version 8.5.0 20210514 (Red Hat 8.5.0-20) (GCC) 
-        COLLECT_GCC_OPTIONS='-fdiagnostics-color=always' '-v' '-o' 'CMakeFiles/cmTC_6f73a.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64'
-         /usr/libexec/gcc/x86_64-redhat-linux/8/cc1 -quiet -v /user/home/oz21652/.cache/JetBrains/RemoteDev/dist/a7332f4099b99_CLion-243.12818.61/bin/cmake/linux/x64/share/cmake-3.30/Modules/CMakeCCompilerABI.c -quiet -dumpbase CMakeCCompilerABI.c -mtune=generic -march=x86-64 -auxbase-strip CMakeFiles/cmTC_6f73a.dir/CMakeCCompilerABI.c.o -version -fdiagnostics-color=always -o /tmp/cc78nLeS.s
+        COLLECT_GCC_OPTIONS='-fdiagnostics-color=always' '-v' '-o' 'CMakeFiles/cmTC_24ce3.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64'
+         /usr/libexec/gcc/x86_64-redhat-linux/8/cc1 -quiet -v /user/home/oz21652/.cache/JetBrains/RemoteDev/dist/a7332f4099b99_CLion-243.12818.61/bin/cmake/linux/x64/share/cmake-3.30/Modules/CMakeCCompilerABI.c -quiet -dumpbase CMakeCCompilerABI.c -mtune=generic -march=x86-64 -auxbase-strip CMakeFiles/cmTC_24ce3.dir/CMakeCCompilerABI.c.o -version -fdiagnostics-color=always -o /tmp/ccWplFoF.s
         GNU C17 (GCC) version 8.5.0 20210514 (Red Hat 8.5.0-20) (x86_64-redhat-linux)
         	compiled by GNU C version 8.5.0 20210514 (Red Hat 8.5.0-20), GMP version 6.1.2, MPFR version 3.1.6-p2, MPC version 1.1.0, isl version isl-0.16.1-GMP
         
@@ -93,6 +96,18 @@ events:
         ignoring nonexistent directory "/usr/lib/gcc/x86_64-redhat-linux/8/../../../../x86_64-redhat-linux/include"
         #include "..." search starts here:
         #include <...> search starts here:
+         /software/local/languages/Intel-OneAPI/tbb/2021.11/env/../include
+         /software/local/languages/Intel-OneAPI/mpi/2021.11/include
+         /software/local/languages/Intel-OneAPI/mkl/2024.0/include
+         /software/local/languages/Intel-OneAPI/ippcp/2021.9/include
+         /software/local/languages/Intel-OneAPI/ipp/2021.10/include
+         /software/local/languages/Intel-OneAPI/dpl/2022.3/include
+         /software/local/languages/Intel-OneAPI/dpcpp-ct/2024.0/include
+         /software/local/languages/Intel-OneAPI/dnnl/2024.0/include
+         /software/local/languages/Intel-OneAPI/dev-utilities/2024.0/include
+         /software/local/languages/Intel-OneAPI/dal/2024.0/include/dal
+         /software/local/languages/Intel-OneAPI/compiler/2024.0/opt/oclfpga/include
+         /software/local/languages/Intel-OneAPI/ccl/2021.11/include
          /usr/lib/gcc/x86_64-redhat-linux/8/include
          /usr/local/include
          /usr/include
@@ -102,13 +117,15 @@ events:
         
         GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
         Compiler executable checksum: d401235ad03d4173493f2b6b161ddcc6
-        COLLECT_GCC_OPTIONS='-fdiagnostics-color=always' '-v' '-o' 'CMakeFiles/cmTC_6f73a.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64'
-         as -v --64 -o CMakeFiles/cmTC_6f73a.dir/CMakeCCompilerABI.c.o /tmp/cc78nLeS.s
+        COLLECT_GCC_OPTIONS='-fdiagnostics-color=always' '-v' '-o' 'CMakeFiles/cmTC_24ce3.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64'
+         as -v --64 -o CMakeFiles/cmTC_24ce3.dir/CMakeCCompilerABI.c.o /tmp/ccWplFoF.s
         GNU assembler version 2.30 (x86_64-redhat-linux) using BFD version version 2.30-123.el8
         COMPILER_PATH=/usr/libexec/gcc/x86_64-redhat-linux/8/:/usr/libexec/gcc/x86_64-redhat-linux/8/:/usr/libexec/gcc/x86_64-redhat-linux/:/usr/lib/gcc/x86_64-redhat-linux/8/:/usr/lib/gcc/x86_64-redhat-linux/
-        LIBRARY_PATH=/usr/lib/gcc/x86_64-redhat-linux/8/:/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/usr/lib/gcc/x86_64-redhat-linux/8/../../../:/lib/:/usr/lib/
-        COLLECT_GCC_OPTIONS='-fdiagnostics-color=always' '-v' '-o' 'CMakeFiles/cmTC_6f73a.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64'
-        [2/2] : && /usr/bin/cc  -v -Wl,-v CMakeFiles/cmTC_6f73a.dir/CMakeCCompilerABI.c.o -o cmTC_6f73a   && :
+        LIBRARY_PATH=/usr/lib/gcc/x86_64-redhat-linux/8/:/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/software/local/languages/Intel-OneAPI/tbb/2021.11/env/../lib/intel64/gcc4.8/:/software/local/languages/Intel-OneAPI/mpi/2021.11/lib/:/software/local/languages/Intel-OneAPI/mkl/2024.0/lib/:/software/local/languages/Intel-OneAPI/ippcp/2021.9/lib32/:/software/local/languages/Intel-OneAPI/ipp/2021.10/lib/:/software/local/languages/Intel-OneAPI/dpl/2022.3/lib/:/software/local/languages/Intel-OneAPI/dnnl/2024.0/lib/:/software/local/languages/Intel-OneAPI/dal/2024.0/lib/:/software/local/languages/Intel-OneAPI/compiler/2024.0/lib/:/software/local/languages/Intel-OneAPI/ccl/2021.11/lib/:/usr/lib/gcc/x86_64-redhat-linux/8/../../../:/lib/:/usr/lib/
+        COLLECT_GCC_OPTIONS='-fdiagnostics-color=always' '-v' '-o' 'CMakeFiles/cmTC_24ce3.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64'
+        Linking C executable cmTC_24ce3
+        /user/home/oz21652/.cache/JetBrains/RemoteDev/dist/a7332f4099b99_CLion-243.12818.61/bin/cmake/linux/x64/bin/cmake -E cmake_link_script CMakeFiles/cmTC_24ce3.dir/link.txt --verbose=1
+        /usr/bin/cc  -v -Wl,-v CMakeFiles/cmTC_24ce3.dir/CMakeCCompilerABI.c.o -o cmTC_24ce3
         Using built-in specs.
         COLLECT_GCC=/usr/bin/cc
         COLLECT_LTO_WRAPPER=/usr/libexec/gcc/x86_64-redhat-linux/8/lto-wrapper
@@ -119,13 +136,14 @@ events:
         Thread model: posix
         gcc version 8.5.0 20210514 (Red Hat 8.5.0-20) (GCC) 
         COMPILER_PATH=/usr/libexec/gcc/x86_64-redhat-linux/8/:/usr/libexec/gcc/x86_64-redhat-linux/8/:/usr/libexec/gcc/x86_64-redhat-linux/:/usr/lib/gcc/x86_64-redhat-linux/8/:/usr/lib/gcc/x86_64-redhat-linux/
-        LIBRARY_PATH=/usr/lib/gcc/x86_64-redhat-linux/8/:/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/usr/lib/gcc/x86_64-redhat-linux/8/../../../:/lib/:/usr/lib/
-        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_6f73a' '-mtune=generic' '-march=x86-64'
-         /usr/libexec/gcc/x86_64-redhat-linux/8/collect2 -plugin /usr/libexec/gcc/x86_64-redhat-linux/8/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-redhat-linux/8/lto-wrapper -plugin-opt=-fresolution=/tmp/ccUMSrF7.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --no-add-needed --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_6f73a /usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/crt1.o /usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/crti.o /usr/lib/gcc/x86_64-redhat-linux/8/crtbegin.o -L/usr/lib/gcc/x86_64-redhat-linux/8 -L/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-redhat-linux/8/../../.. -v CMakeFiles/cmTC_6f73a.dir/CMakeCCompilerABI.c.o -lgcc --as-needed -lgcc_s --no-as-needed -lc -lgcc --as-needed -lgcc_s --no-as-needed /usr/lib/gcc/x86_64-redhat-linux/8/crtend.o /usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/crtn.o
+        LIBRARY_PATH=/usr/lib/gcc/x86_64-redhat-linux/8/:/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/software/local/languages/Intel-OneAPI/tbb/2021.11/env/../lib/intel64/gcc4.8/:/software/local/languages/Intel-OneAPI/mpi/2021.11/lib/:/software/local/languages/Intel-OneAPI/mkl/2024.0/lib/:/software/local/languages/Intel-OneAPI/ippcp/2021.9/lib32/:/software/local/languages/Intel-OneAPI/ipp/2021.10/lib/:/software/local/languages/Intel-OneAPI/dpl/2022.3/lib/:/software/local/languages/Intel-OneAPI/dnnl/2024.0/lib/:/software/local/languages/Intel-OneAPI/dal/2024.0/lib/:/software/local/languages/Intel-OneAPI/compiler/2024.0/lib/:/software/local/languages/Intel-OneAPI/ccl/2021.11/lib/:/usr/lib/gcc/x86_64-redhat-linux/8/../../../:/lib/:/usr/lib/
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_24ce3' '-mtune=generic' '-march=x86-64'
+         /usr/libexec/gcc/x86_64-redhat-linux/8/collect2 -plugin /usr/libexec/gcc/x86_64-redhat-linux/8/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-redhat-linux/8/lto-wrapper -plugin-opt=-fresolution=/tmp/ccYwf9z1.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --no-add-needed --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_24ce3 /usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/crt1.o /usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/crti.o /usr/lib/gcc/x86_64-redhat-linux/8/crtbegin.o -L/usr/lib/gcc/x86_64-redhat-linux/8 -L/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/software/local/languages/Intel-OneAPI/tbb/2021.11/env/../lib/intel64/gcc4.8 -L/software/local/languages/Intel-OneAPI/mpi/2021.11/lib -L/software/local/languages/Intel-OneAPI/mkl/2024.0/lib -L/software/local/languages/Intel-OneAPI/ippcp/2021.9/lib32 -L/software/local/languages/Intel-OneAPI/ipp/2021.10/lib -L/software/local/languages/Intel-OneAPI/dpl/2022.3/lib -L/software/local/languages/Intel-OneAPI/dnnl/2024.0/lib -L/software/local/languages/Intel-OneAPI/dal/2024.0/lib -L/software/local/languages/Intel-OneAPI/compiler/2024.0/lib -L/software/local/languages/Intel-OneAPI/ccl/2021.11/lib -L/usr/lib/gcc/x86_64-redhat-linux/8/../../.. -v CMakeFiles/cmTC_24ce3.dir/CMakeCCompilerABI.c.o -lgcc --as-needed -lgcc_s --no-as-needed -lc -lgcc --as-needed -lgcc_s --no-as-needed /usr/lib/gcc/x86_64-redhat-linux/8/crtend.o /usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/crtn.o
         collect2 version 8.5.0 20210514 (Red Hat 8.5.0-20)
-        /usr/bin/ld -plugin /usr/libexec/gcc/x86_64-redhat-linux/8/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-redhat-linux/8/lto-wrapper -plugin-opt=-fresolution=/tmp/ccUMSrF7.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --no-add-needed --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_6f73a /usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/crt1.o /usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/crti.o /usr/lib/gcc/x86_64-redhat-linux/8/crtbegin.o -L/usr/lib/gcc/x86_64-redhat-linux/8 -L/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-redhat-linux/8/../../.. -v CMakeFiles/cmTC_6f73a.dir/CMakeCCompilerABI.c.o -lgcc --as-needed -lgcc_s --no-as-needed -lc -lgcc --as-needed -lgcc_s --no-as-needed /usr/lib/gcc/x86_64-redhat-linux/8/crtend.o /usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/crtn.o
+        /usr/bin/ld -plugin /usr/libexec/gcc/x86_64-redhat-linux/8/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-redhat-linux/8/lto-wrapper -plugin-opt=-fresolution=/tmp/ccYwf9z1.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --no-add-needed --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_24ce3 /usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/crt1.o /usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/crti.o /usr/lib/gcc/x86_64-redhat-linux/8/crtbegin.o -L/usr/lib/gcc/x86_64-redhat-linux/8 -L/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/software/local/languages/Intel-OneAPI/tbb/2021.11/env/../lib/intel64/gcc4.8 -L/software/local/languages/Intel-OneAPI/mpi/2021.11/lib -L/software/local/languages/Intel-OneAPI/mkl/2024.0/lib -L/software/local/languages/Intel-OneAPI/ippcp/2021.9/lib32 -L/software/local/languages/Intel-OneAPI/ipp/2021.10/lib -L/software/local/languages/Intel-OneAPI/dpl/2022.3/lib -L/software/local/languages/Intel-OneAPI/dnnl/2024.0/lib -L/software/local/languages/Intel-OneAPI/dal/2024.0/lib -L/software/local/languages/Intel-OneAPI/compiler/2024.0/lib -L/software/local/languages/Intel-OneAPI/ccl/2021.11/lib -L/usr/lib/gcc/x86_64-redhat-linux/8/../../.. -v CMakeFiles/cmTC_24ce3.dir/CMakeCCompilerABI.c.o -lgcc --as-needed -lgcc_s --no-as-needed -lc -lgcc --as-needed -lgcc_s --no-as-needed /usr/lib/gcc/x86_64-redhat-linux/8/crtend.o /usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/crtn.o
         GNU ld version 2.30-123.el8
-        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_6f73a' '-mtune=generic' '-march=x86-64'
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_24ce3' '-mtune=generic' '-march=x86-64'
+        gmake[1]: Leaving directory '/user/home/oz21652/Comp401/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-ML5R0m'
         
       exitCode: 0
   -
@@ -138,14 +156,38 @@ events:
       Parsed C implicit include dir info: rv=done
         found start of include info
         found start of implicit include info
+          add: [/software/local/languages/Intel-OneAPI/tbb/2021.11/env/../include]
+          add: [/software/local/languages/Intel-OneAPI/mpi/2021.11/include]
+          add: [/software/local/languages/Intel-OneAPI/mkl/2024.0/include]
+          add: [/software/local/languages/Intel-OneAPI/ippcp/2021.9/include]
+          add: [/software/local/languages/Intel-OneAPI/ipp/2021.10/include]
+          add: [/software/local/languages/Intel-OneAPI/dpl/2022.3/include]
+          add: [/software/local/languages/Intel-OneAPI/dpcpp-ct/2024.0/include]
+          add: [/software/local/languages/Intel-OneAPI/dnnl/2024.0/include]
+          add: [/software/local/languages/Intel-OneAPI/dev-utilities/2024.0/include]
+          add: [/software/local/languages/Intel-OneAPI/dal/2024.0/include/dal]
+          add: [/software/local/languages/Intel-OneAPI/compiler/2024.0/opt/oclfpga/include]
+          add: [/software/local/languages/Intel-OneAPI/ccl/2021.11/include]
           add: [/usr/lib/gcc/x86_64-redhat-linux/8/include]
           add: [/usr/local/include]
           add: [/usr/include]
         end of search list found
+        collapse include dir [/software/local/languages/Intel-OneAPI/tbb/2021.11/env/../include] ==> [/software/local/languages/Intel-OneAPI/tbb/2021.11/include]
+        collapse include dir [/software/local/languages/Intel-OneAPI/mpi/2021.11/include] ==> [/software/local/languages/Intel-OneAPI/mpi/2021.11/include]
+        collapse include dir [/software/local/languages/Intel-OneAPI/mkl/2024.0/include] ==> [/software/local/languages/Intel-OneAPI/mkl/2024.0/include]
+        collapse include dir [/software/local/languages/Intel-OneAPI/ippcp/2021.9/include] ==> [/software/local/languages/Intel-OneAPI/ippcp/2021.9/include]
+        collapse include dir [/software/local/languages/Intel-OneAPI/ipp/2021.10/include] ==> [/software/local/languages/Intel-OneAPI/ipp/2021.10/include]
+        collapse include dir [/software/local/languages/Intel-OneAPI/dpl/2022.3/include] ==> [/software/local/languages/Intel-OneAPI/dpl/2022.3/include]
+        collapse include dir [/software/local/languages/Intel-OneAPI/dpcpp-ct/2024.0/include] ==> [/software/local/languages/Intel-OneAPI/dpcpp-ct/2024.0/include]
+        collapse include dir [/software/local/languages/Intel-OneAPI/dnnl/2024.0/include] ==> [/software/local/languages/Intel-OneAPI/dnnl/2024.0/include]
+        collapse include dir [/software/local/languages/Intel-OneAPI/dev-utilities/2024.0/include] ==> [/software/local/languages/Intel-OneAPI/dev-utilities/2024.0/include]
+        collapse include dir [/software/local/languages/Intel-OneAPI/dal/2024.0/include/dal] ==> [/software/local/languages/Intel-OneAPI/dal/2024.0/include/dal]
+        collapse include dir [/software/local/languages/Intel-OneAPI/compiler/2024.0/opt/oclfpga/include] ==> [/software/local/languages/Intel-OneAPI/compiler/2024.0/opt/oclfpga/include]
+        collapse include dir [/software/local/languages/Intel-OneAPI/ccl/2021.11/include] ==> [/software/local/languages/Intel-OneAPI/ccl/2021.11/include]
         collapse include dir [/usr/lib/gcc/x86_64-redhat-linux/8/include] ==> [/usr/lib/gcc/x86_64-redhat-linux/8/include]
         collapse include dir [/usr/local/include] ==> [/usr/local/include]
         collapse include dir [/usr/include] ==> [/usr/include]
-        implicit include dirs: [/usr/lib/gcc/x86_64-redhat-linux/8/include;/usr/local/include;/usr/include]
+        implicit include dirs: [/software/local/languages/Intel-OneAPI/tbb/2021.11/include;/software/local/languages/Intel-OneAPI/mpi/2021.11/include;/software/local/languages/Intel-OneAPI/mkl/2024.0/include;/software/local/languages/Intel-OneAPI/ippcp/2021.9/include;/software/local/languages/Intel-OneAPI/ipp/2021.10/include;/software/local/languages/Intel-OneAPI/dpl/2022.3/include;/software/local/languages/Intel-OneAPI/dpcpp-ct/2024.0/include;/software/local/languages/Intel-OneAPI/dnnl/2024.0/include;/software/local/languages/Intel-OneAPI/dev-utilities/2024.0/include;/software/local/languages/Intel-OneAPI/dal/2024.0/include/dal;/software/local/languages/Intel-OneAPI/compiler/2024.0/opt/oclfpga/include;/software/local/languages/Intel-OneAPI/ccl/2021.11/include;/usr/lib/gcc/x86_64-redhat-linux/8/include;/usr/local/include;/usr/include]
       
       
   -
@@ -158,10 +200,13 @@ events:
       Parsed C implicit link information:
         link line regex: [^( *|.*[/\\])(ld[0-9]*(\\.[a-z]+)?|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
         linker tool regex: [^[ 	]*(->|")?[ 	]*(([^"]*[/\\])?(ld[0-9]*(\\.[a-z]+)?))("|,| |$)]
-        ignore line: [Change Dir: '/user/home/oz21652/Comp401/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-0J6ZRb']
+        ignore line: [Change Dir: '/user/home/oz21652/Comp401/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-ML5R0m']
         ignore line: []
-        ignore line: [Run Build Command(s): /user/home/oz21652/.cache/JetBrains/RemoteDev/dist/a7332f4099b99_CLion-243.12818.61/bin/ninja/linux/x64/ninja -v cmTC_6f73a]
-        ignore line: [[1/2] /usr/bin/cc   -fdiagnostics-color=always   -v -o CMakeFiles/cmTC_6f73a.dir/CMakeCCompilerABI.c.o -c /user/home/oz21652/.cache/JetBrains/RemoteDev/dist/a7332f4099b99_CLion-243.12818.61/bin/cmake/linux/x64/share/cmake-3.30/Modules/CMakeCCompilerABI.c]
+        ignore line: [Run Build Command(s): /user/home/oz21652/.cache/JetBrains/RemoteDev/dist/a7332f4099b99_CLion-243.12818.61/bin/cmake/linux/x64/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_24ce3/fast]
+        ignore line: [/usr/bin/gmake  -f CMakeFiles/cmTC_24ce3.dir/build.make CMakeFiles/cmTC_24ce3.dir/build]
+        ignore line: [gmake[1]: Entering directory '/user/home/oz21652/Comp401/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-ML5R0m']
+        ignore line: [Building C object CMakeFiles/cmTC_24ce3.dir/CMakeCCompilerABI.c.o]
+        ignore line: [/usr/bin/cc   -fdiagnostics-color=always   -v -o CMakeFiles/cmTC_24ce3.dir/CMakeCCompilerABI.c.o -c /user/home/oz21652/.cache/JetBrains/RemoteDev/dist/a7332f4099b99_CLion-243.12818.61/bin/cmake/linux/x64/share/cmake-3.30/Modules/CMakeCCompilerABI.c]
         ignore line: [Using built-in specs.]
         ignore line: [COLLECT_GCC=/usr/bin/cc]
         ignore line: [OFFLOAD_TARGET_NAMES=nvptx-none]
@@ -170,8 +215,8 @@ events:
         ignore line: [Configured with: ../configure --enable-bootstrap --enable-languages=c c++ fortran lto --prefix=/usr --mandir=/usr/share/man --infodir=/usr/share/info --with-bugurl=https://bugs.rockylinux.org/ --enable-shared --enable-threads=posix --enable-checking=release --enable-multilib --with-system-zlib --enable-__cxa_atexit --disable-libunwind-exceptions --enable-gnu-unique-object --enable-linker-build-id --with-gcc-major-version-only --with-linker-hash-style=gnu --enable-plugin --enable-initfini-array --with-isl --disable-libmpx --enable-offload-targets=nvptx-none --without-cuda-driver --enable-gnu-indirect-function --enable-cet --with-tune=generic --with-arch_32=x86-64 --build=x86_64-redhat-linux]
         ignore line: [Thread model: posix]
         ignore line: [gcc version 8.5.0 20210514 (Red Hat 8.5.0-20) (GCC) ]
-        ignore line: [COLLECT_GCC_OPTIONS='-fdiagnostics-color=always' '-v' '-o' 'CMakeFiles/cmTC_6f73a.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64']
-        ignore line: [ /usr/libexec/gcc/x86_64-redhat-linux/8/cc1 -quiet -v /user/home/oz21652/.cache/JetBrains/RemoteDev/dist/a7332f4099b99_CLion-243.12818.61/bin/cmake/linux/x64/share/cmake-3.30/Modules/CMakeCCompilerABI.c -quiet -dumpbase CMakeCCompilerABI.c -mtune=generic -march=x86-64 -auxbase-strip CMakeFiles/cmTC_6f73a.dir/CMakeCCompilerABI.c.o -version -fdiagnostics-color=always -o /tmp/cc78nLeS.s]
+        ignore line: [COLLECT_GCC_OPTIONS='-fdiagnostics-color=always' '-v' '-o' 'CMakeFiles/cmTC_24ce3.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64']
+        ignore line: [ /usr/libexec/gcc/x86_64-redhat-linux/8/cc1 -quiet -v /user/home/oz21652/.cache/JetBrains/RemoteDev/dist/a7332f4099b99_CLion-243.12818.61/bin/cmake/linux/x64/share/cmake-3.30/Modules/CMakeCCompilerABI.c -quiet -dumpbase CMakeCCompilerABI.c -mtune=generic -march=x86-64 -auxbase-strip CMakeFiles/cmTC_24ce3.dir/CMakeCCompilerABI.c.o -version -fdiagnostics-color=always -o /tmp/ccWplFoF.s]
         ignore line: [GNU C17 (GCC) version 8.5.0 20210514 (Red Hat 8.5.0-20) (x86_64-redhat-linux)]
         ignore line: [	compiled by GNU C version 8.5.0 20210514 (Red Hat 8.5.0-20)  GMP version 6.1.2  MPFR version 3.1.6-p2  MPC version 1.1.0  isl version isl-0.16.1-GMP]
         ignore line: []
@@ -180,6 +225,18 @@ events:
         ignore line: [ignoring nonexistent directory "/usr/lib/gcc/x86_64-redhat-linux/8/../../../../x86_64-redhat-linux/include"]
         ignore line: [#include "..." search starts here:]
         ignore line: [#include <...> search starts here:]
+        ignore line: [ /software/local/languages/Intel-OneAPI/tbb/2021.11/env/../include]
+        ignore line: [ /software/local/languages/Intel-OneAPI/mpi/2021.11/include]
+        ignore line: [ /software/local/languages/Intel-OneAPI/mkl/2024.0/include]
+        ignore line: [ /software/local/languages/Intel-OneAPI/ippcp/2021.9/include]
+        ignore line: [ /software/local/languages/Intel-OneAPI/ipp/2021.10/include]
+        ignore line: [ /software/local/languages/Intel-OneAPI/dpl/2022.3/include]
+        ignore line: [ /software/local/languages/Intel-OneAPI/dpcpp-ct/2024.0/include]
+        ignore line: [ /software/local/languages/Intel-OneAPI/dnnl/2024.0/include]
+        ignore line: [ /software/local/languages/Intel-OneAPI/dev-utilities/2024.0/include]
+        ignore line: [ /software/local/languages/Intel-OneAPI/dal/2024.0/include/dal]
+        ignore line: [ /software/local/languages/Intel-OneAPI/compiler/2024.0/opt/oclfpga/include]
+        ignore line: [ /software/local/languages/Intel-OneAPI/ccl/2021.11/include]
         ignore line: [ /usr/lib/gcc/x86_64-redhat-linux/8/include]
         ignore line: [ /usr/local/include]
         ignore line: [ /usr/include]
@@ -189,13 +246,15 @@ events:
         ignore line: []
         ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
         ignore line: [Compiler executable checksum: d401235ad03d4173493f2b6b161ddcc6]
-        ignore line: [COLLECT_GCC_OPTIONS='-fdiagnostics-color=always' '-v' '-o' 'CMakeFiles/cmTC_6f73a.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64']
-        ignore line: [ as -v --64 -o CMakeFiles/cmTC_6f73a.dir/CMakeCCompilerABI.c.o /tmp/cc78nLeS.s]
+        ignore line: [COLLECT_GCC_OPTIONS='-fdiagnostics-color=always' '-v' '-o' 'CMakeFiles/cmTC_24ce3.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64']
+        ignore line: [ as -v --64 -o CMakeFiles/cmTC_24ce3.dir/CMakeCCompilerABI.c.o /tmp/ccWplFoF.s]
         ignore line: [GNU assembler version 2.30 (x86_64-redhat-linux) using BFD version version 2.30-123.el8]
         ignore line: [COMPILER_PATH=/usr/libexec/gcc/x86_64-redhat-linux/8/:/usr/libexec/gcc/x86_64-redhat-linux/8/:/usr/libexec/gcc/x86_64-redhat-linux/:/usr/lib/gcc/x86_64-redhat-linux/8/:/usr/lib/gcc/x86_64-redhat-linux/]
-        ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-redhat-linux/8/:/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/usr/lib/gcc/x86_64-redhat-linux/8/../../../:/lib/:/usr/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-fdiagnostics-color=always' '-v' '-o' 'CMakeFiles/cmTC_6f73a.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64']
-        ignore line: [[2/2] : && /usr/bin/cc  -v -Wl -v CMakeFiles/cmTC_6f73a.dir/CMakeCCompilerABI.c.o -o cmTC_6f73a   && :]
+        ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-redhat-linux/8/:/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/software/local/languages/Intel-OneAPI/tbb/2021.11/env/../lib/intel64/gcc4.8/:/software/local/languages/Intel-OneAPI/mpi/2021.11/lib/:/software/local/languages/Intel-OneAPI/mkl/2024.0/lib/:/software/local/languages/Intel-OneAPI/ippcp/2021.9/lib32/:/software/local/languages/Intel-OneAPI/ipp/2021.10/lib/:/software/local/languages/Intel-OneAPI/dpl/2022.3/lib/:/software/local/languages/Intel-OneAPI/dnnl/2024.0/lib/:/software/local/languages/Intel-OneAPI/dal/2024.0/lib/:/software/local/languages/Intel-OneAPI/compiler/2024.0/lib/:/software/local/languages/Intel-OneAPI/ccl/2021.11/lib/:/usr/lib/gcc/x86_64-redhat-linux/8/../../../:/lib/:/usr/lib/]
+        ignore line: [COLLECT_GCC_OPTIONS='-fdiagnostics-color=always' '-v' '-o' 'CMakeFiles/cmTC_24ce3.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64']
+        ignore line: [Linking C executable cmTC_24ce3]
+        ignore line: [/user/home/oz21652/.cache/JetBrains/RemoteDev/dist/a7332f4099b99_CLion-243.12818.61/bin/cmake/linux/x64/bin/cmake -E cmake_link_script CMakeFiles/cmTC_24ce3.dir/link.txt --verbose=1]
+        ignore line: [/usr/bin/cc  -v -Wl -v CMakeFiles/cmTC_24ce3.dir/CMakeCCompilerABI.c.o -o cmTC_24ce3]
         ignore line: [Using built-in specs.]
         ignore line: [COLLECT_GCC=/usr/bin/cc]
         ignore line: [COLLECT_LTO_WRAPPER=/usr/libexec/gcc/x86_64-redhat-linux/8/lto-wrapper]
@@ -206,14 +265,14 @@ events:
         ignore line: [Thread model: posix]
         ignore line: [gcc version 8.5.0 20210514 (Red Hat 8.5.0-20) (GCC) ]
         ignore line: [COMPILER_PATH=/usr/libexec/gcc/x86_64-redhat-linux/8/:/usr/libexec/gcc/x86_64-redhat-linux/8/:/usr/libexec/gcc/x86_64-redhat-linux/:/usr/lib/gcc/x86_64-redhat-linux/8/:/usr/lib/gcc/x86_64-redhat-linux/]
-        ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-redhat-linux/8/:/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/usr/lib/gcc/x86_64-redhat-linux/8/../../../:/lib/:/usr/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_6f73a' '-mtune=generic' '-march=x86-64']
-        link line: [ /usr/libexec/gcc/x86_64-redhat-linux/8/collect2 -plugin /usr/libexec/gcc/x86_64-redhat-linux/8/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-redhat-linux/8/lto-wrapper -plugin-opt=-fresolution=/tmp/ccUMSrF7.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --no-add-needed --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_6f73a /usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/crt1.o /usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/crti.o /usr/lib/gcc/x86_64-redhat-linux/8/crtbegin.o -L/usr/lib/gcc/x86_64-redhat-linux/8 -L/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-redhat-linux/8/../../.. -v CMakeFiles/cmTC_6f73a.dir/CMakeCCompilerABI.c.o -lgcc --as-needed -lgcc_s --no-as-needed -lc -lgcc --as-needed -lgcc_s --no-as-needed /usr/lib/gcc/x86_64-redhat-linux/8/crtend.o /usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/crtn.o]
+        ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-redhat-linux/8/:/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/software/local/languages/Intel-OneAPI/tbb/2021.11/env/../lib/intel64/gcc4.8/:/software/local/languages/Intel-OneAPI/mpi/2021.11/lib/:/software/local/languages/Intel-OneAPI/mkl/2024.0/lib/:/software/local/languages/Intel-OneAPI/ippcp/2021.9/lib32/:/software/local/languages/Intel-OneAPI/ipp/2021.10/lib/:/software/local/languages/Intel-OneAPI/dpl/2022.3/lib/:/software/local/languages/Intel-OneAPI/dnnl/2024.0/lib/:/software/local/languages/Intel-OneAPI/dal/2024.0/lib/:/software/local/languages/Intel-OneAPI/compiler/2024.0/lib/:/software/local/languages/Intel-OneAPI/ccl/2021.11/lib/:/usr/lib/gcc/x86_64-redhat-linux/8/../../../:/lib/:/usr/lib/]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_24ce3' '-mtune=generic' '-march=x86-64']
+        link line: [ /usr/libexec/gcc/x86_64-redhat-linux/8/collect2 -plugin /usr/libexec/gcc/x86_64-redhat-linux/8/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-redhat-linux/8/lto-wrapper -plugin-opt=-fresolution=/tmp/ccYwf9z1.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --no-add-needed --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_24ce3 /usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/crt1.o /usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/crti.o /usr/lib/gcc/x86_64-redhat-linux/8/crtbegin.o -L/usr/lib/gcc/x86_64-redhat-linux/8 -L/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/software/local/languages/Intel-OneAPI/tbb/2021.11/env/../lib/intel64/gcc4.8 -L/software/local/languages/Intel-OneAPI/mpi/2021.11/lib -L/software/local/languages/Intel-OneAPI/mkl/2024.0/lib -L/software/local/languages/Intel-OneAPI/ippcp/2021.9/lib32 -L/software/local/languages/Intel-OneAPI/ipp/2021.10/lib -L/software/local/languages/Intel-OneAPI/dpl/2022.3/lib -L/software/local/languages/Intel-OneAPI/dnnl/2024.0/lib -L/software/local/languages/Intel-OneAPI/dal/2024.0/lib -L/software/local/languages/Intel-OneAPI/compiler/2024.0/lib -L/software/local/languages/Intel-OneAPI/ccl/2021.11/lib -L/usr/lib/gcc/x86_64-redhat-linux/8/../../.. -v CMakeFiles/cmTC_24ce3.dir/CMakeCCompilerABI.c.o -lgcc --as-needed -lgcc_s --no-as-needed -lc -lgcc --as-needed -lgcc_s --no-as-needed /usr/lib/gcc/x86_64-redhat-linux/8/crtend.o /usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/crtn.o]
           arg [/usr/libexec/gcc/x86_64-redhat-linux/8/collect2] ==> ignore
           arg [-plugin] ==> ignore
           arg [/usr/libexec/gcc/x86_64-redhat-linux/8/liblto_plugin.so] ==> ignore
           arg [-plugin-opt=/usr/libexec/gcc/x86_64-redhat-linux/8/lto-wrapper] ==> ignore
-          arg [-plugin-opt=-fresolution=/tmp/ccUMSrF7.res] ==> ignore
+          arg [-plugin-opt=-fresolution=/tmp/ccYwf9z1.res] ==> ignore
           arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
           arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
           arg [-plugin-opt=-pass-through=-lc] ==> ignore
@@ -228,7 +287,7 @@ events:
           arg [-dynamic-linker] ==> ignore
           arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
           arg [-o] ==> ignore
-          arg [cmTC_6f73a] ==> ignore
+          arg [cmTC_24ce3] ==> ignore
           arg [/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/crt1.o] ==> obj [/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/crt1.o]
           arg [/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/crti.o] ==> obj [/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/crti.o]
           arg [/usr/lib/gcc/x86_64-redhat-linux/8/crtbegin.o] ==> obj [/usr/lib/gcc/x86_64-redhat-linux/8/crtbegin.o]
@@ -236,9 +295,19 @@ events:
           arg [-L/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64] ==> dir [/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64]
           arg [-L/lib/../lib64] ==> dir [/lib/../lib64]
           arg [-L/usr/lib/../lib64] ==> dir [/usr/lib/../lib64]
+          arg [-L/software/local/languages/Intel-OneAPI/tbb/2021.11/env/../lib/intel64/gcc4.8] ==> dir [/software/local/languages/Intel-OneAPI/tbb/2021.11/env/../lib/intel64/gcc4.8]
+          arg [-L/software/local/languages/Intel-OneAPI/mpi/2021.11/lib] ==> dir [/software/local/languages/Intel-OneAPI/mpi/2021.11/lib]
+          arg [-L/software/local/languages/Intel-OneAPI/mkl/2024.0/lib] ==> dir [/software/local/languages/Intel-OneAPI/mkl/2024.0/lib]
+          arg [-L/software/local/languages/Intel-OneAPI/ippcp/2021.9/lib32] ==> dir [/software/local/languages/Intel-OneAPI/ippcp/2021.9/lib32]
+          arg [-L/software/local/languages/Intel-OneAPI/ipp/2021.10/lib] ==> dir [/software/local/languages/Intel-OneAPI/ipp/2021.10/lib]
+          arg [-L/software/local/languages/Intel-OneAPI/dpl/2022.3/lib] ==> dir [/software/local/languages/Intel-OneAPI/dpl/2022.3/lib]
+          arg [-L/software/local/languages/Intel-OneAPI/dnnl/2024.0/lib] ==> dir [/software/local/languages/Intel-OneAPI/dnnl/2024.0/lib]
+          arg [-L/software/local/languages/Intel-OneAPI/dal/2024.0/lib] ==> dir [/software/local/languages/Intel-OneAPI/dal/2024.0/lib]
+          arg [-L/software/local/languages/Intel-OneAPI/compiler/2024.0/lib] ==> dir [/software/local/languages/Intel-OneAPI/compiler/2024.0/lib]
+          arg [-L/software/local/languages/Intel-OneAPI/ccl/2021.11/lib] ==> dir [/software/local/languages/Intel-OneAPI/ccl/2021.11/lib]
           arg [-L/usr/lib/gcc/x86_64-redhat-linux/8/../../..] ==> dir [/usr/lib/gcc/x86_64-redhat-linux/8/../../..]
           arg [-v] ==> ignore
-          arg [CMakeFiles/cmTC_6f73a.dir/CMakeCCompilerABI.c.o] ==> ignore
+          arg [CMakeFiles/cmTC_24ce3.dir/CMakeCCompilerABI.c.o] ==> ignore
           arg [-lgcc] ==> lib [gcc]
           arg [--as-needed] ==> ignore
           arg [-lgcc_s] ==> lib [gcc_s]
@@ -251,7 +320,7 @@ events:
           arg [/usr/lib/gcc/x86_64-redhat-linux/8/crtend.o] ==> obj [/usr/lib/gcc/x86_64-redhat-linux/8/crtend.o]
           arg [/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/crtn.o] ==> obj [/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/crtn.o]
         ignore line: [collect2 version 8.5.0 20210514 (Red Hat 8.5.0-20)]
-        ignore line: [/usr/bin/ld -plugin /usr/libexec/gcc/x86_64-redhat-linux/8/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-redhat-linux/8/lto-wrapper -plugin-opt=-fresolution=/tmp/ccUMSrF7.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --no-add-needed --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_6f73a /usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/crt1.o /usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/crti.o /usr/lib/gcc/x86_64-redhat-linux/8/crtbegin.o -L/usr/lib/gcc/x86_64-redhat-linux/8 -L/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-redhat-linux/8/../../.. -v CMakeFiles/cmTC_6f73a.dir/CMakeCCompilerABI.c.o -lgcc --as-needed -lgcc_s --no-as-needed -lc -lgcc --as-needed -lgcc_s --no-as-needed /usr/lib/gcc/x86_64-redhat-linux/8/crtend.o /usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/crtn.o]
+        ignore line: [/usr/bin/ld -plugin /usr/libexec/gcc/x86_64-redhat-linux/8/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-redhat-linux/8/lto-wrapper -plugin-opt=-fresolution=/tmp/ccYwf9z1.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --no-add-needed --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_24ce3 /usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/crt1.o /usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/crti.o /usr/lib/gcc/x86_64-redhat-linux/8/crtbegin.o -L/usr/lib/gcc/x86_64-redhat-linux/8 -L/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/software/local/languages/Intel-OneAPI/tbb/2021.11/env/../lib/intel64/gcc4.8 -L/software/local/languages/Intel-OneAPI/mpi/2021.11/lib -L/software/local/languages/Intel-OneAPI/mkl/2024.0/lib -L/software/local/languages/Intel-OneAPI/ippcp/2021.9/lib32 -L/software/local/languages/Intel-OneAPI/ipp/2021.10/lib -L/software/local/languages/Intel-OneAPI/dpl/2022.3/lib -L/software/local/languages/Intel-OneAPI/dnnl/2024.0/lib -L/software/local/languages/Intel-OneAPI/dal/2024.0/lib -L/software/local/languages/Intel-OneAPI/compiler/2024.0/lib -L/software/local/languages/Intel-OneAPI/ccl/2021.11/lib -L/usr/lib/gcc/x86_64-redhat-linux/8/../../.. -v CMakeFiles/cmTC_24ce3.dir/CMakeCCompilerABI.c.o -lgcc --as-needed -lgcc_s --no-as-needed -lc -lgcc --as-needed -lgcc_s --no-as-needed /usr/lib/gcc/x86_64-redhat-linux/8/crtend.o /usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/crtn.o]
         linker tool for 'C': /usr/bin/ld
         collapse obj [/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/crt1.o] ==> [/usr/lib64/crt1.o]
         collapse obj [/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/crti.o] ==> [/usr/lib64/crti.o]
@@ -260,10 +329,20 @@ events:
         collapse library dir [/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64] ==> [/usr/lib64]
         collapse library dir [/lib/../lib64] ==> [/lib64]
         collapse library dir [/usr/lib/../lib64] ==> [/usr/lib64]
+        collapse library dir [/software/local/languages/Intel-OneAPI/tbb/2021.11/env/../lib/intel64/gcc4.8] ==> [/software/local/languages/Intel-OneAPI/tbb/2021.11/lib/intel64/gcc4.8]
+        collapse library dir [/software/local/languages/Intel-OneAPI/mpi/2021.11/lib] ==> [/software/local/languages/Intel-OneAPI/mpi/2021.11/lib]
+        collapse library dir [/software/local/languages/Intel-OneAPI/mkl/2024.0/lib] ==> [/software/local/languages/Intel-OneAPI/mkl/2024.0/lib]
+        collapse library dir [/software/local/languages/Intel-OneAPI/ippcp/2021.9/lib32] ==> [/software/local/languages/Intel-OneAPI/ippcp/2021.9/lib32]
+        collapse library dir [/software/local/languages/Intel-OneAPI/ipp/2021.10/lib] ==> [/software/local/languages/Intel-OneAPI/ipp/2021.10/lib]
+        collapse library dir [/software/local/languages/Intel-OneAPI/dpl/2022.3/lib] ==> [/software/local/languages/Intel-OneAPI/dpl/2022.3/lib]
+        collapse library dir [/software/local/languages/Intel-OneAPI/dnnl/2024.0/lib] ==> [/software/local/languages/Intel-OneAPI/dnnl/2024.0/lib]
+        collapse library dir [/software/local/languages/Intel-OneAPI/dal/2024.0/lib] ==> [/software/local/languages/Intel-OneAPI/dal/2024.0/lib]
+        collapse library dir [/software/local/languages/Intel-OneAPI/compiler/2024.0/lib] ==> [/software/local/languages/Intel-OneAPI/compiler/2024.0/lib]
+        collapse library dir [/software/local/languages/Intel-OneAPI/ccl/2021.11/lib] ==> [/software/local/languages/Intel-OneAPI/ccl/2021.11/lib]
         collapse library dir [/usr/lib/gcc/x86_64-redhat-linux/8/../../..] ==> [/usr/lib]
         implicit libs: [gcc;gcc_s;c;gcc;gcc_s]
         implicit objs: [/usr/lib64/crt1.o;/usr/lib64/crti.o;/usr/lib/gcc/x86_64-redhat-linux/8/crtbegin.o;/usr/lib/gcc/x86_64-redhat-linux/8/crtend.o;/usr/lib64/crtn.o]
-        implicit dirs: [/usr/lib/gcc/x86_64-redhat-linux/8;/usr/lib64;/lib64;/usr/lib]
+        implicit dirs: [/usr/lib/gcc/x86_64-redhat-linux/8;/usr/lib64;/lib64;/software/local/languages/Intel-OneAPI/tbb/2021.11/lib/intel64/gcc4.8;/software/local/languages/Intel-OneAPI/mpi/2021.11/lib;/software/local/languages/Intel-OneAPI/mkl/2024.0/lib;/software/local/languages/Intel-OneAPI/ippcp/2021.9/lib32;/software/local/languages/Intel-OneAPI/ipp/2021.10/lib;/software/local/languages/Intel-OneAPI/dpl/2022.3/lib;/software/local/languages/Intel-OneAPI/dnnl/2024.0/lib;/software/local/languages/Intel-OneAPI/dal/2024.0/lib;/software/local/languages/Intel-OneAPI/compiler/2024.0/lib;/software/local/languages/Intel-OneAPI/ccl/2021.11/lib;/usr/lib]
         implicit fwks: []
       
       
@@ -286,8 +365,8 @@ events:
     checks:
       - "Detecting CXX compiler ABI info"
     directories:
-      source: "/user/home/oz21652/Comp401/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-E8cL6e"
-      binary: "/user/home/oz21652/Comp401/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-E8cL6e"
+      source: "/user/home/oz21652/Comp401/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-dE41FG"
+      binary: "/user/home/oz21652/Comp401/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-dE41FG"
     cmakeVariables:
       CMAKE_CXX_FLAGS: ""
       CMAKE_CXX_FLAGS_DEBUG: "-g"
@@ -297,10 +376,13 @@ events:
       variable: "CMAKE_CXX_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: '/user/home/oz21652/Comp401/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-E8cL6e'
+        Change Dir: '/user/home/oz21652/Comp401/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-dE41FG'
         
-        Run Build Command(s): /user/home/oz21652/.cache/JetBrains/RemoteDev/dist/a7332f4099b99_CLion-243.12818.61/bin/ninja/linux/x64/ninja -v cmTC_b7f95
-        [1/2] /usr/bin/c++   -fdiagnostics-color=always   -v -o CMakeFiles/cmTC_b7f95.dir/CMakeCXXCompilerABI.cpp.o -c /user/home/oz21652/.cache/JetBrains/RemoteDev/dist/a7332f4099b99_CLion-243.12818.61/bin/cmake/linux/x64/share/cmake-3.30/Modules/CMakeCXXCompilerABI.cpp
+        Run Build Command(s): /user/home/oz21652/.cache/JetBrains/RemoteDev/dist/a7332f4099b99_CLion-243.12818.61/bin/cmake/linux/x64/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_28bfe/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_28bfe.dir/build.make CMakeFiles/cmTC_28bfe.dir/build
+        gmake[1]: Entering directory '/user/home/oz21652/Comp401/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-dE41FG'
+        Building CXX object CMakeFiles/cmTC_28bfe.dir/CMakeCXXCompilerABI.cpp.o
+        /usr/bin/c++   -fdiagnostics-color=always   -v -o CMakeFiles/cmTC_28bfe.dir/CMakeCXXCompilerABI.cpp.o -c /user/home/oz21652/.cache/JetBrains/RemoteDev/dist/a7332f4099b99_CLion-243.12818.61/bin/cmake/linux/x64/share/cmake-3.30/Modules/CMakeCXXCompilerABI.cpp
         Using built-in specs.
         COLLECT_GCC=/usr/bin/c++
         OFFLOAD_TARGET_NAMES=nvptx-none
@@ -309,8 +391,8 @@ events:
         Configured with: ../configure --enable-bootstrap --enable-languages=c,c++,fortran,lto --prefix=/usr --mandir=/usr/share/man --infodir=/usr/share/info --with-bugurl=https://bugs.rockylinux.org/ --enable-shared --enable-threads=posix --enable-checking=release --enable-multilib --with-system-zlib --enable-__cxa_atexit --disable-libunwind-exceptions --enable-gnu-unique-object --enable-linker-build-id --with-gcc-major-version-only --with-linker-hash-style=gnu --enable-plugin --enable-initfini-array --with-isl --disable-libmpx --enable-offload-targets=nvptx-none --without-cuda-driver --enable-gnu-indirect-function --enable-cet --with-tune=generic --with-arch_32=x86-64 --build=x86_64-redhat-linux
         Thread model: posix
         gcc version 8.5.0 20210514 (Red Hat 8.5.0-20) (GCC) 
-        COLLECT_GCC_OPTIONS='-fdiagnostics-color=always' '-v' '-o' 'CMakeFiles/cmTC_b7f95.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
-         /usr/libexec/gcc/x86_64-redhat-linux/8/cc1plus -quiet -v -D_GNU_SOURCE /user/home/oz21652/.cache/JetBrains/RemoteDev/dist/a7332f4099b99_CLion-243.12818.61/bin/cmake/linux/x64/share/cmake-3.30/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpbase CMakeCXXCompilerABI.cpp -mtune=generic -march=x86-64 -auxbase-strip CMakeFiles/cmTC_b7f95.dir/CMakeCXXCompilerABI.cpp.o -version -fdiagnostics-color=always -o /tmp/ccGFIhWN.s
+        COLLECT_GCC_OPTIONS='-fdiagnostics-color=always' '-v' '-o' 'CMakeFiles/cmTC_28bfe.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
+         /usr/libexec/gcc/x86_64-redhat-linux/8/cc1plus -quiet -v -D_GNU_SOURCE /user/home/oz21652/.cache/JetBrains/RemoteDev/dist/a7332f4099b99_CLion-243.12818.61/bin/cmake/linux/x64/share/cmake-3.30/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpbase CMakeCXXCompilerABI.cpp -mtune=generic -march=x86-64 -auxbase-strip CMakeFiles/cmTC_28bfe.dir/CMakeCXXCompilerABI.cpp.o -version -fdiagnostics-color=always -o /tmp/ccJbpcRx.s
         GNU C++14 (GCC) version 8.5.0 20210514 (Red Hat 8.5.0-20) (x86_64-redhat-linux)
         	compiled by GNU C version 8.5.0 20210514 (Red Hat 8.5.0-20), GMP version 6.1.2, MPFR version 3.1.6-p2, MPC version 1.1.0, isl version isl-0.16.1-GMP
         
@@ -319,6 +401,18 @@ events:
         ignoring nonexistent directory "/usr/lib/gcc/x86_64-redhat-linux/8/../../../../x86_64-redhat-linux/include"
         #include "..." search starts here:
         #include <...> search starts here:
+         /software/local/languages/Intel-OneAPI/tbb/2021.11/env/../include
+         /software/local/languages/Intel-OneAPI/mpi/2021.11/include
+         /software/local/languages/Intel-OneAPI/mkl/2024.0/include
+         /software/local/languages/Intel-OneAPI/ippcp/2021.9/include
+         /software/local/languages/Intel-OneAPI/ipp/2021.10/include
+         /software/local/languages/Intel-OneAPI/dpl/2022.3/include
+         /software/local/languages/Intel-OneAPI/dpcpp-ct/2024.0/include
+         /software/local/languages/Intel-OneAPI/dnnl/2024.0/include
+         /software/local/languages/Intel-OneAPI/dev-utilities/2024.0/include
+         /software/local/languages/Intel-OneAPI/dal/2024.0/include/dal
+         /software/local/languages/Intel-OneAPI/compiler/2024.0/opt/oclfpga/include
+         /software/local/languages/Intel-OneAPI/ccl/2021.11/include
          /usr/lib/gcc/x86_64-redhat-linux/8/../../../../include/c++/8
          /usr/lib/gcc/x86_64-redhat-linux/8/../../../../include/c++/8/x86_64-redhat-linux
          /usr/lib/gcc/x86_64-redhat-linux/8/../../../../include/c++/8/backward
@@ -331,13 +425,15 @@ events:
         
         GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
         Compiler executable checksum: 1a5fbbb2ca0f971f3e1b59e59dde2ec8
-        COLLECT_GCC_OPTIONS='-fdiagnostics-color=always' '-v' '-o' 'CMakeFiles/cmTC_b7f95.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
-         as -v --64 -o CMakeFiles/cmTC_b7f95.dir/CMakeCXXCompilerABI.cpp.o /tmp/ccGFIhWN.s
+        COLLECT_GCC_OPTIONS='-fdiagnostics-color=always' '-v' '-o' 'CMakeFiles/cmTC_28bfe.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
+         as -v --64 -o CMakeFiles/cmTC_28bfe.dir/CMakeCXXCompilerABI.cpp.o /tmp/ccJbpcRx.s
         GNU assembler version 2.30 (x86_64-redhat-linux) using BFD version version 2.30-123.el8
         COMPILER_PATH=/usr/libexec/gcc/x86_64-redhat-linux/8/:/usr/libexec/gcc/x86_64-redhat-linux/8/:/usr/libexec/gcc/x86_64-redhat-linux/:/usr/lib/gcc/x86_64-redhat-linux/8/:/usr/lib/gcc/x86_64-redhat-linux/
-        LIBRARY_PATH=/usr/lib/gcc/x86_64-redhat-linux/8/:/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/usr/lib/gcc/x86_64-redhat-linux/8/../../../:/lib/:/usr/lib/
-        COLLECT_GCC_OPTIONS='-fdiagnostics-color=always' '-v' '-o' 'CMakeFiles/cmTC_b7f95.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
-        [2/2] : && /usr/bin/c++  -v -Wl,-v CMakeFiles/cmTC_b7f95.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_b7f95   && :
+        LIBRARY_PATH=/usr/lib/gcc/x86_64-redhat-linux/8/:/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/software/local/languages/Intel-OneAPI/tbb/2021.11/env/../lib/intel64/gcc4.8/:/software/local/languages/Intel-OneAPI/mpi/2021.11/lib/:/software/local/languages/Intel-OneAPI/mkl/2024.0/lib/:/software/local/languages/Intel-OneAPI/ippcp/2021.9/lib32/:/software/local/languages/Intel-OneAPI/ipp/2021.10/lib/:/software/local/languages/Intel-OneAPI/dpl/2022.3/lib/:/software/local/languages/Intel-OneAPI/dnnl/2024.0/lib/:/software/local/languages/Intel-OneAPI/dal/2024.0/lib/:/software/local/languages/Intel-OneAPI/compiler/2024.0/lib/:/software/local/languages/Intel-OneAPI/ccl/2021.11/lib/:/usr/lib/gcc/x86_64-redhat-linux/8/../../../:/lib/:/usr/lib/
+        COLLECT_GCC_OPTIONS='-fdiagnostics-color=always' '-v' '-o' 'CMakeFiles/cmTC_28bfe.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
+        Linking CXX executable cmTC_28bfe
+        /user/home/oz21652/.cache/JetBrains/RemoteDev/dist/a7332f4099b99_CLion-243.12818.61/bin/cmake/linux/x64/bin/cmake -E cmake_link_script CMakeFiles/cmTC_28bfe.dir/link.txt --verbose=1
+        /usr/bin/c++  -v -Wl,-v CMakeFiles/cmTC_28bfe.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_28bfe
         Using built-in specs.
         COLLECT_GCC=/usr/bin/c++
         COLLECT_LTO_WRAPPER=/usr/libexec/gcc/x86_64-redhat-linux/8/lto-wrapper
@@ -348,13 +444,14 @@ events:
         Thread model: posix
         gcc version 8.5.0 20210514 (Red Hat 8.5.0-20) (GCC) 
         COMPILER_PATH=/usr/libexec/gcc/x86_64-redhat-linux/8/:/usr/libexec/gcc/x86_64-redhat-linux/8/:/usr/libexec/gcc/x86_64-redhat-linux/:/usr/lib/gcc/x86_64-redhat-linux/8/:/usr/lib/gcc/x86_64-redhat-linux/
-        LIBRARY_PATH=/usr/lib/gcc/x86_64-redhat-linux/8/:/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/usr/lib/gcc/x86_64-redhat-linux/8/../../../:/lib/:/usr/lib/
-        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_b7f95' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
-         /usr/libexec/gcc/x86_64-redhat-linux/8/collect2 -plugin /usr/libexec/gcc/x86_64-redhat-linux/8/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-redhat-linux/8/lto-wrapper -plugin-opt=-fresolution=/tmp/ccTOwtcW.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --no-add-needed --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_b7f95 /usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/crt1.o /usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/crti.o /usr/lib/gcc/x86_64-redhat-linux/8/crtbegin.o -L/usr/lib/gcc/x86_64-redhat-linux/8 -L/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-redhat-linux/8/../../.. -v CMakeFiles/cmTC_b7f95.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-redhat-linux/8/crtend.o /usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/crtn.o
+        LIBRARY_PATH=/usr/lib/gcc/x86_64-redhat-linux/8/:/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/software/local/languages/Intel-OneAPI/tbb/2021.11/env/../lib/intel64/gcc4.8/:/software/local/languages/Intel-OneAPI/mpi/2021.11/lib/:/software/local/languages/Intel-OneAPI/mkl/2024.0/lib/:/software/local/languages/Intel-OneAPI/ippcp/2021.9/lib32/:/software/local/languages/Intel-OneAPI/ipp/2021.10/lib/:/software/local/languages/Intel-OneAPI/dpl/2022.3/lib/:/software/local/languages/Intel-OneAPI/dnnl/2024.0/lib/:/software/local/languages/Intel-OneAPI/dal/2024.0/lib/:/software/local/languages/Intel-OneAPI/compiler/2024.0/lib/:/software/local/languages/Intel-OneAPI/ccl/2021.11/lib/:/usr/lib/gcc/x86_64-redhat-linux/8/../../../:/lib/:/usr/lib/
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_28bfe' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
+         /usr/libexec/gcc/x86_64-redhat-linux/8/collect2 -plugin /usr/libexec/gcc/x86_64-redhat-linux/8/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-redhat-linux/8/lto-wrapper -plugin-opt=-fresolution=/tmp/cccebBus.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --no-add-needed --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_28bfe /usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/crt1.o /usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/crti.o /usr/lib/gcc/x86_64-redhat-linux/8/crtbegin.o -L/usr/lib/gcc/x86_64-redhat-linux/8 -L/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/software/local/languages/Intel-OneAPI/tbb/2021.11/env/../lib/intel64/gcc4.8 -L/software/local/languages/Intel-OneAPI/mpi/2021.11/lib -L/software/local/languages/Intel-OneAPI/mkl/2024.0/lib -L/software/local/languages/Intel-OneAPI/ippcp/2021.9/lib32 -L/software/local/languages/Intel-OneAPI/ipp/2021.10/lib -L/software/local/languages/Intel-OneAPI/dpl/2022.3/lib -L/software/local/languages/Intel-OneAPI/dnnl/2024.0/lib -L/software/local/languages/Intel-OneAPI/dal/2024.0/lib -L/software/local/languages/Intel-OneAPI/compiler/2024.0/lib -L/software/local/languages/Intel-OneAPI/ccl/2021.11/lib -L/usr/lib/gcc/x86_64-redhat-linux/8/../../.. -v CMakeFiles/cmTC_28bfe.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-redhat-linux/8/crtend.o /usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/crtn.o
         collect2 version 8.5.0 20210514 (Red Hat 8.5.0-20)
-        /usr/bin/ld -plugin /usr/libexec/gcc/x86_64-redhat-linux/8/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-redhat-linux/8/lto-wrapper -plugin-opt=-fresolution=/tmp/ccTOwtcW.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --no-add-needed --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_b7f95 /usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/crt1.o /usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/crti.o /usr/lib/gcc/x86_64-redhat-linux/8/crtbegin.o -L/usr/lib/gcc/x86_64-redhat-linux/8 -L/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-redhat-linux/8/../../.. -v CMakeFiles/cmTC_b7f95.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-redhat-linux/8/crtend.o /usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/crtn.o
+        /usr/bin/ld -plugin /usr/libexec/gcc/x86_64-redhat-linux/8/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-redhat-linux/8/lto-wrapper -plugin-opt=-fresolution=/tmp/cccebBus.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --no-add-needed --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_28bfe /usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/crt1.o /usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/crti.o /usr/lib/gcc/x86_64-redhat-linux/8/crtbegin.o -L/usr/lib/gcc/x86_64-redhat-linux/8 -L/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/software/local/languages/Intel-OneAPI/tbb/2021.11/env/../lib/intel64/gcc4.8 -L/software/local/languages/Intel-OneAPI/mpi/2021.11/lib -L/software/local/languages/Intel-OneAPI/mkl/2024.0/lib -L/software/local/languages/Intel-OneAPI/ippcp/2021.9/lib32 -L/software/local/languages/Intel-OneAPI/ipp/2021.10/lib -L/software/local/languages/Intel-OneAPI/dpl/2022.3/lib -L/software/local/languages/Intel-OneAPI/dnnl/2024.0/lib -L/software/local/languages/Intel-OneAPI/dal/2024.0/lib -L/software/local/languages/Intel-OneAPI/compiler/2024.0/lib -L/software/local/languages/Intel-OneAPI/ccl/2021.11/lib -L/usr/lib/gcc/x86_64-redhat-linux/8/../../.. -v CMakeFiles/cmTC_28bfe.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-redhat-linux/8/crtend.o /usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/crtn.o
         GNU ld version 2.30-123.el8
-        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_b7f95' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_28bfe' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
+        gmake[1]: Leaving directory '/user/home/oz21652/Comp401/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-dE41FG'
         
       exitCode: 0
   -
@@ -367,6 +464,18 @@ events:
       Parsed CXX implicit include dir info: rv=done
         found start of include info
         found start of implicit include info
+          add: [/software/local/languages/Intel-OneAPI/tbb/2021.11/env/../include]
+          add: [/software/local/languages/Intel-OneAPI/mpi/2021.11/include]
+          add: [/software/local/languages/Intel-OneAPI/mkl/2024.0/include]
+          add: [/software/local/languages/Intel-OneAPI/ippcp/2021.9/include]
+          add: [/software/local/languages/Intel-OneAPI/ipp/2021.10/include]
+          add: [/software/local/languages/Intel-OneAPI/dpl/2022.3/include]
+          add: [/software/local/languages/Intel-OneAPI/dpcpp-ct/2024.0/include]
+          add: [/software/local/languages/Intel-OneAPI/dnnl/2024.0/include]
+          add: [/software/local/languages/Intel-OneAPI/dev-utilities/2024.0/include]
+          add: [/software/local/languages/Intel-OneAPI/dal/2024.0/include/dal]
+          add: [/software/local/languages/Intel-OneAPI/compiler/2024.0/opt/oclfpga/include]
+          add: [/software/local/languages/Intel-OneAPI/ccl/2021.11/include]
           add: [/usr/lib/gcc/x86_64-redhat-linux/8/../../../../include/c++/8]
           add: [/usr/lib/gcc/x86_64-redhat-linux/8/../../../../include/c++/8/x86_64-redhat-linux]
           add: [/usr/lib/gcc/x86_64-redhat-linux/8/../../../../include/c++/8/backward]
@@ -374,13 +483,25 @@ events:
           add: [/usr/local/include]
           add: [/usr/include]
         end of search list found
+        collapse include dir [/software/local/languages/Intel-OneAPI/tbb/2021.11/env/../include] ==> [/software/local/languages/Intel-OneAPI/tbb/2021.11/include]
+        collapse include dir [/software/local/languages/Intel-OneAPI/mpi/2021.11/include] ==> [/software/local/languages/Intel-OneAPI/mpi/2021.11/include]
+        collapse include dir [/software/local/languages/Intel-OneAPI/mkl/2024.0/include] ==> [/software/local/languages/Intel-OneAPI/mkl/2024.0/include]
+        collapse include dir [/software/local/languages/Intel-OneAPI/ippcp/2021.9/include] ==> [/software/local/languages/Intel-OneAPI/ippcp/2021.9/include]
+        collapse include dir [/software/local/languages/Intel-OneAPI/ipp/2021.10/include] ==> [/software/local/languages/Intel-OneAPI/ipp/2021.10/include]
+        collapse include dir [/software/local/languages/Intel-OneAPI/dpl/2022.3/include] ==> [/software/local/languages/Intel-OneAPI/dpl/2022.3/include]
+        collapse include dir [/software/local/languages/Intel-OneAPI/dpcpp-ct/2024.0/include] ==> [/software/local/languages/Intel-OneAPI/dpcpp-ct/2024.0/include]
+        collapse include dir [/software/local/languages/Intel-OneAPI/dnnl/2024.0/include] ==> [/software/local/languages/Intel-OneAPI/dnnl/2024.0/include]
+        collapse include dir [/software/local/languages/Intel-OneAPI/dev-utilities/2024.0/include] ==> [/software/local/languages/Intel-OneAPI/dev-utilities/2024.0/include]
+        collapse include dir [/software/local/languages/Intel-OneAPI/dal/2024.0/include/dal] ==> [/software/local/languages/Intel-OneAPI/dal/2024.0/include/dal]
+        collapse include dir [/software/local/languages/Intel-OneAPI/compiler/2024.0/opt/oclfpga/include] ==> [/software/local/languages/Intel-OneAPI/compiler/2024.0/opt/oclfpga/include]
+        collapse include dir [/software/local/languages/Intel-OneAPI/ccl/2021.11/include] ==> [/software/local/languages/Intel-OneAPI/ccl/2021.11/include]
         collapse include dir [/usr/lib/gcc/x86_64-redhat-linux/8/../../../../include/c++/8] ==> [/usr/include/c++/8]
         collapse include dir [/usr/lib/gcc/x86_64-redhat-linux/8/../../../../include/c++/8/x86_64-redhat-linux] ==> [/usr/include/c++/8/x86_64-redhat-linux]
         collapse include dir [/usr/lib/gcc/x86_64-redhat-linux/8/../../../../include/c++/8/backward] ==> [/usr/include/c++/8/backward]
         collapse include dir [/usr/lib/gcc/x86_64-redhat-linux/8/include] ==> [/usr/lib/gcc/x86_64-redhat-linux/8/include]
         collapse include dir [/usr/local/include] ==> [/usr/local/include]
         collapse include dir [/usr/include] ==> [/usr/include]
-        implicit include dirs: [/usr/include/c++/8;/usr/include/c++/8/x86_64-redhat-linux;/usr/include/c++/8/backward;/usr/lib/gcc/x86_64-redhat-linux/8/include;/usr/local/include;/usr/include]
+        implicit include dirs: [/software/local/languages/Intel-OneAPI/tbb/2021.11/include;/software/local/languages/Intel-OneAPI/mpi/2021.11/include;/software/local/languages/Intel-OneAPI/mkl/2024.0/include;/software/local/languages/Intel-OneAPI/ippcp/2021.9/include;/software/local/languages/Intel-OneAPI/ipp/2021.10/include;/software/local/languages/Intel-OneAPI/dpl/2022.3/include;/software/local/languages/Intel-OneAPI/dpcpp-ct/2024.0/include;/software/local/languages/Intel-OneAPI/dnnl/2024.0/include;/software/local/languages/Intel-OneAPI/dev-utilities/2024.0/include;/software/local/languages/Intel-OneAPI/dal/2024.0/include/dal;/software/local/languages/Intel-OneAPI/compiler/2024.0/opt/oclfpga/include;/software/local/languages/Intel-OneAPI/ccl/2021.11/include;/usr/include/c++/8;/usr/include/c++/8/x86_64-redhat-linux;/usr/include/c++/8/backward;/usr/lib/gcc/x86_64-redhat-linux/8/include;/usr/local/include;/usr/include]
       
       
   -
@@ -393,10 +514,13 @@ events:
       Parsed CXX implicit link information:
         link line regex: [^( *|.*[/\\])(ld[0-9]*(\\.[a-z]+)?|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
         linker tool regex: [^[ 	]*(->|")?[ 	]*(([^"]*[/\\])?(ld[0-9]*(\\.[a-z]+)?))("|,| |$)]
-        ignore line: [Change Dir: '/user/home/oz21652/Comp401/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-E8cL6e']
+        ignore line: [Change Dir: '/user/home/oz21652/Comp401/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-dE41FG']
         ignore line: []
-        ignore line: [Run Build Command(s): /user/home/oz21652/.cache/JetBrains/RemoteDev/dist/a7332f4099b99_CLion-243.12818.61/bin/ninja/linux/x64/ninja -v cmTC_b7f95]
-        ignore line: [[1/2] /usr/bin/c++   -fdiagnostics-color=always   -v -o CMakeFiles/cmTC_b7f95.dir/CMakeCXXCompilerABI.cpp.o -c /user/home/oz21652/.cache/JetBrains/RemoteDev/dist/a7332f4099b99_CLion-243.12818.61/bin/cmake/linux/x64/share/cmake-3.30/Modules/CMakeCXXCompilerABI.cpp]
+        ignore line: [Run Build Command(s): /user/home/oz21652/.cache/JetBrains/RemoteDev/dist/a7332f4099b99_CLion-243.12818.61/bin/cmake/linux/x64/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_28bfe/fast]
+        ignore line: [/usr/bin/gmake  -f CMakeFiles/cmTC_28bfe.dir/build.make CMakeFiles/cmTC_28bfe.dir/build]
+        ignore line: [gmake[1]: Entering directory '/user/home/oz21652/Comp401/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-dE41FG']
+        ignore line: [Building CXX object CMakeFiles/cmTC_28bfe.dir/CMakeCXXCompilerABI.cpp.o]
+        ignore line: [/usr/bin/c++   -fdiagnostics-color=always   -v -o CMakeFiles/cmTC_28bfe.dir/CMakeCXXCompilerABI.cpp.o -c /user/home/oz21652/.cache/JetBrains/RemoteDev/dist/a7332f4099b99_CLion-243.12818.61/bin/cmake/linux/x64/share/cmake-3.30/Modules/CMakeCXXCompilerABI.cpp]
         ignore line: [Using built-in specs.]
         ignore line: [COLLECT_GCC=/usr/bin/c++]
         ignore line: [OFFLOAD_TARGET_NAMES=nvptx-none]
@@ -405,8 +529,8 @@ events:
         ignore line: [Configured with: ../configure --enable-bootstrap --enable-languages=c c++ fortran lto --prefix=/usr --mandir=/usr/share/man --infodir=/usr/share/info --with-bugurl=https://bugs.rockylinux.org/ --enable-shared --enable-threads=posix --enable-checking=release --enable-multilib --with-system-zlib --enable-__cxa_atexit --disable-libunwind-exceptions --enable-gnu-unique-object --enable-linker-build-id --with-gcc-major-version-only --with-linker-hash-style=gnu --enable-plugin --enable-initfini-array --with-isl --disable-libmpx --enable-offload-targets=nvptx-none --without-cuda-driver --enable-gnu-indirect-function --enable-cet --with-tune=generic --with-arch_32=x86-64 --build=x86_64-redhat-linux]
         ignore line: [Thread model: posix]
         ignore line: [gcc version 8.5.0 20210514 (Red Hat 8.5.0-20) (GCC) ]
-        ignore line: [COLLECT_GCC_OPTIONS='-fdiagnostics-color=always' '-v' '-o' 'CMakeFiles/cmTC_b7f95.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64']
-        ignore line: [ /usr/libexec/gcc/x86_64-redhat-linux/8/cc1plus -quiet -v -D_GNU_SOURCE /user/home/oz21652/.cache/JetBrains/RemoteDev/dist/a7332f4099b99_CLion-243.12818.61/bin/cmake/linux/x64/share/cmake-3.30/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpbase CMakeCXXCompilerABI.cpp -mtune=generic -march=x86-64 -auxbase-strip CMakeFiles/cmTC_b7f95.dir/CMakeCXXCompilerABI.cpp.o -version -fdiagnostics-color=always -o /tmp/ccGFIhWN.s]
+        ignore line: [COLLECT_GCC_OPTIONS='-fdiagnostics-color=always' '-v' '-o' 'CMakeFiles/cmTC_28bfe.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64']
+        ignore line: [ /usr/libexec/gcc/x86_64-redhat-linux/8/cc1plus -quiet -v -D_GNU_SOURCE /user/home/oz21652/.cache/JetBrains/RemoteDev/dist/a7332f4099b99_CLion-243.12818.61/bin/cmake/linux/x64/share/cmake-3.30/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpbase CMakeCXXCompilerABI.cpp -mtune=generic -march=x86-64 -auxbase-strip CMakeFiles/cmTC_28bfe.dir/CMakeCXXCompilerABI.cpp.o -version -fdiagnostics-color=always -o /tmp/ccJbpcRx.s]
         ignore line: [GNU C++14 (GCC) version 8.5.0 20210514 (Red Hat 8.5.0-20) (x86_64-redhat-linux)]
         ignore line: [	compiled by GNU C version 8.5.0 20210514 (Red Hat 8.5.0-20)  GMP version 6.1.2  MPFR version 3.1.6-p2  MPC version 1.1.0  isl version isl-0.16.1-GMP]
         ignore line: []
@@ -415,6 +539,18 @@ events:
         ignore line: [ignoring nonexistent directory "/usr/lib/gcc/x86_64-redhat-linux/8/../../../../x86_64-redhat-linux/include"]
         ignore line: [#include "..." search starts here:]
         ignore line: [#include <...> search starts here:]
+        ignore line: [ /software/local/languages/Intel-OneAPI/tbb/2021.11/env/../include]
+        ignore line: [ /software/local/languages/Intel-OneAPI/mpi/2021.11/include]
+        ignore line: [ /software/local/languages/Intel-OneAPI/mkl/2024.0/include]
+        ignore line: [ /software/local/languages/Intel-OneAPI/ippcp/2021.9/include]
+        ignore line: [ /software/local/languages/Intel-OneAPI/ipp/2021.10/include]
+        ignore line: [ /software/local/languages/Intel-OneAPI/dpl/2022.3/include]
+        ignore line: [ /software/local/languages/Intel-OneAPI/dpcpp-ct/2024.0/include]
+        ignore line: [ /software/local/languages/Intel-OneAPI/dnnl/2024.0/include]
+        ignore line: [ /software/local/languages/Intel-OneAPI/dev-utilities/2024.0/include]
+        ignore line: [ /software/local/languages/Intel-OneAPI/dal/2024.0/include/dal]
+        ignore line: [ /software/local/languages/Intel-OneAPI/compiler/2024.0/opt/oclfpga/include]
+        ignore line: [ /software/local/languages/Intel-OneAPI/ccl/2021.11/include]
         ignore line: [ /usr/lib/gcc/x86_64-redhat-linux/8/../../../../include/c++/8]
         ignore line: [ /usr/lib/gcc/x86_64-redhat-linux/8/../../../../include/c++/8/x86_64-redhat-linux]
         ignore line: [ /usr/lib/gcc/x86_64-redhat-linux/8/../../../../include/c++/8/backward]
@@ -427,13 +563,15 @@ events:
         ignore line: []
         ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
         ignore line: [Compiler executable checksum: 1a5fbbb2ca0f971f3e1b59e59dde2ec8]
-        ignore line: [COLLECT_GCC_OPTIONS='-fdiagnostics-color=always' '-v' '-o' 'CMakeFiles/cmTC_b7f95.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64']
-        ignore line: [ as -v --64 -o CMakeFiles/cmTC_b7f95.dir/CMakeCXXCompilerABI.cpp.o /tmp/ccGFIhWN.s]
+        ignore line: [COLLECT_GCC_OPTIONS='-fdiagnostics-color=always' '-v' '-o' 'CMakeFiles/cmTC_28bfe.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64']
+        ignore line: [ as -v --64 -o CMakeFiles/cmTC_28bfe.dir/CMakeCXXCompilerABI.cpp.o /tmp/ccJbpcRx.s]
         ignore line: [GNU assembler version 2.30 (x86_64-redhat-linux) using BFD version version 2.30-123.el8]
         ignore line: [COMPILER_PATH=/usr/libexec/gcc/x86_64-redhat-linux/8/:/usr/libexec/gcc/x86_64-redhat-linux/8/:/usr/libexec/gcc/x86_64-redhat-linux/:/usr/lib/gcc/x86_64-redhat-linux/8/:/usr/lib/gcc/x86_64-redhat-linux/]
-        ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-redhat-linux/8/:/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/usr/lib/gcc/x86_64-redhat-linux/8/../../../:/lib/:/usr/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-fdiagnostics-color=always' '-v' '-o' 'CMakeFiles/cmTC_b7f95.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64']
-        ignore line: [[2/2] : && /usr/bin/c++  -v -Wl -v CMakeFiles/cmTC_b7f95.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_b7f95   && :]
+        ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-redhat-linux/8/:/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/software/local/languages/Intel-OneAPI/tbb/2021.11/env/../lib/intel64/gcc4.8/:/software/local/languages/Intel-OneAPI/mpi/2021.11/lib/:/software/local/languages/Intel-OneAPI/mkl/2024.0/lib/:/software/local/languages/Intel-OneAPI/ippcp/2021.9/lib32/:/software/local/languages/Intel-OneAPI/ipp/2021.10/lib/:/software/local/languages/Intel-OneAPI/dpl/2022.3/lib/:/software/local/languages/Intel-OneAPI/dnnl/2024.0/lib/:/software/local/languages/Intel-OneAPI/dal/2024.0/lib/:/software/local/languages/Intel-OneAPI/compiler/2024.0/lib/:/software/local/languages/Intel-OneAPI/ccl/2021.11/lib/:/usr/lib/gcc/x86_64-redhat-linux/8/../../../:/lib/:/usr/lib/]
+        ignore line: [COLLECT_GCC_OPTIONS='-fdiagnostics-color=always' '-v' '-o' 'CMakeFiles/cmTC_28bfe.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64']
+        ignore line: [Linking CXX executable cmTC_28bfe]
+        ignore line: [/user/home/oz21652/.cache/JetBrains/RemoteDev/dist/a7332f4099b99_CLion-243.12818.61/bin/cmake/linux/x64/bin/cmake -E cmake_link_script CMakeFiles/cmTC_28bfe.dir/link.txt --verbose=1]
+        ignore line: [/usr/bin/c++  -v -Wl -v CMakeFiles/cmTC_28bfe.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_28bfe]
         ignore line: [Using built-in specs.]
         ignore line: [COLLECT_GCC=/usr/bin/c++]
         ignore line: [COLLECT_LTO_WRAPPER=/usr/libexec/gcc/x86_64-redhat-linux/8/lto-wrapper]
@@ -444,14 +582,14 @@ events:
         ignore line: [Thread model: posix]
         ignore line: [gcc version 8.5.0 20210514 (Red Hat 8.5.0-20) (GCC) ]
         ignore line: [COMPILER_PATH=/usr/libexec/gcc/x86_64-redhat-linux/8/:/usr/libexec/gcc/x86_64-redhat-linux/8/:/usr/libexec/gcc/x86_64-redhat-linux/:/usr/lib/gcc/x86_64-redhat-linux/8/:/usr/lib/gcc/x86_64-redhat-linux/]
-        ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-redhat-linux/8/:/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/usr/lib/gcc/x86_64-redhat-linux/8/../../../:/lib/:/usr/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_b7f95' '-shared-libgcc' '-mtune=generic' '-march=x86-64']
-        link line: [ /usr/libexec/gcc/x86_64-redhat-linux/8/collect2 -plugin /usr/libexec/gcc/x86_64-redhat-linux/8/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-redhat-linux/8/lto-wrapper -plugin-opt=-fresolution=/tmp/ccTOwtcW.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --no-add-needed --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_b7f95 /usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/crt1.o /usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/crti.o /usr/lib/gcc/x86_64-redhat-linux/8/crtbegin.o -L/usr/lib/gcc/x86_64-redhat-linux/8 -L/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-redhat-linux/8/../../.. -v CMakeFiles/cmTC_b7f95.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-redhat-linux/8/crtend.o /usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/crtn.o]
+        ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-redhat-linux/8/:/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/software/local/languages/Intel-OneAPI/tbb/2021.11/env/../lib/intel64/gcc4.8/:/software/local/languages/Intel-OneAPI/mpi/2021.11/lib/:/software/local/languages/Intel-OneAPI/mkl/2024.0/lib/:/software/local/languages/Intel-OneAPI/ippcp/2021.9/lib32/:/software/local/languages/Intel-OneAPI/ipp/2021.10/lib/:/software/local/languages/Intel-OneAPI/dpl/2022.3/lib/:/software/local/languages/Intel-OneAPI/dnnl/2024.0/lib/:/software/local/languages/Intel-OneAPI/dal/2024.0/lib/:/software/local/languages/Intel-OneAPI/compiler/2024.0/lib/:/software/local/languages/Intel-OneAPI/ccl/2021.11/lib/:/usr/lib/gcc/x86_64-redhat-linux/8/../../../:/lib/:/usr/lib/]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_28bfe' '-shared-libgcc' '-mtune=generic' '-march=x86-64']
+        link line: [ /usr/libexec/gcc/x86_64-redhat-linux/8/collect2 -plugin /usr/libexec/gcc/x86_64-redhat-linux/8/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-redhat-linux/8/lto-wrapper -plugin-opt=-fresolution=/tmp/cccebBus.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --no-add-needed --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_28bfe /usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/crt1.o /usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/crti.o /usr/lib/gcc/x86_64-redhat-linux/8/crtbegin.o -L/usr/lib/gcc/x86_64-redhat-linux/8 -L/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/software/local/languages/Intel-OneAPI/tbb/2021.11/env/../lib/intel64/gcc4.8 -L/software/local/languages/Intel-OneAPI/mpi/2021.11/lib -L/software/local/languages/Intel-OneAPI/mkl/2024.0/lib -L/software/local/languages/Intel-OneAPI/ippcp/2021.9/lib32 -L/software/local/languages/Intel-OneAPI/ipp/2021.10/lib -L/software/local/languages/Intel-OneAPI/dpl/2022.3/lib -L/software/local/languages/Intel-OneAPI/dnnl/2024.0/lib -L/software/local/languages/Intel-OneAPI/dal/2024.0/lib -L/software/local/languages/Intel-OneAPI/compiler/2024.0/lib -L/software/local/languages/Intel-OneAPI/ccl/2021.11/lib -L/usr/lib/gcc/x86_64-redhat-linux/8/../../.. -v CMakeFiles/cmTC_28bfe.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-redhat-linux/8/crtend.o /usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/crtn.o]
           arg [/usr/libexec/gcc/x86_64-redhat-linux/8/collect2] ==> ignore
           arg [-plugin] ==> ignore
           arg [/usr/libexec/gcc/x86_64-redhat-linux/8/liblto_plugin.so] ==> ignore
           arg [-plugin-opt=/usr/libexec/gcc/x86_64-redhat-linux/8/lto-wrapper] ==> ignore
-          arg [-plugin-opt=-fresolution=/tmp/ccTOwtcW.res] ==> ignore
+          arg [-plugin-opt=-fresolution=/tmp/cccebBus.res] ==> ignore
           arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
           arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
           arg [-plugin-opt=-pass-through=-lc] ==> ignore
@@ -466,7 +604,7 @@ events:
           arg [-dynamic-linker] ==> ignore
           arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
           arg [-o] ==> ignore
-          arg [cmTC_b7f95] ==> ignore
+          arg [cmTC_28bfe] ==> ignore
           arg [/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/crt1.o] ==> obj [/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/crt1.o]
           arg [/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/crti.o] ==> obj [/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/crti.o]
           arg [/usr/lib/gcc/x86_64-redhat-linux/8/crtbegin.o] ==> obj [/usr/lib/gcc/x86_64-redhat-linux/8/crtbegin.o]
@@ -474,9 +612,19 @@ events:
           arg [-L/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64] ==> dir [/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64]
           arg [-L/lib/../lib64] ==> dir [/lib/../lib64]
           arg [-L/usr/lib/../lib64] ==> dir [/usr/lib/../lib64]
+          arg [-L/software/local/languages/Intel-OneAPI/tbb/2021.11/env/../lib/intel64/gcc4.8] ==> dir [/software/local/languages/Intel-OneAPI/tbb/2021.11/env/../lib/intel64/gcc4.8]
+          arg [-L/software/local/languages/Intel-OneAPI/mpi/2021.11/lib] ==> dir [/software/local/languages/Intel-OneAPI/mpi/2021.11/lib]
+          arg [-L/software/local/languages/Intel-OneAPI/mkl/2024.0/lib] ==> dir [/software/local/languages/Intel-OneAPI/mkl/2024.0/lib]
+          arg [-L/software/local/languages/Intel-OneAPI/ippcp/2021.9/lib32] ==> dir [/software/local/languages/Intel-OneAPI/ippcp/2021.9/lib32]
+          arg [-L/software/local/languages/Intel-OneAPI/ipp/2021.10/lib] ==> dir [/software/local/languages/Intel-OneAPI/ipp/2021.10/lib]
+          arg [-L/software/local/languages/Intel-OneAPI/dpl/2022.3/lib] ==> dir [/software/local/languages/Intel-OneAPI/dpl/2022.3/lib]
+          arg [-L/software/local/languages/Intel-OneAPI/dnnl/2024.0/lib] ==> dir [/software/local/languages/Intel-OneAPI/dnnl/2024.0/lib]
+          arg [-L/software/local/languages/Intel-OneAPI/dal/2024.0/lib] ==> dir [/software/local/languages/Intel-OneAPI/dal/2024.0/lib]
+          arg [-L/software/local/languages/Intel-OneAPI/compiler/2024.0/lib] ==> dir [/software/local/languages/Intel-OneAPI/compiler/2024.0/lib]
+          arg [-L/software/local/languages/Intel-OneAPI/ccl/2021.11/lib] ==> dir [/software/local/languages/Intel-OneAPI/ccl/2021.11/lib]
           arg [-L/usr/lib/gcc/x86_64-redhat-linux/8/../../..] ==> dir [/usr/lib/gcc/x86_64-redhat-linux/8/../../..]
           arg [-v] ==> ignore
-          arg [CMakeFiles/cmTC_b7f95.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
+          arg [CMakeFiles/cmTC_28bfe.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
           arg [-lstdc++] ==> lib [stdc++]
           arg [-lm] ==> lib [m]
           arg [-lgcc_s] ==> lib [gcc_s]
@@ -487,7 +635,7 @@ events:
           arg [/usr/lib/gcc/x86_64-redhat-linux/8/crtend.o] ==> obj [/usr/lib/gcc/x86_64-redhat-linux/8/crtend.o]
           arg [/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/crtn.o] ==> obj [/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/crtn.o]
         ignore line: [collect2 version 8.5.0 20210514 (Red Hat 8.5.0-20)]
-        ignore line: [/usr/bin/ld -plugin /usr/libexec/gcc/x86_64-redhat-linux/8/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-redhat-linux/8/lto-wrapper -plugin-opt=-fresolution=/tmp/ccTOwtcW.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --no-add-needed --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_b7f95 /usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/crt1.o /usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/crti.o /usr/lib/gcc/x86_64-redhat-linux/8/crtbegin.o -L/usr/lib/gcc/x86_64-redhat-linux/8 -L/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-redhat-linux/8/../../.. -v CMakeFiles/cmTC_b7f95.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-redhat-linux/8/crtend.o /usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/crtn.o]
+        ignore line: [/usr/bin/ld -plugin /usr/libexec/gcc/x86_64-redhat-linux/8/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-redhat-linux/8/lto-wrapper -plugin-opt=-fresolution=/tmp/cccebBus.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --no-add-needed --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_28bfe /usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/crt1.o /usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/crti.o /usr/lib/gcc/x86_64-redhat-linux/8/crtbegin.o -L/usr/lib/gcc/x86_64-redhat-linux/8 -L/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/software/local/languages/Intel-OneAPI/tbb/2021.11/env/../lib/intel64/gcc4.8 -L/software/local/languages/Intel-OneAPI/mpi/2021.11/lib -L/software/local/languages/Intel-OneAPI/mkl/2024.0/lib -L/software/local/languages/Intel-OneAPI/ippcp/2021.9/lib32 -L/software/local/languages/Intel-OneAPI/ipp/2021.10/lib -L/software/local/languages/Intel-OneAPI/dpl/2022.3/lib -L/software/local/languages/Intel-OneAPI/dnnl/2024.0/lib -L/software/local/languages/Intel-OneAPI/dal/2024.0/lib -L/software/local/languages/Intel-OneAPI/compiler/2024.0/lib -L/software/local/languages/Intel-OneAPI/ccl/2021.11/lib -L/usr/lib/gcc/x86_64-redhat-linux/8/../../.. -v CMakeFiles/cmTC_28bfe.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-redhat-linux/8/crtend.o /usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/crtn.o]
         linker tool for 'CXX': /usr/bin/ld
         collapse obj [/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/crt1.o] ==> [/usr/lib64/crt1.o]
         collapse obj [/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/crti.o] ==> [/usr/lib64/crti.o]
@@ -496,10 +644,20 @@ events:
         collapse library dir [/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64] ==> [/usr/lib64]
         collapse library dir [/lib/../lib64] ==> [/lib64]
         collapse library dir [/usr/lib/../lib64] ==> [/usr/lib64]
+        collapse library dir [/software/local/languages/Intel-OneAPI/tbb/2021.11/env/../lib/intel64/gcc4.8] ==> [/software/local/languages/Intel-OneAPI/tbb/2021.11/lib/intel64/gcc4.8]
+        collapse library dir [/software/local/languages/Intel-OneAPI/mpi/2021.11/lib] ==> [/software/local/languages/Intel-OneAPI/mpi/2021.11/lib]
+        collapse library dir [/software/local/languages/Intel-OneAPI/mkl/2024.0/lib] ==> [/software/local/languages/Intel-OneAPI/mkl/2024.0/lib]
+        collapse library dir [/software/local/languages/Intel-OneAPI/ippcp/2021.9/lib32] ==> [/software/local/languages/Intel-OneAPI/ippcp/2021.9/lib32]
+        collapse library dir [/software/local/languages/Intel-OneAPI/ipp/2021.10/lib] ==> [/software/local/languages/Intel-OneAPI/ipp/2021.10/lib]
+        collapse library dir [/software/local/languages/Intel-OneAPI/dpl/2022.3/lib] ==> [/software/local/languages/Intel-OneAPI/dpl/2022.3/lib]
+        collapse library dir [/software/local/languages/Intel-OneAPI/dnnl/2024.0/lib] ==> [/software/local/languages/Intel-OneAPI/dnnl/2024.0/lib]
+        collapse library dir [/software/local/languages/Intel-OneAPI/dal/2024.0/lib] ==> [/software/local/languages/Intel-OneAPI/dal/2024.0/lib]
+        collapse library dir [/software/local/languages/Intel-OneAPI/compiler/2024.0/lib] ==> [/software/local/languages/Intel-OneAPI/compiler/2024.0/lib]
+        collapse library dir [/software/local/languages/Intel-OneAPI/ccl/2021.11/lib] ==> [/software/local/languages/Intel-OneAPI/ccl/2021.11/lib]
         collapse library dir [/usr/lib/gcc/x86_64-redhat-linux/8/../../..] ==> [/usr/lib]
         implicit libs: [stdc++;m;gcc_s;gcc;c;gcc_s;gcc]
         implicit objs: [/usr/lib64/crt1.o;/usr/lib64/crti.o;/usr/lib/gcc/x86_64-redhat-linux/8/crtbegin.o;/usr/lib/gcc/x86_64-redhat-linux/8/crtend.o;/usr/lib64/crtn.o]
-        implicit dirs: [/usr/lib/gcc/x86_64-redhat-linux/8;/usr/lib64;/lib64;/usr/lib]
+        implicit dirs: [/usr/lib/gcc/x86_64-redhat-linux/8;/usr/lib64;/lib64;/software/local/languages/Intel-OneAPI/tbb/2021.11/lib/intel64/gcc4.8;/software/local/languages/Intel-OneAPI/mpi/2021.11/lib;/software/local/languages/Intel-OneAPI/mkl/2024.0/lib;/software/local/languages/Intel-OneAPI/ippcp/2021.9/lib32;/software/local/languages/Intel-OneAPI/ipp/2021.10/lib;/software/local/languages/Intel-OneAPI/dpl/2022.3/lib;/software/local/languages/Intel-OneAPI/dnnl/2024.0/lib;/software/local/languages/Intel-OneAPI/dal/2024.0/lib;/software/local/languages/Intel-OneAPI/compiler/2024.0/lib;/software/local/languages/Intel-OneAPI/ccl/2021.11/lib;/usr/lib]
         implicit fwks: []
       
       
@@ -513,428 +671,4 @@ events:
     message: |
       Running the CXX compiler's linker: "/usr/bin/ld" "-v"
       GNU ld version 2.30-123.el8
-...
-
----
-events:
-  -
-    kind: "try_compile-v1"
-    backtrace:
-      - "/user/home/oz21652/.cache/JetBrains/RemoteDev/dist/a7332f4099b99_CLion-243.12818.61/bin/cmake/linux/x64/share/cmake-3.30/Modules/FindOpenMP.cmake:238 (try_compile)"
-      - "/user/home/oz21652/.cache/JetBrains/RemoteDev/dist/a7332f4099b99_CLion-243.12818.61/bin/cmake/linux/x64/share/cmake-3.30/Modules/FindOpenMP.cmake:506 (_OPENMP_GET_FLAGS)"
-      - "CMakeLists.txt:8 (find_package)"
-    description: "Detecting C OpenMP compiler info"
-    directories:
-      source: "/user/home/oz21652/Comp401/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-avW4DD"
-      binary: "/user/home/oz21652/Comp401/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-avW4DD"
-    cmakeVariables:
-      CMAKE_C_FLAGS: ""
-      CMAKE_C_FLAGS_DEBUG: "-g"
-      CMAKE_EXE_LINKER_FLAGS: ""
-    buildResult:
-      variable: "OpenMP_COMPILE_RESULT_C_fopenmp"
-      cached: true
-      stdout: |
-        Change Dir: '/user/home/oz21652/Comp401/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-avW4DD'
-        
-        Run Build Command(s): /user/home/oz21652/.cache/JetBrains/RemoteDev/dist/a7332f4099b99_CLion-243.12818.61/bin/ninja/linux/x64/ninja -v cmTC_4b45d
-        [1/2] /usr/bin/cc   -fopenmp -v -fdiagnostics-color=always -o CMakeFiles/cmTC_4b45d.dir/OpenMPTryFlag.c.o -c /user/home/oz21652/Comp401/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-avW4DD/OpenMPTryFlag.c
-        Using built-in specs.
-        COLLECT_GCC=/usr/bin/cc
-        OFFLOAD_TARGET_NAMES=nvptx-none
-        OFFLOAD_TARGET_DEFAULT=1
-        Target: x86_64-redhat-linux
-        Configured with: ../configure --enable-bootstrap --enable-languages=c,c++,fortran,lto --prefix=/usr --mandir=/usr/share/man --infodir=/usr/share/info --with-bugurl=https://bugs.rockylinux.org/ --enable-shared --enable-threads=posix --enable-checking=release --enable-multilib --with-system-zlib --enable-__cxa_atexit --disable-libunwind-exceptions --enable-gnu-unique-object --enable-linker-build-id --with-gcc-major-version-only --with-linker-hash-style=gnu --enable-plugin --enable-initfini-array --with-isl --disable-libmpx --enable-offload-targets=nvptx-none --without-cuda-driver --enable-gnu-indirect-function --enable-cet --with-tune=generic --with-arch_32=x86-64 --build=x86_64-redhat-linux
-        Thread model: posix
-        gcc version 8.5.0 20210514 (Red Hat 8.5.0-20) (GCC) 
-        COLLECT_GCC_OPTIONS='-fdiagnostics-color=always' '-fopenmp' '-v' '-o' 'CMakeFiles/cmTC_4b45d.dir/OpenMPTryFlag.c.o' '-c' '-mtune=generic' '-march=x86-64' '-pthread'
-         /usr/libexec/gcc/x86_64-redhat-linux/8/cc1 -quiet -v -D_REENTRANT /user/home/oz21652/Comp401/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-avW4DD/OpenMPTryFlag.c -quiet -dumpbase OpenMPTryFlag.c -mtune=generic -march=x86-64 -auxbase-strip CMakeFiles/cmTC_4b45d.dir/OpenMPTryFlag.c.o -version -fdiagnostics-color=always -fopenmp -o /tmp/ccrLLyGj.s
-        GNU C17 (GCC) version 8.5.0 20210514 (Red Hat 8.5.0-20) (x86_64-redhat-linux)
-        	compiled by GNU C version 8.5.0 20210514 (Red Hat 8.5.0-20), GMP version 6.1.2, MPFR version 3.1.6-p2, MPC version 1.1.0, isl version isl-0.16.1-GMP
-        
-        GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
-        ignoring nonexistent directory "/usr/lib/gcc/x86_64-redhat-linux/8/include-fixed"
-        ignoring nonexistent directory "/usr/lib/gcc/x86_64-redhat-linux/8/../../../../x86_64-redhat-linux/include"
-        #include "..." search starts here:
-        #include <...> search starts here:
-         /usr/lib/gcc/x86_64-redhat-linux/8/include
-         /usr/local/include
-         /usr/include
-        End of search list.
-        GNU C17 (GCC) version 8.5.0 20210514 (Red Hat 8.5.0-20) (x86_64-redhat-linux)
-        	compiled by GNU C version 8.5.0 20210514 (Red Hat 8.5.0-20), GMP version 6.1.2, MPFR version 3.1.6-p2, MPC version 1.1.0, isl version isl-0.16.1-GMP
-        
-        GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
-        Compiler executable checksum: d401235ad03d4173493f2b6b161ddcc6
-        COLLECT_GCC_OPTIONS='-fdiagnostics-color=always' '-fopenmp' '-v' '-o' 'CMakeFiles/cmTC_4b45d.dir/OpenMPTryFlag.c.o' '-c' '-mtune=generic' '-march=x86-64' '-pthread'
-         as -v --64 -o CMakeFiles/cmTC_4b45d.dir/OpenMPTryFlag.c.o /tmp/ccrLLyGj.s
-        GNU assembler version 2.30 (x86_64-redhat-linux) using BFD version version 2.30-123.el8
-        COMPILER_PATH=/usr/libexec/gcc/x86_64-redhat-linux/8/:/usr/libexec/gcc/x86_64-redhat-linux/8/:/usr/libexec/gcc/x86_64-redhat-linux/:/usr/lib/gcc/x86_64-redhat-linux/8/:/usr/lib/gcc/x86_64-redhat-linux/
-        LIBRARY_PATH=/usr/lib/gcc/x86_64-redhat-linux/8/:/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/usr/lib/gcc/x86_64-redhat-linux/8/../../../:/lib/:/usr/lib/
-        COLLECT_GCC_OPTIONS='-fdiagnostics-color=always' '-fopenmp' '-v' '-o' 'CMakeFiles/cmTC_4b45d.dir/OpenMPTryFlag.c.o' '-c' '-mtune=generic' '-march=x86-64' '-pthread'
-        [2/2] : && /usr/bin/cc -fopenmp -v  CMakeFiles/cmTC_4b45d.dir/OpenMPTryFlag.c.o -o cmTC_4b45d  -v && :
-        Using built-in specs.
-        COLLECT_GCC=/usr/bin/cc
-        COLLECT_LTO_WRAPPER=/usr/libexec/gcc/x86_64-redhat-linux/8/lto-wrapper
-        OFFLOAD_TARGET_NAMES=nvptx-none
-        OFFLOAD_TARGET_DEFAULT=1
-        Target: x86_64-redhat-linux
-        Configured with: ../configure --enable-bootstrap --enable-languages=c,c++,fortran,lto --prefix=/usr --mandir=/usr/share/man --infodir=/usr/share/info --with-bugurl=https://bugs.rockylinux.org/ --enable-shared --enable-threads=posix --enable-checking=release --enable-multilib --with-system-zlib --enable-__cxa_atexit --disable-libunwind-exceptions --enable-gnu-unique-object --enable-linker-build-id --with-gcc-major-version-only --with-linker-hash-style=gnu --enable-plugin --enable-initfini-array --with-isl --disable-libmpx --enable-offload-targets=nvptx-none --without-cuda-driver --enable-gnu-indirect-function --enable-cet --with-tune=generic --with-arch_32=x86-64 --build=x86_64-redhat-linux
-        Thread model: posix
-        gcc version 8.5.0 20210514 (Red Hat 8.5.0-20) (GCC) 
-        COMPILER_PATH=/usr/libexec/gcc/x86_64-redhat-linux/8/:/usr/libexec/gcc/x86_64-redhat-linux/8/:/usr/libexec/gcc/x86_64-redhat-linux/:/usr/lib/gcc/x86_64-redhat-linux/8/:/usr/lib/gcc/x86_64-redhat-linux/
-        LIBRARY_PATH=/usr/lib/gcc/x86_64-redhat-linux/8/:/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/usr/lib/gcc/x86_64-redhat-linux/8/../../../:/lib/:/usr/lib/
-        Reading specs from /usr/lib/gcc/x86_64-redhat-linux/8/libgomp.spec
-        COLLECT_GCC_OPTIONS='-fopenmp' '-v' '-o' 'cmTC_4b45d' '-v' '-mtune=generic' '-march=x86-64' '-pthread'
-         /usr/libexec/gcc/x86_64-redhat-linux/8/collect2 -plugin /usr/libexec/gcc/x86_64-redhat-linux/8/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-redhat-linux/8/lto-wrapper -plugin-opt=-fresolution=/tmp/cczBhxt7.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lpthread -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --no-add-needed --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_4b45d /usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/crt1.o /usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/crti.o /usr/lib/gcc/x86_64-redhat-linux/8/crtbegin.o /usr/lib/gcc/x86_64-redhat-linux/8/crtoffloadbegin.o -L/usr/lib/gcc/x86_64-redhat-linux/8 -L/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-redhat-linux/8/../../.. CMakeFiles/cmTC_4b45d.dir/OpenMPTryFlag.c.o -lgomp -lgcc --as-needed -lgcc_s --no-as-needed -lpthread -lc -lgcc --as-needed -lgcc_s --no-as-needed /usr/lib/gcc/x86_64-redhat-linux/8/crtend.o /usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/crtn.o /usr/lib/gcc/x86_64-redhat-linux/8/crtoffloadend.o
-        COLLECT_GCC_OPTIONS='-fopenmp' '-v' '-o' 'cmTC_4b45d' '-v' '-mtune=generic' '-march=x86-64' '-pthread'
-        
-      exitCode: 0
-  -
-    kind: "message-v1"
-    backtrace:
-      - "/user/home/oz21652/.cache/JetBrains/RemoteDev/dist/a7332f4099b99_CLion-243.12818.61/bin/cmake/linux/x64/share/cmake-3.30/Modules/FindOpenMP.cmake:282 (message)"
-      - "/user/home/oz21652/.cache/JetBrains/RemoteDev/dist/a7332f4099b99_CLion-243.12818.61/bin/cmake/linux/x64/share/cmake-3.30/Modules/FindOpenMP.cmake:506 (_OPENMP_GET_FLAGS)"
-      - "CMakeLists.txt:8 (find_package)"
-    message: |
-      Parsed C OpenMP implicit link information from above output:
-        link line regex: [^( *|.*[/\\])(ld[0-9]*(\\.[a-z]+)?|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
-        ignore line: [Change Dir: '/user/home/oz21652/Comp401/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-avW4DD']
-        ignore line: []
-        ignore line: [Run Build Command(s): /user/home/oz21652/.cache/JetBrains/RemoteDev/dist/a7332f4099b99_CLion-243.12818.61/bin/ninja/linux/x64/ninja -v cmTC_4b45d]
-        ignore line: [[1/2] /usr/bin/cc   -fopenmp -v -fdiagnostics-color=always -o CMakeFiles/cmTC_4b45d.dir/OpenMPTryFlag.c.o -c /user/home/oz21652/Comp401/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-avW4DD/OpenMPTryFlag.c]
-        ignore line: [Using built-in specs.]
-        ignore line: [COLLECT_GCC=/usr/bin/cc]
-        ignore line: [OFFLOAD_TARGET_NAMES=nvptx-none]
-        ignore line: [OFFLOAD_TARGET_DEFAULT=1]
-        ignore line: [Target: x86_64-redhat-linux]
-        ignore line: [Configured with: ../configure --enable-bootstrap --enable-languages=c c++ fortran lto --prefix=/usr --mandir=/usr/share/man --infodir=/usr/share/info --with-bugurl=https://bugs.rockylinux.org/ --enable-shared --enable-threads=posix --enable-checking=release --enable-multilib --with-system-zlib --enable-__cxa_atexit --disable-libunwind-exceptions --enable-gnu-unique-object --enable-linker-build-id --with-gcc-major-version-only --with-linker-hash-style=gnu --enable-plugin --enable-initfini-array --with-isl --disable-libmpx --enable-offload-targets=nvptx-none --without-cuda-driver --enable-gnu-indirect-function --enable-cet --with-tune=generic --with-arch_32=x86-64 --build=x86_64-redhat-linux]
-        ignore line: [Thread model: posix]
-        ignore line: [gcc version 8.5.0 20210514 (Red Hat 8.5.0-20) (GCC) ]
-        ignore line: [COLLECT_GCC_OPTIONS='-fdiagnostics-color=always' '-fopenmp' '-v' '-o' 'CMakeFiles/cmTC_4b45d.dir/OpenMPTryFlag.c.o' '-c' '-mtune=generic' '-march=x86-64' '-pthread']
-        ignore line: [ /usr/libexec/gcc/x86_64-redhat-linux/8/cc1 -quiet -v -D_REENTRANT /user/home/oz21652/Comp401/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-avW4DD/OpenMPTryFlag.c -quiet -dumpbase OpenMPTryFlag.c -mtune=generic -march=x86-64 -auxbase-strip CMakeFiles/cmTC_4b45d.dir/OpenMPTryFlag.c.o -version -fdiagnostics-color=always -fopenmp -o /tmp/ccrLLyGj.s]
-        ignore line: [GNU C17 (GCC) version 8.5.0 20210514 (Red Hat 8.5.0-20) (x86_64-redhat-linux)]
-        ignore line: [	compiled by GNU C version 8.5.0 20210514 (Red Hat 8.5.0-20)  GMP version 6.1.2  MPFR version 3.1.6-p2  MPC version 1.1.0  isl version isl-0.16.1-GMP]
-        ignore line: []
-        ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
-        ignore line: [ignoring nonexistent directory "/usr/lib/gcc/x86_64-redhat-linux/8/include-fixed"]
-        ignore line: [ignoring nonexistent directory "/usr/lib/gcc/x86_64-redhat-linux/8/../../../../x86_64-redhat-linux/include"]
-        ignore line: [#include "..." search starts here:]
-        ignore line: [#include <...> search starts here:]
-        ignore line: [ /usr/lib/gcc/x86_64-redhat-linux/8/include]
-        ignore line: [ /usr/local/include]
-        ignore line: [ /usr/include]
-        ignore line: [End of search list.]
-        ignore line: [GNU C17 (GCC) version 8.5.0 20210514 (Red Hat 8.5.0-20) (x86_64-redhat-linux)]
-        ignore line: [	compiled by GNU C version 8.5.0 20210514 (Red Hat 8.5.0-20)  GMP version 6.1.2  MPFR version 3.1.6-p2  MPC version 1.1.0  isl version isl-0.16.1-GMP]
-        ignore line: []
-        ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
-        ignore line: [Compiler executable checksum: d401235ad03d4173493f2b6b161ddcc6]
-        ignore line: [COLLECT_GCC_OPTIONS='-fdiagnostics-color=always' '-fopenmp' '-v' '-o' 'CMakeFiles/cmTC_4b45d.dir/OpenMPTryFlag.c.o' '-c' '-mtune=generic' '-march=x86-64' '-pthread']
-        ignore line: [ as -v --64 -o CMakeFiles/cmTC_4b45d.dir/OpenMPTryFlag.c.o /tmp/ccrLLyGj.s]
-        ignore line: [GNU assembler version 2.30 (x86_64-redhat-linux) using BFD version version 2.30-123.el8]
-        ignore line: [COMPILER_PATH=/usr/libexec/gcc/x86_64-redhat-linux/8/:/usr/libexec/gcc/x86_64-redhat-linux/8/:/usr/libexec/gcc/x86_64-redhat-linux/:/usr/lib/gcc/x86_64-redhat-linux/8/:/usr/lib/gcc/x86_64-redhat-linux/]
-        ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-redhat-linux/8/:/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/usr/lib/gcc/x86_64-redhat-linux/8/../../../:/lib/:/usr/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-fdiagnostics-color=always' '-fopenmp' '-v' '-o' 'CMakeFiles/cmTC_4b45d.dir/OpenMPTryFlag.c.o' '-c' '-mtune=generic' '-march=x86-64' '-pthread']
-        ignore line: [[2/2] : && /usr/bin/cc -fopenmp -v  CMakeFiles/cmTC_4b45d.dir/OpenMPTryFlag.c.o -o cmTC_4b45d  -v && :]
-        ignore line: [Using built-in specs.]
-        ignore line: [COLLECT_GCC=/usr/bin/cc]
-        ignore line: [COLLECT_LTO_WRAPPER=/usr/libexec/gcc/x86_64-redhat-linux/8/lto-wrapper]
-        ignore line: [OFFLOAD_TARGET_NAMES=nvptx-none]
-        ignore line: [OFFLOAD_TARGET_DEFAULT=1]
-        ignore line: [Target: x86_64-redhat-linux]
-        ignore line: [Configured with: ../configure --enable-bootstrap --enable-languages=c c++ fortran lto --prefix=/usr --mandir=/usr/share/man --infodir=/usr/share/info --with-bugurl=https://bugs.rockylinux.org/ --enable-shared --enable-threads=posix --enable-checking=release --enable-multilib --with-system-zlib --enable-__cxa_atexit --disable-libunwind-exceptions --enable-gnu-unique-object --enable-linker-build-id --with-gcc-major-version-only --with-linker-hash-style=gnu --enable-plugin --enable-initfini-array --with-isl --disable-libmpx --enable-offload-targets=nvptx-none --without-cuda-driver --enable-gnu-indirect-function --enable-cet --with-tune=generic --with-arch_32=x86-64 --build=x86_64-redhat-linux]
-        ignore line: [Thread model: posix]
-        ignore line: [gcc version 8.5.0 20210514 (Red Hat 8.5.0-20) (GCC) ]
-        ignore line: [COMPILER_PATH=/usr/libexec/gcc/x86_64-redhat-linux/8/:/usr/libexec/gcc/x86_64-redhat-linux/8/:/usr/libexec/gcc/x86_64-redhat-linux/:/usr/lib/gcc/x86_64-redhat-linux/8/:/usr/lib/gcc/x86_64-redhat-linux/]
-        ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-redhat-linux/8/:/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/usr/lib/gcc/x86_64-redhat-linux/8/../../../:/lib/:/usr/lib/]
-        ignore line: [Reading specs from /usr/lib/gcc/x86_64-redhat-linux/8/libgomp.spec]
-        ignore line: [COLLECT_GCC_OPTIONS='-fopenmp' '-v' '-o' 'cmTC_4b45d' '-v' '-mtune=generic' '-march=x86-64' '-pthread']
-        link line: [ /usr/libexec/gcc/x86_64-redhat-linux/8/collect2 -plugin /usr/libexec/gcc/x86_64-redhat-linux/8/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-redhat-linux/8/lto-wrapper -plugin-opt=-fresolution=/tmp/cczBhxt7.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lpthread -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --no-add-needed --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_4b45d /usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/crt1.o /usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/crti.o /usr/lib/gcc/x86_64-redhat-linux/8/crtbegin.o /usr/lib/gcc/x86_64-redhat-linux/8/crtoffloadbegin.o -L/usr/lib/gcc/x86_64-redhat-linux/8 -L/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-redhat-linux/8/../../.. CMakeFiles/cmTC_4b45d.dir/OpenMPTryFlag.c.o -lgomp -lgcc --as-needed -lgcc_s --no-as-needed -lpthread -lc -lgcc --as-needed -lgcc_s --no-as-needed /usr/lib/gcc/x86_64-redhat-linux/8/crtend.o /usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/crtn.o /usr/lib/gcc/x86_64-redhat-linux/8/crtoffloadend.o]
-          arg [/usr/libexec/gcc/x86_64-redhat-linux/8/collect2] ==> ignore
-          arg [-plugin] ==> ignore
-          arg [/usr/libexec/gcc/x86_64-redhat-linux/8/liblto_plugin.so] ==> ignore
-          arg [-plugin-opt=/usr/libexec/gcc/x86_64-redhat-linux/8/lto-wrapper] ==> ignore
-          arg [-plugin-opt=-fresolution=/tmp/cczBhxt7.res] ==> ignore
-          arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
-          arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
-          arg [-plugin-opt=-pass-through=-lpthread] ==> ignore
-          arg [-plugin-opt=-pass-through=-lc] ==> ignore
-          arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
-          arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
-          arg [--build-id] ==> ignore
-          arg [--no-add-needed] ==> ignore
-          arg [--eh-frame-hdr] ==> ignore
-          arg [--hash-style=gnu] ==> ignore
-          arg [-m] ==> ignore
-          arg [elf_x86_64] ==> ignore
-          arg [-dynamic-linker] ==> ignore
-          arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
-          arg [-o] ==> ignore
-          arg [cmTC_4b45d] ==> ignore
-          arg [-L/usr/lib/gcc/x86_64-redhat-linux/8] ==> dir [/usr/lib/gcc/x86_64-redhat-linux/8]
-          arg [-L/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64] ==> dir [/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64]
-          arg [-L/lib/../lib64] ==> dir [/lib/../lib64]
-          arg [-L/usr/lib/../lib64] ==> dir [/usr/lib/../lib64]
-          arg [-L/usr/lib/gcc/x86_64-redhat-linux/8/../../..] ==> dir [/usr/lib/gcc/x86_64-redhat-linux/8/../../..]
-          arg [CMakeFiles/cmTC_4b45d.dir/OpenMPTryFlag.c.o] ==> ignore
-          arg [-lgomp] ==> lib [gomp]
-          arg [-lgcc] ==> lib [gcc]
-          arg [--as-needed] ==> ignore
-          arg [-lgcc_s] ==> lib [gcc_s]
-          arg [--no-as-needed] ==> ignore
-          arg [-lpthread] ==> lib [pthread]
-          arg [-lc] ==> lib [c]
-          arg [-lgcc] ==> lib [gcc]
-          arg [--as-needed] ==> ignore
-          arg [-lgcc_s] ==> lib [gcc_s]
-          arg [--no-as-needed] ==> ignore
-        collapse library dir [/usr/lib/gcc/x86_64-redhat-linux/8] ==> [/usr/lib/gcc/x86_64-redhat-linux/8]
-        collapse library dir [/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64] ==> [/usr/lib64]
-        collapse library dir [/lib/../lib64] ==> [/lib64]
-        collapse library dir [/usr/lib/../lib64] ==> [/usr/lib64]
-        collapse library dir [/usr/lib/gcc/x86_64-redhat-linux/8/../../..] ==> [/usr/lib]
-        implicit libs: [gomp;gcc;gcc_s;pthread;c;gcc;gcc_s]
-        implicit objs: []
-        implicit dirs: [/usr/lib/gcc/x86_64-redhat-linux/8;/usr/lib64;/lib64;/usr/lib]
-        implicit fwks: []
-      
-      
-  -
-    kind: "try_compile-v1"
-    backtrace:
-      - "/user/home/oz21652/.cache/JetBrains/RemoteDev/dist/a7332f4099b99_CLion-243.12818.61/bin/cmake/linux/x64/share/cmake-3.30/Modules/FindOpenMP.cmake:238 (try_compile)"
-      - "/user/home/oz21652/.cache/JetBrains/RemoteDev/dist/a7332f4099b99_CLion-243.12818.61/bin/cmake/linux/x64/share/cmake-3.30/Modules/FindOpenMP.cmake:506 (_OPENMP_GET_FLAGS)"
-      - "CMakeLists.txt:8 (find_package)"
-    description: "Detecting CXX OpenMP compiler info"
-    directories:
-      source: "/user/home/oz21652/Comp401/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-rCHFCI"
-      binary: "/user/home/oz21652/Comp401/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-rCHFCI"
-    cmakeVariables:
-      CMAKE_CXX_FLAGS: ""
-      CMAKE_CXX_FLAGS_DEBUG: "-g"
-      CMAKE_EXE_LINKER_FLAGS: ""
-    buildResult:
-      variable: "OpenMP_COMPILE_RESULT_CXX_fopenmp"
-      cached: true
-      stdout: |
-        Change Dir: '/user/home/oz21652/Comp401/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-rCHFCI'
-        
-        Run Build Command(s): /user/home/oz21652/.cache/JetBrains/RemoteDev/dist/a7332f4099b99_CLion-243.12818.61/bin/ninja/linux/x64/ninja -v cmTC_7a54b
-        [1/2] /usr/bin/c++   -fopenmp -v -fdiagnostics-color=always -o CMakeFiles/cmTC_7a54b.dir/OpenMPTryFlag.cpp.o -c /user/home/oz21652/Comp401/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-rCHFCI/OpenMPTryFlag.cpp
-        Using built-in specs.
-        COLLECT_GCC=/usr/bin/c++
-        OFFLOAD_TARGET_NAMES=nvptx-none
-        OFFLOAD_TARGET_DEFAULT=1
-        Target: x86_64-redhat-linux
-        Configured with: ../configure --enable-bootstrap --enable-languages=c,c++,fortran,lto --prefix=/usr --mandir=/usr/share/man --infodir=/usr/share/info --with-bugurl=https://bugs.rockylinux.org/ --enable-shared --enable-threads=posix --enable-checking=release --enable-multilib --with-system-zlib --enable-__cxa_atexit --disable-libunwind-exceptions --enable-gnu-unique-object --enable-linker-build-id --with-gcc-major-version-only --with-linker-hash-style=gnu --enable-plugin --enable-initfini-array --with-isl --disable-libmpx --enable-offload-targets=nvptx-none --without-cuda-driver --enable-gnu-indirect-function --enable-cet --with-tune=generic --with-arch_32=x86-64 --build=x86_64-redhat-linux
-        Thread model: posix
-        gcc version 8.5.0 20210514 (Red Hat 8.5.0-20) (GCC) 
-        COLLECT_GCC_OPTIONS='-fdiagnostics-color=always' '-fopenmp' '-v' '-o' 'CMakeFiles/cmTC_7a54b.dir/OpenMPTryFlag.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-pthread'
-         /usr/libexec/gcc/x86_64-redhat-linux/8/cc1plus -quiet -v -D_GNU_SOURCE -D_REENTRANT /user/home/oz21652/Comp401/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-rCHFCI/OpenMPTryFlag.cpp -quiet -dumpbase OpenMPTryFlag.cpp -mtune=generic -march=x86-64 -auxbase-strip CMakeFiles/cmTC_7a54b.dir/OpenMPTryFlag.cpp.o -version -fdiagnostics-color=always -fopenmp -o /tmp/ccEaXEBY.s
-        GNU C++14 (GCC) version 8.5.0 20210514 (Red Hat 8.5.0-20) (x86_64-redhat-linux)
-        	compiled by GNU C version 8.5.0 20210514 (Red Hat 8.5.0-20), GMP version 6.1.2, MPFR version 3.1.6-p2, MPC version 1.1.0, isl version isl-0.16.1-GMP
-        
-        GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
-        ignoring nonexistent directory "/usr/lib/gcc/x86_64-redhat-linux/8/include-fixed"
-        ignoring nonexistent directory "/usr/lib/gcc/x86_64-redhat-linux/8/../../../../x86_64-redhat-linux/include"
-        #include "..." search starts here:
-        #include <...> search starts here:
-         /usr/lib/gcc/x86_64-redhat-linux/8/../../../../include/c++/8
-         /usr/lib/gcc/x86_64-redhat-linux/8/../../../../include/c++/8/x86_64-redhat-linux
-         /usr/lib/gcc/x86_64-redhat-linux/8/../../../../include/c++/8/backward
-         /usr/lib/gcc/x86_64-redhat-linux/8/include
-         /usr/local/include
-         /usr/include
-        End of search list.
-        GNU C++14 (GCC) version 8.5.0 20210514 (Red Hat 8.5.0-20) (x86_64-redhat-linux)
-        	compiled by GNU C version 8.5.0 20210514 (Red Hat 8.5.0-20), GMP version 6.1.2, MPFR version 3.1.6-p2, MPC version 1.1.0, isl version isl-0.16.1-GMP
-        
-        GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
-        Compiler executable checksum: 1a5fbbb2ca0f971f3e1b59e59dde2ec8
-        COLLECT_GCC_OPTIONS='-fdiagnostics-color=always' '-fopenmp' '-v' '-o' 'CMakeFiles/cmTC_7a54b.dir/OpenMPTryFlag.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-pthread'
-         as -v --64 -o CMakeFiles/cmTC_7a54b.dir/OpenMPTryFlag.cpp.o /tmp/ccEaXEBY.s
-        GNU assembler version 2.30 (x86_64-redhat-linux) using BFD version version 2.30-123.el8
-        COMPILER_PATH=/usr/libexec/gcc/x86_64-redhat-linux/8/:/usr/libexec/gcc/x86_64-redhat-linux/8/:/usr/libexec/gcc/x86_64-redhat-linux/:/usr/lib/gcc/x86_64-redhat-linux/8/:/usr/lib/gcc/x86_64-redhat-linux/
-        LIBRARY_PATH=/usr/lib/gcc/x86_64-redhat-linux/8/:/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/usr/lib/gcc/x86_64-redhat-linux/8/../../../:/lib/:/usr/lib/
-        COLLECT_GCC_OPTIONS='-fdiagnostics-color=always' '-fopenmp' '-v' '-o' 'CMakeFiles/cmTC_7a54b.dir/OpenMPTryFlag.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-pthread'
-        [2/2] : && /usr/bin/c++ -fopenmp -v  CMakeFiles/cmTC_7a54b.dir/OpenMPTryFlag.cpp.o -o cmTC_7a54b  -v && :
-        Using built-in specs.
-        COLLECT_GCC=/usr/bin/c++
-        COLLECT_LTO_WRAPPER=/usr/libexec/gcc/x86_64-redhat-linux/8/lto-wrapper
-        OFFLOAD_TARGET_NAMES=nvptx-none
-        OFFLOAD_TARGET_DEFAULT=1
-        Target: x86_64-redhat-linux
-        Configured with: ../configure --enable-bootstrap --enable-languages=c,c++,fortran,lto --prefix=/usr --mandir=/usr/share/man --infodir=/usr/share/info --with-bugurl=https://bugs.rockylinux.org/ --enable-shared --enable-threads=posix --enable-checking=release --enable-multilib --with-system-zlib --enable-__cxa_atexit --disable-libunwind-exceptions --enable-gnu-unique-object --enable-linker-build-id --with-gcc-major-version-only --with-linker-hash-style=gnu --enable-plugin --enable-initfini-array --with-isl --disable-libmpx --enable-offload-targets=nvptx-none --without-cuda-driver --enable-gnu-indirect-function --enable-cet --with-tune=generic --with-arch_32=x86-64 --build=x86_64-redhat-linux
-        Thread model: posix
-        gcc version 8.5.0 20210514 (Red Hat 8.5.0-20) (GCC) 
-        COMPILER_PATH=/usr/libexec/gcc/x86_64-redhat-linux/8/:/usr/libexec/gcc/x86_64-redhat-linux/8/:/usr/libexec/gcc/x86_64-redhat-linux/:/usr/lib/gcc/x86_64-redhat-linux/8/:/usr/lib/gcc/x86_64-redhat-linux/
-        LIBRARY_PATH=/usr/lib/gcc/x86_64-redhat-linux/8/:/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/usr/lib/gcc/x86_64-redhat-linux/8/../../../:/lib/:/usr/lib/
-        Reading specs from /usr/lib/gcc/x86_64-redhat-linux/8/libgomp.spec
-        COLLECT_GCC_OPTIONS='-fopenmp' '-v' '-o' 'cmTC_7a54b' '-v' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-pthread'
-         /usr/libexec/gcc/x86_64-redhat-linux/8/collect2 -plugin /usr/libexec/gcc/x86_64-redhat-linux/8/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-redhat-linux/8/lto-wrapper -plugin-opt=-fresolution=/tmp/ccCtXm2I.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lpthread -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --no-add-needed --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_7a54b /usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/crt1.o /usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/crti.o /usr/lib/gcc/x86_64-redhat-linux/8/crtbegin.o /usr/lib/gcc/x86_64-redhat-linux/8/crtoffloadbegin.o -L/usr/lib/gcc/x86_64-redhat-linux/8 -L/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-redhat-linux/8/../../.. CMakeFiles/cmTC_7a54b.dir/OpenMPTryFlag.cpp.o -lstdc++ -lm -lgomp -lgcc_s -lgcc -lpthread -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-redhat-linux/8/crtend.o /usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/crtn.o /usr/lib/gcc/x86_64-redhat-linux/8/crtoffloadend.o
-        COLLECT_GCC_OPTIONS='-fopenmp' '-v' '-o' 'cmTC_7a54b' '-v' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-pthread'
-        
-      exitCode: 0
-  -
-    kind: "message-v1"
-    backtrace:
-      - "/user/home/oz21652/.cache/JetBrains/RemoteDev/dist/a7332f4099b99_CLion-243.12818.61/bin/cmake/linux/x64/share/cmake-3.30/Modules/FindOpenMP.cmake:282 (message)"
-      - "/user/home/oz21652/.cache/JetBrains/RemoteDev/dist/a7332f4099b99_CLion-243.12818.61/bin/cmake/linux/x64/share/cmake-3.30/Modules/FindOpenMP.cmake:506 (_OPENMP_GET_FLAGS)"
-      - "CMakeLists.txt:8 (find_package)"
-    message: |
-      Parsed CXX OpenMP implicit link information from above output:
-        link line regex: [^( *|.*[/\\])(ld[0-9]*(\\.[a-z]+)?|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
-        ignore line: [Change Dir: '/user/home/oz21652/Comp401/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-rCHFCI']
-        ignore line: []
-        ignore line: [Run Build Command(s): /user/home/oz21652/.cache/JetBrains/RemoteDev/dist/a7332f4099b99_CLion-243.12818.61/bin/ninja/linux/x64/ninja -v cmTC_7a54b]
-        ignore line: [[1/2] /usr/bin/c++   -fopenmp -v -fdiagnostics-color=always -o CMakeFiles/cmTC_7a54b.dir/OpenMPTryFlag.cpp.o -c /user/home/oz21652/Comp401/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-rCHFCI/OpenMPTryFlag.cpp]
-        ignore line: [Using built-in specs.]
-        ignore line: [COLLECT_GCC=/usr/bin/c++]
-        ignore line: [OFFLOAD_TARGET_NAMES=nvptx-none]
-        ignore line: [OFFLOAD_TARGET_DEFAULT=1]
-        ignore line: [Target: x86_64-redhat-linux]
-        ignore line: [Configured with: ../configure --enable-bootstrap --enable-languages=c c++ fortran lto --prefix=/usr --mandir=/usr/share/man --infodir=/usr/share/info --with-bugurl=https://bugs.rockylinux.org/ --enable-shared --enable-threads=posix --enable-checking=release --enable-multilib --with-system-zlib --enable-__cxa_atexit --disable-libunwind-exceptions --enable-gnu-unique-object --enable-linker-build-id --with-gcc-major-version-only --with-linker-hash-style=gnu --enable-plugin --enable-initfini-array --with-isl --disable-libmpx --enable-offload-targets=nvptx-none --without-cuda-driver --enable-gnu-indirect-function --enable-cet --with-tune=generic --with-arch_32=x86-64 --build=x86_64-redhat-linux]
-        ignore line: [Thread model: posix]
-        ignore line: [gcc version 8.5.0 20210514 (Red Hat 8.5.0-20) (GCC) ]
-        ignore line: [COLLECT_GCC_OPTIONS='-fdiagnostics-color=always' '-fopenmp' '-v' '-o' 'CMakeFiles/cmTC_7a54b.dir/OpenMPTryFlag.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-pthread']
-        ignore line: [ /usr/libexec/gcc/x86_64-redhat-linux/8/cc1plus -quiet -v -D_GNU_SOURCE -D_REENTRANT /user/home/oz21652/Comp401/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-rCHFCI/OpenMPTryFlag.cpp -quiet -dumpbase OpenMPTryFlag.cpp -mtune=generic -march=x86-64 -auxbase-strip CMakeFiles/cmTC_7a54b.dir/OpenMPTryFlag.cpp.o -version -fdiagnostics-color=always -fopenmp -o /tmp/ccEaXEBY.s]
-        ignore line: [GNU C++14 (GCC) version 8.5.0 20210514 (Red Hat 8.5.0-20) (x86_64-redhat-linux)]
-        ignore line: [	compiled by GNU C version 8.5.0 20210514 (Red Hat 8.5.0-20)  GMP version 6.1.2  MPFR version 3.1.6-p2  MPC version 1.1.0  isl version isl-0.16.1-GMP]
-        ignore line: []
-        ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
-        ignore line: [ignoring nonexistent directory "/usr/lib/gcc/x86_64-redhat-linux/8/include-fixed"]
-        ignore line: [ignoring nonexistent directory "/usr/lib/gcc/x86_64-redhat-linux/8/../../../../x86_64-redhat-linux/include"]
-        ignore line: [#include "..." search starts here:]
-        ignore line: [#include <...> search starts here:]
-        ignore line: [ /usr/lib/gcc/x86_64-redhat-linux/8/../../../../include/c++/8]
-        ignore line: [ /usr/lib/gcc/x86_64-redhat-linux/8/../../../../include/c++/8/x86_64-redhat-linux]
-        ignore line: [ /usr/lib/gcc/x86_64-redhat-linux/8/../../../../include/c++/8/backward]
-        ignore line: [ /usr/lib/gcc/x86_64-redhat-linux/8/include]
-        ignore line: [ /usr/local/include]
-        ignore line: [ /usr/include]
-        ignore line: [End of search list.]
-        ignore line: [GNU C++14 (GCC) version 8.5.0 20210514 (Red Hat 8.5.0-20) (x86_64-redhat-linux)]
-        ignore line: [	compiled by GNU C version 8.5.0 20210514 (Red Hat 8.5.0-20)  GMP version 6.1.2  MPFR version 3.1.6-p2  MPC version 1.1.0  isl version isl-0.16.1-GMP]
-        ignore line: []
-        ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
-        ignore line: [Compiler executable checksum: 1a5fbbb2ca0f971f3e1b59e59dde2ec8]
-        ignore line: [COLLECT_GCC_OPTIONS='-fdiagnostics-color=always' '-fopenmp' '-v' '-o' 'CMakeFiles/cmTC_7a54b.dir/OpenMPTryFlag.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-pthread']
-        ignore line: [ as -v --64 -o CMakeFiles/cmTC_7a54b.dir/OpenMPTryFlag.cpp.o /tmp/ccEaXEBY.s]
-        ignore line: [GNU assembler version 2.30 (x86_64-redhat-linux) using BFD version version 2.30-123.el8]
-        ignore line: [COMPILER_PATH=/usr/libexec/gcc/x86_64-redhat-linux/8/:/usr/libexec/gcc/x86_64-redhat-linux/8/:/usr/libexec/gcc/x86_64-redhat-linux/:/usr/lib/gcc/x86_64-redhat-linux/8/:/usr/lib/gcc/x86_64-redhat-linux/]
-        ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-redhat-linux/8/:/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/usr/lib/gcc/x86_64-redhat-linux/8/../../../:/lib/:/usr/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-fdiagnostics-color=always' '-fopenmp' '-v' '-o' 'CMakeFiles/cmTC_7a54b.dir/OpenMPTryFlag.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-pthread']
-        ignore line: [[2/2] : && /usr/bin/c++ -fopenmp -v  CMakeFiles/cmTC_7a54b.dir/OpenMPTryFlag.cpp.o -o cmTC_7a54b  -v && :]
-        ignore line: [Using built-in specs.]
-        ignore line: [COLLECT_GCC=/usr/bin/c++]
-        ignore line: [COLLECT_LTO_WRAPPER=/usr/libexec/gcc/x86_64-redhat-linux/8/lto-wrapper]
-        ignore line: [OFFLOAD_TARGET_NAMES=nvptx-none]
-        ignore line: [OFFLOAD_TARGET_DEFAULT=1]
-        ignore line: [Target: x86_64-redhat-linux]
-        ignore line: [Configured with: ../configure --enable-bootstrap --enable-languages=c c++ fortran lto --prefix=/usr --mandir=/usr/share/man --infodir=/usr/share/info --with-bugurl=https://bugs.rockylinux.org/ --enable-shared --enable-threads=posix --enable-checking=release --enable-multilib --with-system-zlib --enable-__cxa_atexit --disable-libunwind-exceptions --enable-gnu-unique-object --enable-linker-build-id --with-gcc-major-version-only --with-linker-hash-style=gnu --enable-plugin --enable-initfini-array --with-isl --disable-libmpx --enable-offload-targets=nvptx-none --without-cuda-driver --enable-gnu-indirect-function --enable-cet --with-tune=generic --with-arch_32=x86-64 --build=x86_64-redhat-linux]
-        ignore line: [Thread model: posix]
-        ignore line: [gcc version 8.5.0 20210514 (Red Hat 8.5.0-20) (GCC) ]
-        ignore line: [COMPILER_PATH=/usr/libexec/gcc/x86_64-redhat-linux/8/:/usr/libexec/gcc/x86_64-redhat-linux/8/:/usr/libexec/gcc/x86_64-redhat-linux/:/usr/lib/gcc/x86_64-redhat-linux/8/:/usr/lib/gcc/x86_64-redhat-linux/]
-        ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-redhat-linux/8/:/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/usr/lib/gcc/x86_64-redhat-linux/8/../../../:/lib/:/usr/lib/]
-        ignore line: [Reading specs from /usr/lib/gcc/x86_64-redhat-linux/8/libgomp.spec]
-        ignore line: [COLLECT_GCC_OPTIONS='-fopenmp' '-v' '-o' 'cmTC_7a54b' '-v' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-pthread']
-        link line: [ /usr/libexec/gcc/x86_64-redhat-linux/8/collect2 -plugin /usr/libexec/gcc/x86_64-redhat-linux/8/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-redhat-linux/8/lto-wrapper -plugin-opt=-fresolution=/tmp/ccCtXm2I.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lpthread -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --no-add-needed --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_7a54b /usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/crt1.o /usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/crti.o /usr/lib/gcc/x86_64-redhat-linux/8/crtbegin.o /usr/lib/gcc/x86_64-redhat-linux/8/crtoffloadbegin.o -L/usr/lib/gcc/x86_64-redhat-linux/8 -L/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-redhat-linux/8/../../.. CMakeFiles/cmTC_7a54b.dir/OpenMPTryFlag.cpp.o -lstdc++ -lm -lgomp -lgcc_s -lgcc -lpthread -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-redhat-linux/8/crtend.o /usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/crtn.o /usr/lib/gcc/x86_64-redhat-linux/8/crtoffloadend.o]
-          arg [/usr/libexec/gcc/x86_64-redhat-linux/8/collect2] ==> ignore
-          arg [-plugin] ==> ignore
-          arg [/usr/libexec/gcc/x86_64-redhat-linux/8/liblto_plugin.so] ==> ignore
-          arg [-plugin-opt=/usr/libexec/gcc/x86_64-redhat-linux/8/lto-wrapper] ==> ignore
-          arg [-plugin-opt=-fresolution=/tmp/ccCtXm2I.res] ==> ignore
-          arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
-          arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
-          arg [-plugin-opt=-pass-through=-lpthread] ==> ignore
-          arg [-plugin-opt=-pass-through=-lc] ==> ignore
-          arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
-          arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
-          arg [--build-id] ==> ignore
-          arg [--no-add-needed] ==> ignore
-          arg [--eh-frame-hdr] ==> ignore
-          arg [--hash-style=gnu] ==> ignore
-          arg [-m] ==> ignore
-          arg [elf_x86_64] ==> ignore
-          arg [-dynamic-linker] ==> ignore
-          arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
-          arg [-o] ==> ignore
-          arg [cmTC_7a54b] ==> ignore
-          arg [-L/usr/lib/gcc/x86_64-redhat-linux/8] ==> dir [/usr/lib/gcc/x86_64-redhat-linux/8]
-          arg [-L/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64] ==> dir [/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64]
-          arg [-L/lib/../lib64] ==> dir [/lib/../lib64]
-          arg [-L/usr/lib/../lib64] ==> dir [/usr/lib/../lib64]
-          arg [-L/usr/lib/gcc/x86_64-redhat-linux/8/../../..] ==> dir [/usr/lib/gcc/x86_64-redhat-linux/8/../../..]
-          arg [CMakeFiles/cmTC_7a54b.dir/OpenMPTryFlag.cpp.o] ==> ignore
-          arg [-lstdc++] ==> lib [stdc++]
-          arg [-lm] ==> lib [m]
-          arg [-lgomp] ==> lib [gomp]
-          arg [-lgcc_s] ==> lib [gcc_s]
-          arg [-lgcc] ==> lib [gcc]
-          arg [-lpthread] ==> lib [pthread]
-          arg [-lc] ==> lib [c]
-          arg [-lgcc_s] ==> lib [gcc_s]
-          arg [-lgcc] ==> lib [gcc]
-        collapse library dir [/usr/lib/gcc/x86_64-redhat-linux/8] ==> [/usr/lib/gcc/x86_64-redhat-linux/8]
-        collapse library dir [/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64] ==> [/usr/lib64]
-        collapse library dir [/lib/../lib64] ==> [/lib64]
-        collapse library dir [/usr/lib/../lib64] ==> [/usr/lib64]
-        collapse library dir [/usr/lib/gcc/x86_64-redhat-linux/8/../../..] ==> [/usr/lib]
-        implicit libs: [stdc++;m;gomp;gcc_s;gcc;pthread;c;gcc_s;gcc]
-        implicit objs: []
-        implicit dirs: [/usr/lib/gcc/x86_64-redhat-linux/8;/usr/lib64;/lib64;/usr/lib]
-        implicit fwks: []
-      
-      
-  -
-    kind: "try_compile-v1"
-    backtrace:
-      - "/user/home/oz21652/.cache/JetBrains/RemoteDev/dist/a7332f4099b99_CLion-243.12818.61/bin/cmake/linux/x64/share/cmake-3.30/Modules/FindOpenMP.cmake:440 (try_compile)"
-      - "/user/home/oz21652/.cache/JetBrains/RemoteDev/dist/a7332f4099b99_CLion-243.12818.61/bin/cmake/linux/x64/share/cmake-3.30/Modules/FindOpenMP.cmake:580 (_OPENMP_GET_SPEC_DATE)"
-      - "CMakeLists.txt:8 (find_package)"
-    description: "Detecting C OpenMP version"
-    directories:
-      source: "/user/home/oz21652/Comp401/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-t1khex"
-      binary: "/user/home/oz21652/Comp401/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-t1khex"
-    cmakeVariables:
-      CMAKE_C_FLAGS: ""
-      CMAKE_C_FLAGS_DEBUG: "-g"
-      CMAKE_EXE_LINKER_FLAGS: ""
-    buildResult:
-      variable: "OpenMP_SPECTEST_C_"
-      cached: true
-      stdout: |
-        Change Dir: '/user/home/oz21652/Comp401/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-t1khex'
-        
-        Run Build Command(s): /user/home/oz21652/.cache/JetBrains/RemoteDev/dist/a7332f4099b99_CLion-243.12818.61/bin/ninja/linux/x64/ninja -v cmTC_6bbe2
-        [1/2] /usr/bin/cc   -fopenmp -fdiagnostics-color=always -o CMakeFiles/cmTC_6bbe2.dir/OpenMPCheckVersion.c.o -c /user/home/oz21652/Comp401/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-t1khex/OpenMPCheckVersion.c
-        [2/2] : && /usr/bin/cc -fopenmp  CMakeFiles/cmTC_6bbe2.dir/OpenMPCheckVersion.c.o -o cmTC_6bbe2   && :
-        
-      exitCode: 0
-  -
-    kind: "try_compile-v1"
-    backtrace:
-      - "/user/home/oz21652/.cache/JetBrains/RemoteDev/dist/a7332f4099b99_CLion-243.12818.61/bin/cmake/linux/x64/share/cmake-3.30/Modules/FindOpenMP.cmake:440 (try_compile)"
-      - "/user/home/oz21652/.cache/JetBrains/RemoteDev/dist/a7332f4099b99_CLion-243.12818.61/bin/cmake/linux/x64/share/cmake-3.30/Modules/FindOpenMP.cmake:580 (_OPENMP_GET_SPEC_DATE)"
-      - "CMakeLists.txt:8 (find_package)"
-    description: "Detecting CXX OpenMP version"
-    directories:
-      source: "/user/home/oz21652/Comp401/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-AEmu1v"
-      binary: "/user/home/oz21652/Comp401/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-AEmu1v"
-    cmakeVariables:
-      CMAKE_CXX_FLAGS: ""
-      CMAKE_CXX_FLAGS_DEBUG: "-g"
-      CMAKE_EXE_LINKER_FLAGS: ""
-    buildResult:
-      variable: "OpenMP_SPECTEST_CXX_"
-      cached: true
-      stdout: |
-        Change Dir: '/user/home/oz21652/Comp401/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-AEmu1v'
-        
-        Run Build Command(s): /user/home/oz21652/.cache/JetBrains/RemoteDev/dist/a7332f4099b99_CLion-243.12818.61/bin/ninja/linux/x64/ninja -v cmTC_c7ce6
-        [1/2] /usr/bin/c++   -fopenmp -fdiagnostics-color=always -o CMakeFiles/cmTC_c7ce6.dir/OpenMPCheckVersion.cpp.o -c /user/home/oz21652/Comp401/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-AEmu1v/OpenMPCheckVersion.cpp
-        [2/2] : && /usr/bin/c++ -fopenmp  CMakeFiles/cmTC_c7ce6.dir/OpenMPCheckVersion.cpp.o -o cmTC_c7ce6   && :
-        
-      exitCode: 0
 ...

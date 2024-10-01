@@ -5,7 +5,7 @@
 #ifndef PICALC_H
 #define PICALC_H
 
-int main(const int argc, char* argv[]);
+int main(int argc, char* argv[]);
 
 double multiThreadedCalc();
 
