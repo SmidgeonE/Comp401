@@ -1,0 +1,23 @@
+/tmp/slurmd/job10532936/slurm_script: line 6: SBATCH: command not found
+/tmp/slurmd/job10532936/slurm_script: line 7: SBATCH: command not found
+/tmp/slurmd/job10532936/slurm_script: line 8: SBATCH: command not found
+/tmp/slurmd/job10532936/slurm_script: line 9: SBATCH: command not found
+/tmp/slurmd/job10532936/slurm_script: line 10: SBATCH: command not found
+/tmp/slurmd/job10532936/slurm_script: line 11: SBATCH: command not found
+/tmp/slurmd/job10532936/slurm_script: line 12: SBATCH: command not found
+/tmp/slurmd/job10532936/slurm_script: line 13: SBATCH: command not found
+Lmod has detected the following error: The following module(s) are unknown:
+"languages/Intel/OneAPI/2024.0.2"
+
+Please check the spelling or version number. Also try "module spider ..."
+It is also possible your cache file is out-of-date; it may help to try:
+  $ module --ignore_cache load "languages/Intel/OneAPI/2024.0.2"
+
+Also make sure that all modulefiles written in TCL start with the string
+#%Module
+
+
+
+Multiprocess Application 
+MPI startup(): PMI server not found. Please set I_MPI_PMI_LIBRARY variable if it is not a singleton case.
+Hello from process 0 out of 1 process on node compute283.bc4.acrc.priv

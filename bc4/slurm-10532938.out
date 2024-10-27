@@ -1,0 +1,19 @@
+Lmod has detected the following error: The following module(s) are unknown:
+"languages/Intel/OneAPI/2024.0.2"
+
+Please check the spelling or version number. Also try "module spider ..."
+It is also possible your cache file is out-of-date; it may help to try:
+  $ module --ignore_cache load "languages/Intel/OneAPI/2024.0.2"
+
+Also make sure that all modulefiles written in TCL start with the string
+#%Module
+
+
+
+This is the pi calculator. 
+The answer given by single threaded for pi was 3.14159
+The single threaded application took 0.0216401s 
+
+The answer given by multi threaded for pi was 3.14159
+The multi threaded application took 0.021488s 
+
