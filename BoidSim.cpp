@@ -8,6 +8,9 @@
 #include <vector>
 #include "mpi.h"
 #include <gsl/gsl_vector.h>
+#include "array"
+
+constexpr int SIZE_OF_SIMULATION = 1000;
 
 std::vector<gsl_vector*> initializeBoidsToSquare(const int n, const double sideLength) {
     std::vector<gsl_vector*> boids; 
@@ -31,12 +34,83 @@ std::vector<gsl_vector*> initializeBoidsToSquare(const int n, const double sideL
 }
 
 int main(int argc, char* argv[]) {
+    BoidSim* boidSim = new BoidSim();
 
-    auto budgieBoids = initializeBoidsToSquare(105, 5);
-
-    for (auto budgieBoid : budgieBoids) {
-        std::cout << gsl_vector_get(budgieBoid, 0) << " " << gsl_vector_get(budgieBoid, 1) << " " << gsl_vector_get(budgieBoid, 2) << std::endl;
-    }
-
+    
     return 0;
 }
+
+
+class BoidSim {
+private:
+    VectorArray* BoidPositions;
+    VectorArray* BoidDirections;
+
+    std::array<double, SIZE_OF_SIMULATION>* BoidMasses;
+    std::array<double, SIZE_OF_SIMULATION>* BoidSpeeds;
+
+public:
+    BoidSim() {
+        BoidPositions = new VectorArray;
+        BoidDirections = new VectorArray;
+        BoidMasses = new std::array<double, SIZE_OF_SIMULATION>;
+        BoidSpeeds = new std::array<double, SIZE_OF_SIMULATION>;
+    }
+
+    ~BoidSim() {
+        delete BoidPositions;
+        delete BoidDirections;
+        delete[] BoidMasses;
+        delete[] BoidSpeeds;
+    }
+
+    VectorArray* getBoidPositions() const {
+        return BoidPositions;
+    }
+
+    VectorArray* getBoidDirections() const {
+        return BoidDirections;
+    }
+
+    std::array<double, SIZE_OF_SIMULATION>* getBoidMasses() const {
+        return BoidMasses;
+    }
+
+    std::array<double, SIZE_OF_SIMULATION>* getBoidSpeeds() const {
+        return BoidSpeeds;
+    }
+};
+
+
+class VectorArray {
+private:
+    std::array<double, SIZE_OF_SIMULATION>* arrayX;
+    std::array<double, SIZE_OF_SIMULATION>* arrayY;
+    std::array<double, SIZE_OF_SIMULATION>* arrayZ;
+
+public:
+    VectorArray() {
+        arrayX = new std::array<double, SIZE_OF_SIMULATION>;
+        arrayY = new std::array<double, SIZE_OF_SIMULATION>;
+        arrayZ = new std::array<double, SIZE_OF_SIMULATION>;
+    }
+
+    ~VectorArray() {
+        delete[] arrayX;
+        delete[] arrayY;
+        delete[] arrayZ;
+    }
+
+    std::array<double, SIZE_OF_SIMULATION>* getArrayX() const {
+        return arrayX;
+    }
+
+    std::array<double, SIZE_OF_SIMULATION>* getArrayY() const {
+        return arrayY;
+    }
+
+    std::array<double, SIZE_OF_SIMULATION>* getArrayZ() const {
+        return arrayZ;
+    }
+};
+    
