@@ -1,7 +1,0 @@
-This is the pi calculator. 
-The answer given by single threaded for pi was 3.14159
-The single threaded application took 0.0218742s 
-
-The answer given by multi threaded for pi was 3.14159
-The multi threaded application took 0.022238s 
-

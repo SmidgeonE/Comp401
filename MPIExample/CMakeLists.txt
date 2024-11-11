@@ -5,4 +5,6 @@ set(CMAKE_CXX_STANDARD 14)
 
 include_directories(.)
 include_directories(/software/local/languages/Intel-OneAPI)
-include_directories(/software/spack/linux-rocky8-broadwell/gcc-12.3.0/gsl-2.7.1-w4io/include/gsl)
+add_executable(Comp401 multithreaded-pi-calc/picalc.cpp
+        MPIAndQueueing.cpp
+        multithreaded-pi-calc/picalc.h)
