@@ -1,10 +1,11 @@
 #ifndef BOIDSIM_H
 #define BOIDSIM_H
 
-#include <vector>
 #include "array"
+#include <iostream>
+#include <fstream>
 
-constexpr long SIZE_OF_SIMULATION = 1000;
+constexpr long SIZE_OF_SIMULATION = 20;
 
 class VectorArray {
 private:
@@ -29,6 +30,11 @@ private:
     std::array<double, SIZE_OF_SIMULATION>* BoidMasses;
     std::array<double, SIZE_OF_SIMULATION>* BoidSpeeds;
 
+    bool writeToFile;
+    std::ofstream outputStream;
+
+    void WriteBoidSimulation();
+
 public:
     BoidSim();
     ~BoidSim();
@@ -38,12 +44,16 @@ public:
     std::array<double, SIZE_OF_SIMULATION>* getBoidMasses() const { return BoidMasses; };
     std::array<double, SIZE_OF_SIMULATION>* getBoidSpeeds() const { return BoidSpeeds; };
 
-    void SimView(const int viewNum);
+    void setWriteToFile(const bool writeToFile);
+
+    void SimView(int viewNum) const;
+
+    void StartSimulation(long timeSteps);
 };
 
 
-void initialiseRandomVectors(VectorArray* vectorArray, const double lowerBound, const double upperBound, const bool normalise);
+void initialiseRandomVectors(VectorArray* vectorArray, double lowerBound, double upperBound, bool normalise);
 
-void initialiseRandomScalars(std::array<double, SIZE_OF_SIMULATION>* scalarArray, const double lowerBound, const double upperBound);
+void initialiseRandomScalars(std::array<double, SIZE_OF_SIMULATION>* scalarArray, double lowerBound, double upperBound);
 
 #endif // BOIDSIM_H
