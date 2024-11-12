@@ -37,9 +37,13 @@ public:
     VectorArray* getBoidDirections() const { return BoidDirections; };
     std::array<double, SIZE_OF_SIMULATION>* getBoidMasses() const { return BoidMasses; };
     std::array<double, SIZE_OF_SIMULATION>* getBoidSpeeds() const { return BoidSpeeds; };
+
+    void SimView(const int viewNum);
 };
 
 
-void initializeRandomVectors(VectorArray* vectorArray, double lowerBound, double upperBound);
+void initialiseRandomVectors(VectorArray* vectorArray, const double lowerBound, const double upperBound, const bool normalise);
+
+void initialiseRandomScalars(std::array<double, SIZE_OF_SIMULATION>* scalarArray, const double lowerBound, const double upperBound);
 
 #endif // BOIDSIM_H
