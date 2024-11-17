@@ -117,65 +117,41 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named Comp401
+# Target rules for targets named new_target
 
 # Build rule for target.
-Comp401: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 Comp401
-.PHONY : Comp401
+new_target: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 new_target
+.PHONY : new_target
 
 # fast build rule for target.
-Comp401/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Comp401.dir/build.make CMakeFiles/Comp401.dir/build
-.PHONY : Comp401/fast
+new_target/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/new_target.dir/build.make CMakeFiles/new_target.dir/build
+.PHONY : new_target/fast
 
-MPIAndQueueing.o: MPIAndQueueing.cpp.o
-.PHONY : MPIAndQueueing.o
-
-# target to build an object file
-MPIAndQueueing.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Comp401.dir/build.make CMakeFiles/Comp401.dir/MPIAndQueueing.cpp.o
-.PHONY : MPIAndQueueing.cpp.o
-
-MPIAndQueueing.i: MPIAndQueueing.cpp.i
-.PHONY : MPIAndQueueing.i
-
-# target to preprocess a source file
-MPIAndQueueing.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Comp401.dir/build.make CMakeFiles/Comp401.dir/MPIAndQueueing.cpp.i
-.PHONY : MPIAndQueueing.cpp.i
-
-MPIAndQueueing.s: MPIAndQueueing.cpp.s
-.PHONY : MPIAndQueueing.s
-
-# target to generate assembly for a file
-MPIAndQueueing.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Comp401.dir/build.make CMakeFiles/Comp401.dir/MPIAndQueueing.cpp.s
-.PHONY : MPIAndQueueing.cpp.s
-
-multithreaded-pi-calc/picalc.o: multithreaded-pi-calc/picalc.cpp.o
-.PHONY : multithreaded-pi-calc/picalc.o
+BoidSim.o: BoidSim.cpp.o
+.PHONY : BoidSim.o
 
 # target to build an object file
-multithreaded-pi-calc/picalc.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Comp401.dir/build.make CMakeFiles/Comp401.dir/multithreaded-pi-calc/picalc.cpp.o
-.PHONY : multithreaded-pi-calc/picalc.cpp.o
+BoidSim.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/new_target.dir/build.make CMakeFiles/new_target.dir/BoidSim.cpp.o
+.PHONY : BoidSim.cpp.o
 
-multithreaded-pi-calc/picalc.i: multithreaded-pi-calc/picalc.cpp.i
-.PHONY : multithreaded-pi-calc/picalc.i
+BoidSim.i: BoidSim.cpp.i
+.PHONY : BoidSim.i
 
 # target to preprocess a source file
-multithreaded-pi-calc/picalc.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Comp401.dir/build.make CMakeFiles/Comp401.dir/multithreaded-pi-calc/picalc.cpp.i
-.PHONY : multithreaded-pi-calc/picalc.cpp.i
+BoidSim.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/new_target.dir/build.make CMakeFiles/new_target.dir/BoidSim.cpp.i
+.PHONY : BoidSim.cpp.i
 
-multithreaded-pi-calc/picalc.s: multithreaded-pi-calc/picalc.cpp.s
-.PHONY : multithreaded-pi-calc/picalc.s
+BoidSim.s: BoidSim.cpp.s
+.PHONY : BoidSim.s
 
 # target to generate assembly for a file
-multithreaded-pi-calc/picalc.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Comp401.dir/build.make CMakeFiles/Comp401.dir/multithreaded-pi-calc/picalc.cpp.s
-.PHONY : multithreaded-pi-calc/picalc.cpp.s
+BoidSim.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/new_target.dir/build.make CMakeFiles/new_target.dir/BoidSim.cpp.s
+.PHONY : BoidSim.cpp.s
 
 # Help Target
 help:
@@ -185,13 +161,10 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... Comp401"
-	@echo "... MPIAndQueueing.o"
-	@echo "... MPIAndQueueing.i"
-	@echo "... MPIAndQueueing.s"
-	@echo "... multithreaded-pi-calc/picalc.o"
-	@echo "... multithreaded-pi-calc/picalc.i"
-	@echo "... multithreaded-pi-calc/picalc.s"
+	@echo "... new_target"
+	@echo "... BoidSim.o"
+	@echo "... BoidSim.i"
+	@echo "... BoidSim.s"
 .PHONY : help
 
 
