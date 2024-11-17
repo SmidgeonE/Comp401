@@ -5,7 +5,13 @@
 #include <iostream>
 #include <fstream>
 
-constexpr long SIZE_OF_SIMULATION = 20;
+constexpr long SIZE_OF_SIMULATION = 5;
+
+constexpr double dt = 0.01f;
+
+constexpr double SEPARATION_FORCE_CONSTANT = 0.00000001;
+constexpr double ALIGNMENT_FORCE_CONSTANT = 0.00000001;
+constexpr double COHESION_FORCE_CONSTANT = 0.00000001;
 
 class VectorArray {
 private:
@@ -29,6 +35,8 @@ class BoidSim {
 private:
     VectorArray* BoidPositions;
     VectorArray* BoidDirections;
+    VectorArray* BoidForces;
+
     std::array<double, SIZE_OF_SIMULATION>* BoidMasses;
     std::array<double, SIZE_OF_SIMULATION>* BoidSpeeds;
 
@@ -37,7 +45,10 @@ private:
     void WriteBoidSimulation();
 
     std::array<double, 3> getAverageFlockDirection();
-    void moveBoidsTowardsDirection(const std::array<double, 3>& newDirection, const double newDirectionWeight = 1.0, const int specificBoid = -1);
+
+    void calculateBoidVelocity();
+    void resetForces();
+    void addForce(const VectorArray& force);
     
     void applyAlignmentAlgorithm();
     void applyCohesionAlgorithm();

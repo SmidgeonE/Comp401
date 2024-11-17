@@ -2,7 +2,7 @@ from matplotlib import pyplot as plt
 import matplotlib.animation as animation
 import polars as pl
 
-file_path = '/home/finlay/Comp401/BoidSimulation.csv'
+file_path = '/user/home/oz21652/Comp401/BoidSimulation.csv'
 dfs = []
 
 columnDict = {
@@ -17,18 +17,18 @@ columnDict = {
 }
 
 with open(file_path, 'r') as file:
-    dataDict = {
-    'posX': [],
-    'posY': [],
-    'posZ': [],
-    'dirX': [],
-    'dirY': [],
-    'dirZ': [],
-    'speed': [],
-    'mass': []
-    }
-
     for line in file:
+        dataDict = {
+            'posX': [],
+            'posY': [],
+            'posZ': [],
+            'dirX': [],
+            'dirY': [],
+            'dirZ': [],
+            'speed': [],
+            'mass': []
+            }
+            
         line = line.strip()
 
         for boid in line.split('],'):
@@ -42,7 +42,6 @@ with open(file_path, 'r') as file:
 
         dfs.append(pl.DataFrame(dataDict))
 
-print(dfs[0])
 figure, ax = plt.subplots()
 
 allXVals = [val for df in dfs for val in df['posX'].to_list()]
@@ -51,7 +50,7 @@ allYVals = [val for df in dfs for val in df['posY'].to_list()]
 
 def update(frame):
     ax.clear()
-    ax.plot(dfs[frame]['posX'], dfs[frame]['posY'], 'bo')
+    asd = ax.plot(dfs[frame]['posX'], dfs[frame]['posY'], 'bo')
     ax.set_xlim(min(allXVals), max(allXVals))
     ax.set_ylim(min(allYVals), max(allYVals))
     ax.set_title('Boid Simulation')
@@ -59,9 +58,10 @@ def update(frame):
     ax.set_ylabel('Y Position')
     ax.grid(True)
 
-    
+    return asd
 
-ani = animation.FuncAnimation(figure, update, frames=len(dfs), repeat=False)
+
+ani = animation.FuncAnimation(figure, update, frames=len(dfs), repeat=False, blit=True)
 
 ani.save('simulation.gif', writer='pillow', fps=10)
 plt.show()

@@ -11,8 +11,10 @@
 BoidSim::BoidSim() : BoidPositions(new VectorArray),
                      BoidDirections(new VectorArray),
                      BoidMasses(new std::array<double, SIZE_OF_SIMULATION>),
-                     BoidSpeeds(new std::array<double, SIZE_OF_SIMULATION>), writeToFile(false) {
-    initialiseRandomVectors(BoidPositions, 0.0, 1.0, false);
+                     BoidSpeeds(new std::array<double, SIZE_OF_SIMULATION>), 
+                     BoidForces(new VectorArray),
+                     writeToFile(false) {
+    initialiseRandomVectors(BoidPositions, -10, 10, false);
     initialiseRandomVectors(BoidDirections, -1.0, 1.0, true);
     BoidSpeeds->fill(0.0);
     BoidMasses->fill(1.0);
@@ -29,10 +31,14 @@ void BoidSim::StartSimulation(const long timeSteps) {
 
     // Now we must iterate through the time steps
 
-    for (long i = 0; i < timeSteps; ++i) {
+    for (double i = 0.0; i < timeSteps * dt; i += dt) {
+        resetForces();
+
         applySeparationAlgorithm();
         applyAlignmentAlgorithm();
         applyCohesionAlgorithm();
+
+        calculateBoidVelocity();
 
         applyTimeStep();
 
@@ -115,17 +121,23 @@ void BoidSim::applyCohesionAlgorithm(){
         com[i] /= totalMass;
     }
 
-    // Now we have the COM we need to find the direction to move the boids towards the COM
+    // Now we have the COM we need to add a linear force based on the distance from the COM
+
+    VectorArray* comForces = new VectorArray;
 
     for (int i = 0; i < SIZE_OF_SIMULATION; ++i){
         auto comDirectionX = com[0] - (*positionsX)[i];
         auto comDirectionY = com[1] - (*positionsY)[i];
         auto comDirectionZ = com[2] - (*positionsZ)[i];
 
-        auto comDirection = normaliseVector({comDirectionX, comDirectionY, comDirectionZ});
-
-        moveBoidsTowardsDirection(comDirection);
+        (*comForces->getArrayX())[i] = comDirectionX;
+        (*comForces->getArrayY())[i] = comDirectionY;
+        (*comForces->getArrayZ())[i] = comDirectionZ;
     }
+
+    addForce(*comForces);
+
+    delete comForces;
 }
 
 
@@ -134,9 +146,10 @@ void BoidSim::applySeparationAlgorithm(){
     const auto positionsY = BoidPositions->getArrayY();
     const auto positionsZ = BoidPositions->getArrayZ();
 
+    VectorArray* repulsionForces = new VectorArray;
+
 
     for (int i = 0; i < SIZE_OF_SIMULATION; ++i){
-        auto repulsionVector = std::array<double, 3> {0.0, 0.0, 0.0};
         int numRejections = 0;
 
         for (int j = 0; j < SIZE_OF_SIMULATION; ++j){
@@ -146,22 +159,26 @@ void BoidSim::applySeparationAlgorithm(){
             auto separationY = (*positionsY)[j] - (*positionsY)[i];
             auto separationZ = (*positionsZ)[j] - (*positionsZ)[i];
         
-            auto separationSquared = magSquared({separationX, separationY, separationZ});
+            auto magnitudeFactor = std::sqrt(magSquared({separationX, separationY, separationZ}));
+            magnitudeFactor *= magnitudeFactor * magnitudeFactor;
 
-            if (separationSquared > 5) {
+            if (magnitudeFactor > 5) {
                 ++numRejections;
                 continue;
             }
 
-            repulsionVector[0] -= separationX / separationSquared;
-            repulsionVector[1] -= separationY / separationSquared;
-            repulsionVector[2] -= separationZ / separationSquared;
+            (*repulsionForces->getArrayX())[i] += -SEPARATION_FORCE_CONSTANT * separationX / magnitudeFactor;
+            (*repulsionForces->getArrayY())[i] += -SEPARATION_FORCE_CONSTANT * separationY / magnitudeFactor;
+            (*repulsionForces->getArrayZ())[i] += -SEPARATION_FORCE_CONSTANT * separationZ / magnitudeFactor;
         }
 
         if (numRejections == SIZE_OF_SIMULATION - 1) continue;
 
-        moveBoidsTowardsDirection(normaliseVector(repulsionVector), 1, i);
     }
+
+    addForce(*repulsionForces);
+
+    delete repulsionForces;
 }
 
 
@@ -169,28 +186,22 @@ void BoidSim::applySeparationAlgorithm(){
 void BoidSim::applyAlignmentAlgorithm(){
     const auto averageDirection = getAverageFlockDirection();
 
-    moveBoidsTowardsDirection(averageDirection);
-}
-
-
-void BoidSim::moveBoidsTowardsDirection(const std::array<double, 3>& newDirection, const double newDirectionWeight, const int specificBoid){
-    const auto directionsX = BoidDirections->getArrayX();
-    const auto directionsY = BoidDirections->getArrayY();
-    const auto directionsZ = BoidDirections->getArrayZ();
+    VectorArray* alignmentForces = new VectorArray;
 
     for (int i = 0; i < SIZE_OF_SIMULATION; ++i){
-        if (specificBoid != -1 && i != specificBoid) continue;
+        auto alignmentForceX = ALIGNMENT_FORCE_CONSTANT * averageDirection[0];
+        auto alignmentForceY = ALIGNMENT_FORCE_CONSTANT * averageDirection[1];
+        auto alignmentForceZ = ALIGNMENT_FORCE_CONSTANT * averageDirection[2];
 
-        auto newDirectionX = ((*directionsX)[i] + newDirectionWeight * newDirection[0])/2;
-        auto newDirectionY = ((*directionsY)[i] + newDirectionWeight * newDirection[1])/2;
-        auto newDirectionZ = ((*directionsZ)[i] + newDirectionWeight * newDirection[2])/2;
 
-        auto newDirection = normaliseVector({newDirectionX, newDirectionY, newDirectionZ});
-
-        (*directionsX)[i] = newDirection[0];
-        (*directionsY)[i] = newDirection[1];
-        (*directionsZ)[i] = newDirection[2];
+        (*alignmentForces->getArrayX())[i] = alignmentForceX;
+        (*alignmentForces->getArrayY())[i] = alignmentForceY;
+        (*alignmentForces->getArrayZ())[i] = alignmentForceZ;
     }
+
+    addForce(*alignmentForces);
+
+    delete alignmentForces;
 }
 
 
@@ -211,6 +222,52 @@ void BoidSim::applyTimeStep(){
         (*xPositions)[j] += (*xDirections)[j] * (*boidSpeeds)[j];
         (*yPositions)[j] += (*yDirections)[j] * (*boidSpeeds)[j];
         (*zPositions)[j] += (*zDirections)[j] * (*boidSpeeds)[j];
+    }
+}
+
+void BoidSim::calculateBoidVelocity(){
+    auto xDirections = BoidDirections->getArrayX();
+    auto yDirections = BoidDirections->getArrayY();
+    auto zDirections = BoidDirections->getArrayZ();
+
+
+    for (int j = 0; j < SIZE_OF_SIMULATION; ++j) {
+        // We have now calculated the total force for this time step, now we must calculate the new velocity because of that
+        std::cout << "Force: " << (*BoidForces->getArrayX())[j] << ", " << (*BoidForces->getArrayY())[j] << ", " << (*BoidForces->getArrayZ())[j] << "\n";
+
+        auto newVelocityX = (*xDirections)[j] * (*BoidMasses)[j] + (*BoidForces->getArrayX())[j] * dt / (*BoidMasses)[j];
+        auto newVelocityY = (*yDirections)[j] * (*BoidMasses)[j] + (*BoidForces->getArrayY())[j] * dt / (*BoidMasses)[j];
+        auto newVelocityZ = (*zDirections)[j] * (*BoidMasses)[j] + (*BoidForces->getArrayZ())[j] * dt / (*BoidMasses)[j];
+
+        auto velocity = std::array<double, 3> {newVelocityX, newVelocityY, newVelocityZ};
+        
+        (*BoidSpeeds)[j] = std::sqrt(magSquared(velocity));
+        
+        auto velocityNormalised = normaliseVector(velocity);
+
+        (*xDirections)[j] = velocityNormalised[0];
+        (*yDirections)[j] = velocityNormalised[1];
+        (*zDirections)[j] = velocityNormalised[2];
+    }
+}
+
+
+void BoidSim::resetForces(){
+    BoidForces->getArrayX()->fill(0.0);
+    BoidForces->getArrayY()->fill(0.0);
+    BoidForces->getArrayZ()->fill(0.0);
+}
+
+
+void BoidSim::addForce(const VectorArray& force){
+    const auto forcesX = BoidForces->getArrayX();
+    const auto forcesY = BoidForces->getArrayY();
+    const auto forcesZ = BoidForces->getArrayZ();
+
+    for (int i = 0; i < SIZE_OF_SIMULATION; ++i){
+        (*forcesX)[i] += (*force.getArrayX())[i];
+        (*forcesY)[i] += (*force.getArrayY())[i];
+        (*forcesZ)[i] += (*force.getArrayZ())[i];
     }
 }
 
