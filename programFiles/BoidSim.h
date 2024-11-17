@@ -20,6 +20,8 @@ public:
     std::array<double, SIZE_OF_SIMULATION>* getArrayX() const { return arrayX; };
     std::array<double, SIZE_OF_SIMULATION>* getArrayY() const { return arrayY; };
     std::array<double, SIZE_OF_SIMULATION>* getArrayZ() const { return arrayZ; };
+
+    std::array<double, 3> getVectorAverage();
 };
 
 
@@ -35,6 +37,7 @@ private:
     void WriteBoidSimulation();
 
     std::array<double, 3> getAverageFlockDirection();
+    void moveBoidsTowardsDirection(const std::array<double, 3>& newDirection, const double newDirectionWeight);
     
     void applyAlignmentAlgorithm();
     void applyCohesionAlgorithm();

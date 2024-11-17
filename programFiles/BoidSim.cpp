@@ -30,8 +30,8 @@ void BoidSim::StartSimulation(const long timeSteps) {
     // Now we must iterate through the time steps
 
     for (long i = 0; i < timeSteps; ++i) {
-        applySeparationAlgorithm();
-        applyAlignmentAlgorithm();
+        // applySeparationAlgorithm();
+        // applyAlignmentAlgorithm();
         applyCohesionAlgorithm();
 
         applyTimeStep();
@@ -94,7 +94,38 @@ void BoidSim::SimView(const int viewNum) const {
 
 
 void BoidSim::applyCohesionAlgorithm(){
+    const auto positionsX = BoidPositions->getArrayX();
+    const auto positionsY = BoidPositions->getArrayY();
+    const auto positionsZ = BoidPositions->getArrayZ();
 
+    // Calculate COM of the flock
+
+    std::array<double, 3> com = {0.0, 0.0, 0.0};
+    double totalMass = 0.0;
+
+    for (int i = 0; i < SIZE_OF_SIMULATION; ++i){
+        com[0] += (*positionsX)[i] * (*BoidMasses)[i];
+        com[1] += (*positionsY)[i] * (*BoidMasses)[i];
+        com[2] += (*positionsZ)[i] * (*BoidMasses)[i];
+
+        totalMass += (*BoidMasses)[i];
+    }
+
+    for (int i = 0; i < 3; ++i){
+        com[i] /= totalMass;
+    }
+
+    // Now we have the COM we need to find the direction to move the boids towards the COM
+
+    for (int i = 0; i < SIZE_OF_SIMULATION; ++i){
+        auto comDirectionX = com[0] - (*positionsX)[i];
+        auto comDirectionY = com[1] - (*positionsY)[i];
+        auto comDirectionZ = com[2] - (*positionsZ)[i];
+
+        auto comDirection = normaliseVector({comDirectionX, comDirectionY, comDirectionZ});
+
+        moveBoidsTowardsDirection(comDirection);
+    }
 }
 
 
@@ -104,37 +135,27 @@ void BoidSim::applySeparationAlgorithm(){
 
 
 void BoidSim::applyAlignmentAlgorithm(){
+    const auto averageDirection = getAverageFlockDirection();
+
+    moveBoidsTowardsDirection(averageDirection);
+}
+
+
+void BoidSim::moveBoidsTowardsDirection(const std::array<double, 3>& newDirection, const double newDirectionWeight){
     const auto directionsX = BoidDirections->getArrayX();
     const auto directionsY = BoidDirections->getArrayY();
     const auto directionsZ = BoidDirections->getArrayZ();
 
-    const auto averageDirection = getAverageFlockDirection();
-
     for (int i = 0; i < SIZE_OF_SIMULATION; ++i){
-        auto newDirectionX = ((*directionsX)[i] + 1 * averageDirection[0])/2;
-        auto newDirectionY = ((*directionsY)[i] + 1 * averageDirection[1])/2;
-        auto newDirectionZ = ((*directionsZ)[i] + 1 * averageDirection[2])/2;
+        auto newDirectionX = ((*directionsX)[i] + newDirectionWeight * newDirection[0])/2;
+        auto newDirectionY = ((*directionsY)[i] + newDirectionWeight * newDirection[1])/2;
+        auto newDirectionZ = ((*directionsZ)[i] + newDirectionWeight * newDirection[2])/2;
 
         auto newDirection = normaliseVector({newDirectionX, newDirectionY, newDirectionZ});
 
         (*directionsX)[i] = newDirection[0];
         (*directionsY)[i] = newDirection[1];
         (*directionsZ)[i] = newDirection[2];
-
-
-        if (i == 0){
-            std::cout << "First boids Direction: "
-             << (*BoidDirections->getArrayX())[0] 
-             << ", " << (*BoidDirections->getArrayY())[0] 
-             << ", " << (*BoidDirections->getArrayZ())[0] 
-             << "\n";
-
-            std::cout << "Average Direction: " 
-            << averageDirection[0] 
-            << ", " << averageDirection[1] 
-            << ", " << averageDirection[2]
-             << "\n";
-        }
     }
 }
 
@@ -161,27 +182,7 @@ void BoidSim::applyTimeStep(){
 
 
 std::array<double, 3> BoidSim::getAverageFlockDirection(){
-    const auto directionsX = BoidPositions->getArrayX();
-    const auto directionsY = BoidPositions->getArrayY();
-    const auto directionsZ = BoidPositions->getArrayZ();
-
-    double averageX = 0;
-    double averageY = 0;
-    double averageZ = 0;
-
-    for (int i = 0; i < SIZE_OF_SIMULATION; ++i){
-        averageX += (*directionsX)[i];
-        averageY += (*directionsY)[i];
-        averageZ += (*directionsZ)[i];
-    }
-
-    averageX /= SIZE_OF_SIMULATION;
-    averageY /= SIZE_OF_SIMULATION;
-    averageZ /= SIZE_OF_SIMULATION;
-
-    std::cout << "Before normalisation, it is " << averageX << ", " << averageY << ", " << averageZ << "\n";
-
-    std::array<double, 3> averageDirection = {averageX, averageY, averageZ};
+    std::array<double, 3> averageDirection = BoidDirections->getVectorAverage();
 
     return normaliseVector(averageDirection);
 }
