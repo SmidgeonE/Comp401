@@ -14,7 +14,7 @@ BoidSim::BoidSim() : BoidPositions(new VectorArray),
                      BoidSpeeds(new std::array<double, SIZE_OF_SIMULATION>), writeToFile(false) {
     initialiseRandomVectors(BoidPositions, 0.0, 1.0, false);
     initialiseRandomVectors(BoidDirections, -1.0, 1.0, true);
-    initialiseRandomScalars(BoidSpeeds, 0.0, 1.0);
+    BoidSpeeds->fill(0.0);
     BoidMasses->fill(1.0);
 }
 
@@ -30,8 +30,8 @@ void BoidSim::StartSimulation(const long timeSteps) {
     // Now we must iterate through the time steps
 
     for (long i = 0; i < timeSteps; ++i) {
-        // applySeparationAlgorithm();
-        // applyAlignmentAlgorithm();
+        applySeparationAlgorithm();
+        applyAlignmentAlgorithm();
         applyCohesionAlgorithm();
 
         applyTimeStep();
@@ -130,8 +130,40 @@ void BoidSim::applyCohesionAlgorithm(){
 
 
 void BoidSim::applySeparationAlgorithm(){
+    const auto positionsX = BoidPositions->getArrayX();
+    const auto positionsY = BoidPositions->getArrayY();
+    const auto positionsZ = BoidPositions->getArrayZ();
 
+
+    for (int i = 0; i < SIZE_OF_SIMULATION; ++i){
+        auto repulsionVector = std::array<double, 3> {0.0, 0.0, 0.0};
+        int numRejections = 0;
+
+        for (int j = 0; j < SIZE_OF_SIMULATION; ++j){
+            if (i == j) continue;
+            
+            auto separationX = (*positionsX)[j] - (*positionsX)[i];
+            auto separationY = (*positionsY)[j] - (*positionsY)[i];
+            auto separationZ = (*positionsZ)[j] - (*positionsZ)[i];
+        
+            auto separationSquared = magSquared({separationX, separationY, separationZ});
+
+            if (separationSquared > 5) {
+                ++numRejections;
+                continue;
+            }
+
+            repulsionVector[0] -= separationX / separationSquared;
+            repulsionVector[1] -= separationY / separationSquared;
+            repulsionVector[2] -= separationZ / separationSquared;
+        }
+
+        if (numRejections == SIZE_OF_SIMULATION - 1) continue;
+
+        moveBoidsTowardsDirection(normaliseVector(repulsionVector), 1, i);
+    }
 }
+
 
 
 void BoidSim::applyAlignmentAlgorithm(){
@@ -141,12 +173,14 @@ void BoidSim::applyAlignmentAlgorithm(){
 }
 
 
-void BoidSim::moveBoidsTowardsDirection(const std::array<double, 3>& newDirection, const double newDirectionWeight){
+void BoidSim::moveBoidsTowardsDirection(const std::array<double, 3>& newDirection, const double newDirectionWeight, const int specificBoid){
     const auto directionsX = BoidDirections->getArrayX();
     const auto directionsY = BoidDirections->getArrayY();
     const auto directionsZ = BoidDirections->getArrayZ();
 
     for (int i = 0; i < SIZE_OF_SIMULATION; ++i){
+        if (specificBoid != -1 && i != specificBoid) continue;
+
         auto newDirectionX = ((*directionsX)[i] + newDirectionWeight * newDirection[0])/2;
         auto newDirectionY = ((*directionsY)[i] + newDirectionWeight * newDirection[1])/2;
         auto newDirectionZ = ((*directionsZ)[i] + newDirectionWeight * newDirection[2])/2;

@@ -18,6 +18,11 @@ std::array<double, 3> normaliseVector(const std::array<double, 3>& vector){
 }
 
 
+double magSquared(const std::array<double, 3>& vector) {
+    return vector[0]*vector[0] + vector[1]*vector[1] + vector[2]*vector[2];
+}
+
+
 void initialiseRandomVectors(VectorArray* vectorArray, const double lowerBound, const double upperBound, const bool normalise) {
     std::random_device rd;
     std::mt19937 gen(rd());

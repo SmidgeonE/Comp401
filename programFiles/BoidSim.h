@@ -37,7 +37,7 @@ private:
     void WriteBoidSimulation();
 
     std::array<double, 3> getAverageFlockDirection();
-    void moveBoidsTowardsDirection(const std::array<double, 3>& newDirection, const double newDirectionWeight);
+    void moveBoidsTowardsDirection(const std::array<double, 3>& newDirection, const double newDirectionWeight = 1.0, const int specificBoid = -1);
     
     void applyAlignmentAlgorithm();
     void applyCohesionAlgorithm();
@@ -59,5 +59,7 @@ void initialiseRandomVectors(VectorArray* vectorArray, double lowerBound, double
 void initialiseRandomScalars(std::array<double, SIZE_OF_SIMULATION>* scalarArray, double lowerBound, double upperBound);
 
 std::array<double, 3> normaliseVector(const std::array<double, 3>& vector);
+
+double magSquared(const std::array<double, 3>& vector);
 
 #endif // BOIDSIM_H

@@ -5,7 +5,7 @@ int main(int argc, char* argv[]) {
 
     boidSim->setWriteToFile(true);
     boidSim->SimView(5);
-    boidSim->StartSimulation(20);
+    boidSim->StartSimulation(1000);
 
     delete boidSim;
 
