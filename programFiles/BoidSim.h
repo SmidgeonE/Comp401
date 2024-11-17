@@ -32,22 +32,21 @@ private:
 
     bool writeToFile;
     std::ofstream outputStream;
-
     void WriteBoidSimulation();
+
+    std::array<double, 3> getAverageFlockDirection();
+    
+    void applyAlignmentAlgorithm();
+    void applyCohesionAlgorithm();
+    void applySeparationAlgorithm();
+    void applyTimeStep();
 
 public:
     BoidSim();
     ~BoidSim();
 
-    VectorArray* getBoidPositions() const { return BoidPositions; };
-    VectorArray* getBoidDirections() const { return BoidDirections; };
-    std::array<double, SIZE_OF_SIMULATION>* getBoidMasses() const { return BoidMasses; };
-    std::array<double, SIZE_OF_SIMULATION>* getBoidSpeeds() const { return BoidSpeeds; };
-
     void setWriteToFile(const bool writeToFile);
-
     void SimView(int viewNum) const;
-
     void StartSimulation(long timeSteps);
 };
 
@@ -55,5 +54,7 @@ public:
 void initialiseRandomVectors(VectorArray* vectorArray, double lowerBound, double upperBound, bool normalise);
 
 void initialiseRandomScalars(std::array<double, SIZE_OF_SIMULATION>* scalarArray, double lowerBound, double upperBound);
+
+std::array<double, 3> normaliseVector(const std::array<double, 3>& vector);
 
 #endif // BOIDSIM_H
