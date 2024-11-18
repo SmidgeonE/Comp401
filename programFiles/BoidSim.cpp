@@ -73,7 +73,7 @@ void BoidSim::setWriteToFile(const bool writeToFile) {
     // Opening a stream to write the file
 
     if (writeToFile){
-        outputStream.open("BoidSimulation.csv");
+        outputStream.open("/user/home/oz21652/Comp401/BoidSimulation.csv");
     }
 }
 
@@ -233,7 +233,6 @@ void BoidSim::calculateBoidVelocity(){
 
     for (int j = 0; j < SIZE_OF_SIMULATION; ++j) {
         // We have now calculated the total force for this time step, now we must calculate the new velocity because of that
-        std::cout << "Force: " << (*BoidForces->getArrayX())[j] << ", " << (*BoidForces->getArrayY())[j] << ", " << (*BoidForces->getArrayZ())[j] << "\n";
 
         auto newVelocityX = (*xDirections)[j] * (*BoidMasses)[j] + (*BoidForces->getArrayX())[j] * dt / (*BoidMasses)[j];
         auto newVelocityY = (*yDirections)[j] * (*BoidMasses)[j] + (*BoidForces->getArrayY())[j] * dt / (*BoidMasses)[j];

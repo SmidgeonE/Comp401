@@ -1,5 +1,6 @@
 #include "BoidSim.h"
 #include <random>
+#include <chrono>
 
 void initialiseRandomScalars(std::array<double, SIZE_OF_SIMULATION>* scalarArray, const double lowerBound, const double upperBound) {
     std::random_device rd;
@@ -44,5 +45,27 @@ void initialiseRandomVectors(VectorArray* vectorArray, const double lowerBound, 
         (*vectorArray->getArrayY())[i] = vector[1];
         (*vectorArray->getArrayZ())[i] = vector[2];
     }
+}
+
+
+double runAndTimeSimulation(int timeSteps, bool writeToFile){
+    auto start = std::chrono::high_resolution_clock::now();
+
+    auto boidSim = new BoidSim();
+
+    if (writeToFile) {
+        boidSim->setWriteToFile(true);
+    }
+
+    boidSim->StartSimulation(timeSteps);
+
+    delete boidSim;
+
+    auto end = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double> elapsed = end - start;
+
+    std::cout << "Time taken for time steps: " << timeSteps << " is " << elapsed.count() << " seconds" << std::endl;
+    
+    return elapsed.count();
 }
     

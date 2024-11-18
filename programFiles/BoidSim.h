@@ -5,7 +5,9 @@
 #include <iostream>
 #include <fstream>
 
-constexpr long SIZE_OF_SIMULATION = 5;
+#ifndef SIZE_OF_SIMULATION
+#   define SIZE_OF_SIMULATION 5
+#endif
 
 constexpr double dt = 0.01f;
 
@@ -72,5 +74,7 @@ void initialiseRandomScalars(std::array<double, SIZE_OF_SIMULATION>* scalarArray
 std::array<double, 3> normaliseVector(const std::array<double, 3>& vector);
 
 double magSquared(const std::array<double, 3>& vector);
+
+double runAndTimeSimulation(int timeSteps, bool writeToFile);
 
 #endif // BOIDSIM_H
