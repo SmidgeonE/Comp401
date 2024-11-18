@@ -4,16 +4,30 @@
 #include "array"
 #include <iostream>
 #include <fstream>
+#include <omp.h>
+#include <cmath>
+#include <random>
+
 
 #ifndef SIZE_OF_SIMULATION
 #   define SIZE_OF_SIMULATION 5
 #endif
 
-constexpr double dt = 0.01f;
+#ifndef NUM_THREADS
+#   define NUM_THREADS -1
+#endif
+
+#ifndef DEBUG
+#   define DEBUG false
+#endif
+
+constexpr double DT = 0.01f;
 
 constexpr double SEPARATION_FORCE_CONSTANT = 0.00000001;
 constexpr double ALIGNMENT_FORCE_CONSTANT = 0.00000001;
 constexpr double COHESION_FORCE_CONSTANT = 0.00000001;
+
+constexpr int NUM_SIMULATIONS = 6;
 
 class VectorArray {
 private:
@@ -25,26 +39,28 @@ public:
     VectorArray();
     ~VectorArray();
 
-    std::array<double, SIZE_OF_SIMULATION>* getArrayX() const { return arrayX; };
-    std::array<double, SIZE_OF_SIMULATION>* getArrayY() const { return arrayY; };
-    std::array<double, SIZE_OF_SIMULATION>* getArrayZ() const { return arrayZ; };
+    std::array<double, SIZE_OF_SIMULATION>* GetArrayX() const { return arrayX; };
+    std::array<double, SIZE_OF_SIMULATION>* GetArrayY() const { return arrayY; };
+    std::array<double, SIZE_OF_SIMULATION>* GetArrayZ() const { return arrayZ; };
 
-    std::array<double, 3> getVectorAverage();
+    std::array<double, 3> GetVectorAverage();
+    void InitialiseRandomVectors(double lowerBound, double upperBound, bool normalise);
+    void InitialiseVectorsToLine(int lineLength);
 };
 
 
 class BoidSim {
 private:
-    VectorArray* BoidPositions;
-    VectorArray* BoidDirections;
-    VectorArray* BoidForces;
+    VectorArray* boidPositions;
+    VectorArray* boidDirections;
+    VectorArray* boidForces;
 
-    std::array<double, SIZE_OF_SIMULATION>* BoidMasses;
-    std::array<double, SIZE_OF_SIMULATION>* BoidSpeeds;
+    std::array<double, SIZE_OF_SIMULATION>* boidMasses;
+    std::array<double, SIZE_OF_SIMULATION>* boidSpeeds;
 
     bool writeToFile;
     std::ofstream outputStream;
-    void WriteBoidSimulation();
+    void writeBoidSimulation();
 
     std::array<double, 3> getAverageFlockDirection();
 
@@ -52,22 +68,21 @@ private:
     void resetForces();
     void addForce(const VectorArray& force);
     
-    void applyAlignmentAlgorithm();
-    void applyCohesionAlgorithm();
-    void applySeparationAlgorithm();
+    void applyAlignmentForce();
+    void applyCohesionForce();
+    void applySeparationForce();
     void applyTimeStep();
 
 public:
     BoidSim();
     ~BoidSim();
 
-    void setWriteToFile(const bool writeToFile);
+    void SetWriteToFile(const bool writeToFile);
     void SimView(int viewNum) const;
     void StartSimulation(long timeSteps);
 };
 
 
-void initialiseRandomVectors(VectorArray* vectorArray, double lowerBound, double upperBound, bool normalise);
 
 void initialiseRandomScalars(std::array<double, SIZE_OF_SIMULATION>* scalarArray, double lowerBound, double upperBound);
 
