@@ -1,6 +1,7 @@
 from matplotlib import pyplot as plt
 import matplotlib.animation as animation
 import polars as pl
+from mpl_toolkits.mplot3d import Axes3D
 
 file_path = '/user/home/oz21652/Comp401/BoidSimulation.csv'
 dfs = []
@@ -42,23 +43,28 @@ with open(file_path, 'r') as file:
 
         dfs.append(pl.DataFrame(dataDict))
 
-figure, ax = plt.subplots()
+figure = plt.figure()
+
+ax = figure.add_subplot(111, projection='3d')
+
 
 allXVals = [val for df in dfs for val in df['posX'].to_list()]
 allYVals = [val for df in dfs for val in df['posY'].to_list()]
-
+allZVals = [val for df in dfs for val in df['posZ'].to_list()]
 
 def update(frame):
     ax.clear()
-    asd = ax.plot(dfs[frame]['posX'], dfs[frame]['posY'], 'bo')
+    scat = ax.scatter(dfs[frame]['posX'], dfs[frame]['posY'], dfs[frame]['posZ'], c='b', marker='o')
     ax.set_xlim(min(allXVals), max(allXVals))
     ax.set_ylim(min(allYVals), max(allYVals))
+    ax.set_zlim(min(allZVals), max(allZVals))
     ax.set_title('Boid Simulation')
     ax.set_xlabel('X Position')
     ax.set_ylabel('Y Position')
+    ax.set_zlabel('Z Position')
     ax.grid(True)
 
-    return asd
+    return [scat]
 
 
 ani = animation.FuncAnimation(figure, update, frames=len(dfs), repeat=False, blit=True)
