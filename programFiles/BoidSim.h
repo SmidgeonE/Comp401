@@ -44,8 +44,12 @@ public:
     std::array<double, SIZE_OF_SIMULATION>* GetArrayZ() const { return arrayZ; };
 
     std::array<double, 3> GetVectorAverage();
+
     void InitialiseRandomVectors(double lowerBound, double upperBound, bool normalise);
     void InitialiseVectorsToLine(int lineLength);
+    void InitaliseVectorsToZHat();
+
+    void View(const int viewNum, const std::string& name);
 };
 
 
@@ -61,6 +65,7 @@ private:
     bool writeToFile;
     std::ofstream outputStream;
     void writeBoidSimulation();
+
 
     std::array<double, 3> getAverageFlockDirection();
 

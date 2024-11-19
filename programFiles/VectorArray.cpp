@@ -52,16 +52,41 @@ void VectorArray::InitialiseRandomVectors(const double lowerBound, const double 
     }
 }
 
+
 void VectorArray::InitialiseVectorsToLine(const int gridSize) {
     // Sets vectors to the line y=x=z
 
     auto spacing = gridSize / SIZE_OF_SIMULATION;
 
-    for (double i = 0; i < gridSize; i += spacing) {
-        GetArrayX()->at(i) = i;
+    for (int i = 0; i < SIZE_OF_SIMULATION; ++i) {
+        GetArrayX()->at(i) = i * spacing;
         GetArrayY()->at(i) = i;
         GetArrayZ()->at(i) = i;
     }
 }
+
+
+void VectorArray::InitaliseVectorsToZHat() {
+    for (int i = 0; i < SIZE_OF_SIMULATION; ++i) {
+        GetArrayX()->at(i) = 0;
+        GetArrayY()->at(i) = 0;
+        GetArrayZ()->at(i) = 1;
+    }
+}
+
+
+void VectorArray::View(const int viewNum, const std::string& name) {
+    std::cout << "Viewing " << name << std::endl;
+    
+    auto maxViewNum = std::min(viewNum, SIZE_OF_SIMULATION);
+
+    for (int i = 0; i < maxViewNum; ++i) {
+        std::cout << "Vector " << i << ": " << (*GetArrayX())[i] << ", " << (*GetArrayY())[i] << ", " << (*GetArrayZ())[i] << std::endl;
+    }
+
+    std::cout << std::endl;
+}
+
+
 
 

@@ -2,7 +2,6 @@
 // Created by oz21652 on 9/24/24.
 //
 
-#include "multiprocess.h"
 #include <iostream>
 #include "mpi.h"
 

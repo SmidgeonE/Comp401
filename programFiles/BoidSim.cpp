@@ -14,38 +14,39 @@ BoidSim::BoidSim() : boidPositions(new VectorArray),
                      boidSpeeds(new std::array<double, SIZE_OF_SIMULATION>), 
                      boidForces(new VectorArray),
                      writeToFile(false) {
-
+    
     boidPositions->InitialiseVectorsToLine(10);
-    boidDirections->InitialiseRandomVectors(-1.0, 1.0, true);
-    boidSpeeds->fill(0.0);
+    boidDirections->InitaliseVectorsToZHat();
+    boidSpeeds->fill(1.0);
     boidMasses->fill(1.0);
 }
 
 
 void BoidSim::StartSimulation(const long timeSteps) {
-    if (DEBUG) {
-        SimView(3);
-    }
-
     if (writeToFile) {
         // We need to write the initial state of the simulation
 
         writeBoidSimulation();
     }
 
-    // Now we must iterate through the time steps
 
     for (double i = 0.0; i < timeSteps * DT; i += DT) {
-        if (DEBUG && i < DT) {
-            std::cout << "Next Time Step: \n\n";
+        if (DEBUG && i < 2 * (DT + std::numeric_limits<double>::epsilon())) {
+            std::cout << "\n\nNext Time Step: \n\n";
             SimView(3);
         }
 
+        if (DEBUG && i > 2 * (DT + std::numeric_limits<double>::epsilon())) {
+            std::cout << "Debug has finished: 3 time steps have occured." << std::endl;
+            return;
+        }
+
+
         resetForces();
 
-        applySeparationForce();
+        // applySeparationForce();
         // applyAlignmentForce();
-        // applyCohesionForce();
+        applyCohesionForce();
 
         calculateBoidVelocity();
 
@@ -87,7 +88,7 @@ void BoidSim::SetWriteToFile(const bool writeToFile) {
 }
 
 
-void BoidSim::SimView(const int viewNum) const {
+void BoidSim::SimView(int viewNum) const {
     const auto boidPositionsX = boidPositions->GetArrayX();
     const auto boidPositionsY = boidPositions->GetArrayY();
     const auto boidPositionsZ = boidPositions->GetArrayZ();
@@ -95,6 +96,14 @@ void BoidSim::SimView(const int viewNum) const {
     const auto boidDirectionsX = boidDirections->GetArrayX();
     const auto boidDirectionsY = boidDirections->GetArrayY();
     const auto boidDirectionsZ = boidDirections->GetArrayZ();
+
+    if (viewNum >= SIZE_OF_SIMULATION) {
+        std::cout << "View number is greater than the number of boids in the simulation\n";
+        std::cout << "Defaulting to view all boids\n";
+        return;
+    }
+
+    viewNum = std::min(viewNum, SIZE_OF_SIMULATION);
 
 
     for (int i = 0; i < viewNum; ++i){
@@ -109,53 +118,54 @@ void BoidSim::SimView(const int viewNum) const {
 
 
 void BoidSim::applyCohesionForce(){
+    std::cout << "Applying Cohesion Force\n";
+    
     const auto positionsX = boidPositions->GetArrayX();
     const auto positionsY = boidPositions->GetArrayY();
     const auto positionsZ = boidPositions->GetArrayZ();
 
     // Calculate COM of the flock
 
-    std::array<double, 3> com = {0.0, 0.0, 0.0};
+    double comX = 0.0;
+    double comY = 0.0;
+    double comZ = 0.0;
+
     double totalInvMass = 0.0;
     VectorArray* comForces = new VectorArray;
 
-#pragma omp parallel private(totalInvMass, com)
-{
 
-#pragma omp for reduction(+:com, totalInvMass)
+
+#pragma omp parallel for reduction(+:comX, comY, comZ, totalInvMass)
     for (int i = 0; i < SIZE_OF_SIMULATION; ++i){
-        com[0] += (*positionsX)[i] * (*boidMasses)[i];
-        com[1] += (*positionsY)[i] * (*boidMasses)[i];
-        com[2] += (*positionsZ)[i] * (*boidMasses)[i];
+        comX += (*positionsX)[i] * (*boidMasses)[i];
+        comY += (*positionsY)[i] * (*boidMasses)[i];
+        comZ += (*positionsZ)[i] * (*boidMasses)[i];
 
         totalInvMass += (*boidMasses)[i];
     }
 
-#pragma omp barrier
-
-#pragma omp for reduction(*:com)
-    for (int i = 0; i < 3; ++i){
-        com[i] *= totalInvMass;
-    }
-
-#pragma omp barrier
+    comX *= totalInvMass;
+    comY *= totalInvMass;
+    comZ *= totalInvMass;
 
     // Now we have the COM we need to add a linear force based on the distance from the COM
 
 #pragma omp for
     for (int i = 0; i < SIZE_OF_SIMULATION; ++i){
-        auto comDirectionX = com[0] - (*positionsX)[i];
-        auto comDirectionY = com[1] - (*positionsY)[i];
-        auto comDirectionZ = com[2] - (*positionsZ)[i];
+        auto comDirectionX = comX - (*positionsX)[i];
+        auto comDirectionY = comY - (*positionsY)[i];
+        auto comDirectionZ = comZ - (*positionsZ)[i];
 
         (*comForces->GetArrayX())[i] = comDirectionX;
         (*comForces->GetArrayY())[i] = comDirectionY;
         (*comForces->GetArrayZ())[i] = comDirectionZ;
     }
-}
+
+    if (DEBUG) {
+        comForces->View(3, "COM Forces");
+    }
 
     addForce(*comForces);
-
     delete comForces;
 }
 

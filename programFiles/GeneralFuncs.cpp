@@ -24,9 +24,8 @@ double magSquared(const std::array<double, 3>& vector) {
 
 double runAndTimeSimulation(int timeSteps, bool writeToFile){
     auto start = omp_get_wtime();
-
     auto boidSim = new BoidSim();
-
+    
     if (writeToFile) {
         boidSim->SetWriteToFile(true);
     }
