@@ -41,4 +41,24 @@ double runAndTimeSimulation(int timeSteps, bool writeToFile){
     
     return end;
 }
+
+
+std::array<double, 2> minMaxOfArray(std::array<double, SIZE_OF_SIMULATION>* array){
+    double min = (*array)[0];
+    double max = (*array)[0];
+
+    for (int i = 1; i < SIZE_OF_SIMULATION; ++i){
+        auto value = (*array)[i];
+
+        if (value < min){
+            min = value;
+        }
+
+        if (value > max){
+            max = value;
+        }
+    }
+
+    return {min, max};
+}
     

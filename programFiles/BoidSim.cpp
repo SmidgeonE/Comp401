@@ -6,6 +6,7 @@
 #include "mpi.h"
 #include "BoidSim.h"
 #include <random>
+#include <bits/algorithmfwd.h>
 
 
 BoidSim::BoidSim() : boidPositions(new VectorArray),
@@ -13,10 +14,9 @@ BoidSim::BoidSim() : boidPositions(new VectorArray),
                      boidMasses(new std::array<double, SIZE_OF_SIMULATION>),
                      boidSpeeds(new std::array<double, SIZE_OF_SIMULATION>), 
                      boidForces(new VectorArray),
-                     writeToFile(false) {
-    
-    boidPositions->InitialiseVectorsToLine(10);
-    boidDirections->InitaliseVectorsToZHat();
+                     writeToFile(false){
+    boidPositions->InitialiseRandomVectors(-10.0, 10.0, false);
+    boidDirections->InitialiseRandomVectors(-1.0, 1.0, true);
     boidSpeeds->fill(0.0);
     boidMasses->fill(1.0);
 }
@@ -43,6 +43,8 @@ void BoidSim::StartSimulation(const long timeSteps) {
 
 
         resetForces();
+
+        startTime = omp_get_wtime();
 
         applySeparationForce();
         applyAlignmentForce();
@@ -167,7 +169,23 @@ void BoidSim::applyCohesionForce(){
     addForce(*comForces);
 
     delete comForces;
+
+    if (DEBUG) {
+        cohTime += omp_get_wtime() - startTime;
+        startTime = omp_get_wtime();
+    }
 }
+
+
+// void BoidSim::applySeparationForceCellList(){
+//     const auto positionsX = boidPositions->GetArrayX();
+//     const auto positionsY = boidPositions->GetArrayY();
+//     const auto positionsZ = boidPositions->GetArrayZ();
+
+//     VectorArray* repulsionForces = new VectorArray;
+
+//     constructCellList();
+// }
 
 
 void BoidSim::applySeparationForce(){
@@ -204,6 +222,11 @@ void BoidSim::applySeparationForce(){
     addForce(*repulsionForces);
 
     delete repulsionForces;
+
+    if (DEBUG){ 
+        sepTime += omp_get_wtime() - startTime;
+        startTime = omp_get_wtime();
+    }
 }
 
 
@@ -229,14 +252,15 @@ void BoidSim::applyAlignmentForce(){
     addForce(*alignmentForces);
 
     delete alignmentForces;
+
+    if (DEBUG) {
+        alignTime += omp_get_wtime() - startTime;
+        startTime = omp_get_wtime();
+    }
 }
 
 
 void BoidSim::applyTimeStep(){
-    auto xPosPtr = boidPositions->GetArrayX()->data();
-    auto yPosPtr = boidPositions->GetArrayX()->data();
-    auto zPosPtr = boidPositions->GetArrayZ()->data();
-
     auto xPositions = boidPositions->GetArrayX();
     auto yPositions = boidPositions->GetArrayY();
     auto zPositions = boidPositions->GetArrayZ();
@@ -245,14 +269,20 @@ void BoidSim::applyTimeStep(){
     auto yDirections = boidDirections->GetArrayY();
     auto zDirections = boidDirections->GetArrayZ();
 
-// #pragma omp parallel \
-         reduction(+:xPosPtr[:SIZE_OF_SIMULATION], yPosPtr[:SIZE_OF_SIMULATION], zPosPtr[:SIZE_OF_SIMULATION])
+
+#pragma omp parallel for
     for (int j = 0; j < SIZE_OF_SIMULATION; ++j) {
         // Then we must apply the physical movements from this time step
+
 
         (*xPositions)[j] += (*xDirections)[j] * (*boidSpeeds)[j];
         (*yPositions)[j] += (*yDirections)[j] * (*boidSpeeds)[j];
         (*zPositions)[j] += (*zDirections)[j] * (*boidSpeeds)[j];
+    }
+
+    if (DEBUG){
+        velTime += omp_get_wtime() - startTime;
+        startTime = omp_get_wtime();
     }
 }
 
@@ -261,7 +291,7 @@ void BoidSim::calculateBoidVelocity(){
     auto yDirections = boidDirections->GetArrayY();
     auto zDirections = boidDirections->GetArrayZ();
 
-
+#pragma omp parallel for
     for (int j = 0; j < SIZE_OF_SIMULATION; ++j) {
         // We have now calculated the total force for this time step, now we must calculate the new velocity because of that
 
@@ -294,6 +324,7 @@ void BoidSim::addForce(const VectorArray& force){
     const auto forcesY = boidForces->GetArrayY();
     const auto forcesZ = boidForces->GetArrayZ();
 
+#pragma omp parallel for
     for (int i = 0; i < SIZE_OF_SIMULATION; ++i){
         (*forcesX)[i] += (*force.GetArrayX())[i];
         (*forcesY)[i] += (*force.GetArrayY())[i];
@@ -308,12 +339,64 @@ std::array<double, 3> BoidSim::getAverageFlockDirection(){
     return normaliseVector(averageDirection);
 }
 
+// void BoidSim::constructCellList(){
+//     auto positionsX = boidPositions->GetArrayX();
+//     auto positionsY = boidPositions->GetArrayY();
+//     auto positionsZ = boidPositions->GetArrayZ();
+
+//     auto minMaxX = minMaxOfArray(positionsX);
+//     auto minMaxY = minMaxOfArray(positionsY);
+//     auto minMaxZ = minMaxOfArray(positionsZ);
+
+//     (*cellMinima)[0] = minMaxX[0];
+//     (*cellMinima)[1] = minMaxY[0];
+//     (*cellMinima)[2] = minMaxZ[0];
+
+//     (*cellMaxima)[0] = minMaxX[1];
+//     (*cellMaxima)[1] = minMaxY[1];
+//     (*cellMaxima)[2] = minMaxZ[1];
+
+// #pragma omp parallel for
+//     for (int i = 0; i < SIZE_OF_SIMULATION; ++i){
+//         auto cellX = (int) ((((*positionsX)[i] - (*cellMinima)[0]) / ((*cellMaxima)[0] - (*cellMinima)[0])) * CELL_NUMBER);
+//         auto cellY = (int) ((((*positionsY)[i] - (*cellMinima)[1]) / ((*cellMaxima)[1] - (*cellMinima)[1])) * CELL_NUMBER);
+//         auto cellZ = (int) ((((*positionsZ)[i] - (*cellMinima)[2]) / ((*cellMaxima)[2] - (*cellMinima)[2])) * CELL_NUMBER);
+
+//         (*filledCellsX)[i] = cellX;
+//         (*filledCellsY)[i] = cellY;
+//         (*filledCellsZ)[i] = cellZ;
+
+// #pragma omp critical
+//         {
+//             (*cellList)[cellX][cellY][cellZ].push_back(i);
+//         }
+//     }
+// }
+
+
+// void BoidSim::wipeCellList(){
+//     for (int i = 0; i < SIZE_OF_SIMULATION; ++i){
+//         auto cellX = ((*filledCellsX)[i]);
+//         auto cellY = ((*filledCellsY)[i]);
+//         auto cellZ = ((*filledCellsZ)[i]);
+
+//         (*cellList)[cellX][cellY][cellZ].clear();
+//     }
+// }
+
 
 BoidSim::~BoidSim() { 
     delete boidPositions; 
     delete boidDirections; 
     delete boidMasses; 
     delete boidSpeeds; 
+
+    if (DEBUG) {
+        std::cout << "Time taken for Separation Force: " << sepTime << " seconds" << std::endl;
+        std::cout << "Time taken for Alignment Force: " << alignTime << " seconds" << std::endl;
+        std::cout << "Time taken for Cohesion Force: " << cohTime << " seconds" << std::endl;
+        std::cout << "Time taken for Velocity Calculation: " << velTime << " seconds" << std::endl;
+    }
 
     if (writeToFile) {
         outputStream.close();

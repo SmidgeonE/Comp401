@@ -21,11 +21,16 @@
 #   define DEBUG false
 #endif
 
+#define CELL_NUMBER SIZE_OF_SIMULATION * SIZE_OF_SIMULATION
+
+
 constexpr double DT = 0.01f;
 
 constexpr double SEPARATION_FORCE_CONSTANT = 1;
 constexpr double ALIGNMENT_FORCE_CONSTANT = 1;
 constexpr double COHESION_FORCE_CONSTANT = 1;
+
+
 
 constexpr int NUM_SIMULATIONS = 6;
 
@@ -62,10 +67,24 @@ private:
     std::array<double, SIZE_OF_SIMULATION>* boidMasses;
     std::array<double, SIZE_OF_SIMULATION>* boidSpeeds;
 
+    std::array<std::array<std::array<std::vector<int>, CELL_NUMBER>, CELL_NUMBER>, CELL_NUMBER>* cellList;
+
+    std::array<int, SIZE_OF_SIMULATION>* filledCellsX;
+    std::array<int, SIZE_OF_SIMULATION>* filledCellsY;
+    std::array<int, SIZE_OF_SIMULATION>* filledCellsZ;
+
+    std::array<double, 3>* cellMinima;
+    std::array<double, 3>* cellMaxima;
+
     bool writeToFile;
     std::ofstream outputStream;
     void writeBoidSimulation();
 
+    double startTime;
+    double sepTime;
+    double alignTime;
+    double cohTime;
+    double velTime;
 
     std::array<double, 3> getAverageFlockDirection();
 
@@ -76,7 +95,11 @@ private:
     void applyAlignmentForce();
     void applyCohesionForce();
     void applySeparationForce();
+    void applySeparationForceCellList();
     void applyTimeStep();
+
+    void constructCellList();
+    void wipeCellList();
 
 public:
     BoidSim();
@@ -97,4 +120,6 @@ double magSquared(const std::array<double, 3>& vector);
 
 double runAndTimeSimulation(int timeSteps, bool writeToFile);
 
-#endif // BOIDSIM_H
+std::array<double, 2> minMaxOfArray(std::array<double, SIZE_OF_SIMULATION>* array);
+
+#endif
