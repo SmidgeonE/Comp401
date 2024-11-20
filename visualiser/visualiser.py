@@ -69,5 +69,5 @@ def update(frame):
 
 ani = animation.FuncAnimation(figure, update, frames=len(dfs), repeat=False, blit=True)
 
-ani.save('simulation.gif', writer='pillow', fps=10)
+ani.save('simulation.gif', writer='pillow', fps=100)
 plt.show()

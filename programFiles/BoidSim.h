@@ -23,9 +23,9 @@
 
 constexpr double DT = 0.01f;
 
-constexpr double SEPARATION_FORCE_CONSTANT = 0.00000001;
-constexpr double ALIGNMENT_FORCE_CONSTANT = 0.00000001;
-constexpr double COHESION_FORCE_CONSTANT = 0.00000001;
+constexpr double SEPARATION_FORCE_CONSTANT = 1;
+constexpr double ALIGNMENT_FORCE_CONSTANT = 1;
+constexpr double COHESION_FORCE_CONSTANT = 1;
 
 constexpr int NUM_SIMULATIONS = 6;
 

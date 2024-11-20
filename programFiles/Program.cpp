@@ -13,11 +13,13 @@ int main(int argc, char* argv[]) {
     timeTakenArray.fill(0.0);
 
     for (int i = 0; i < timeTakenArray.size(); ++i){
+        if (DEBUG && i != 1) continue;
+
         std::cout << "Num of time Steps : " << 100 * std::pow(10, i) << std::endl;
 
-        timeTakenArray[i] = runAndTimeSimulation(100 * std::pow(10, i), false);
+        timeTakenArray[i] = runAndTimeSimulation(100 * std::pow(10, i), true);
 
-        if (DEBUG) break;
+        break;
     }
 
 

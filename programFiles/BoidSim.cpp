@@ -17,7 +17,7 @@ BoidSim::BoidSim() : boidPositions(new VectorArray),
     
     boidPositions->InitialiseVectorsToLine(10);
     boidDirections->InitaliseVectorsToZHat();
-    boidSpeeds->fill(1.0);
+    boidSpeeds->fill(0.0);
     boidMasses->fill(1.0);
 }
 
@@ -44,8 +44,8 @@ void BoidSim::StartSimulation(const long timeSteps) {
 
         resetForces();
 
-        // applySeparationForce();
-        // applyAlignmentForce();
+        applySeparationForce();
+        applyAlignmentForce();
         applyCohesionForce();
 
         calculateBoidVelocity();
@@ -117,36 +117,37 @@ void BoidSim::SimView(int viewNum) const {
 }
 
 
-void BoidSim::applyCohesionForce(){
-    std::cout << "Applying Cohesion Force\n";
-    
+void BoidSim::applyCohesionForce(){    
     const auto positionsX = boidPositions->GetArrayX();
     const auto positionsY = boidPositions->GetArrayY();
     const auto positionsZ = boidPositions->GetArrayZ();
-
+    
     // Calculate COM of the flock
 
     double comX = 0.0;
     double comY = 0.0;
     double comZ = 0.0;
 
-    double totalInvMass = 0.0;
+    double totalMass = 0.0;
     VectorArray* comForces = new VectorArray;
 
 
-
-#pragma omp parallel for reduction(+:comX, comY, comZ, totalInvMass)
+#pragma omp parallel for reduction(+:comX, comY, comZ, totalMass)
     for (int i = 0; i < SIZE_OF_SIMULATION; ++i){
         comX += (*positionsX)[i] * (*boidMasses)[i];
         comY += (*positionsY)[i] * (*boidMasses)[i];
         comZ += (*positionsZ)[i] * (*boidMasses)[i];
 
-        totalInvMass += (*boidMasses)[i];
+        totalMass += (*boidMasses)[i];
     }
 
-    comX *= totalInvMass;
-    comY *= totalInvMass;
-    comZ *= totalInvMass;
+    if (DEBUG) std::cout << "Total Mass: " << totalMass << std::endl;
+
+    comX /= totalMass;
+    comY /= totalMass;
+    comZ /= totalMass;
+
+    if (DEBUG) std::cout << "COM: " << comX << ", " << comY << ", " << comZ << std::endl;
 
     // Now we have the COM we need to add a linear force based on the distance from the COM
 
@@ -156,16 +157,15 @@ void BoidSim::applyCohesionForce(){
         auto comDirectionY = comY - (*positionsY)[i];
         auto comDirectionZ = comZ - (*positionsZ)[i];
 
-        (*comForces->GetArrayX())[i] = comDirectionX;
-        (*comForces->GetArrayY())[i] = comDirectionY;
-        (*comForces->GetArrayZ())[i] = comDirectionZ;
+        (*comForces->GetArrayX())[i] = COHESION_FORCE_CONSTANT * comDirectionX;
+        (*comForces->GetArrayY())[i] = COHESION_FORCE_CONSTANT * comDirectionY;
+        (*comForces->GetArrayZ())[i] = COHESION_FORCE_CONSTANT * comDirectionZ;
     }
 
-    if (DEBUG) {
-        comForces->View(3, "COM Forces");
-    }
+    if (DEBUG) comForces->View(3, "COM Forces");
 
     addForce(*comForces);
+
     delete comForces;
 }
 
@@ -177,10 +177,8 @@ void BoidSim::applySeparationForce(){
 
     VectorArray* repulsionForces = new VectorArray;
 
-
+#pragma omp parallel for
     for (int i = 0; i < SIZE_OF_SIMULATION; ++i){
-        int numRejections = 0;
-
         for (int j = 0; j < SIZE_OF_SIMULATION; ++j){
             if (i == j) continue;
             
@@ -191,19 +189,17 @@ void BoidSim::applySeparationForce(){
             auto magnitudeFactor = std::sqrt(magSquared({separationX, separationY, separationZ}));
             magnitudeFactor *= magnitudeFactor * magnitudeFactor;
 
-            if (magnitudeFactor > 5) {
-                ++numRejections;
-                continue;
-            }
+            auto repulsionX = std::min(-SEPARATION_FORCE_CONSTANT * separationX / magnitudeFactor, 10.0);
+            auto repulsionY = std::min(-SEPARATION_FORCE_CONSTANT * separationY / magnitudeFactor, 10.0);
+            auto repulsionZ = std::min(-SEPARATION_FORCE_CONSTANT * separationZ / magnitudeFactor, 10.0);
 
-            (*repulsionForces->GetArrayX())[i] += -SEPARATION_FORCE_CONSTANT * separationX / magnitudeFactor;
-            (*repulsionForces->GetArrayY())[i] += -SEPARATION_FORCE_CONSTANT * separationY / magnitudeFactor;
-            (*repulsionForces->GetArrayZ())[i] += -SEPARATION_FORCE_CONSTANT * separationZ / magnitudeFactor;
+            (*repulsionForces->GetArrayX())[i] += repulsionX;
+            (*repulsionForces->GetArrayY())[i] += repulsionY;
+            (*repulsionForces->GetArrayZ())[i] += repulsionZ;
         }
-
-        if (numRejections == SIZE_OF_SIMULATION - 1) continue;
-
     }
+
+    if (DEBUG) repulsionForces->View(3, "Repulsion Forces");
 
     addForce(*repulsionForces);
 
@@ -217,16 +213,18 @@ void BoidSim::applyAlignmentForce(){
 
     VectorArray* alignmentForces = new VectorArray;
 
+#pragma omp parallel for 
     for (int i = 0; i < SIZE_OF_SIMULATION; ++i){
-        auto alignmentForceX = ALIGNMENT_FORCE_CONSTANT * averageDirection[0];
-        auto alignmentForceY = ALIGNMENT_FORCE_CONSTANT * averageDirection[1];
-        auto alignmentForceZ = ALIGNMENT_FORCE_CONSTANT * averageDirection[2];
-
+        auto alignmentForceX = ALIGNMENT_FORCE_CONSTANT * (averageDirection[0] - (*boidDirections->GetArrayX())[i]);
+        auto alignmentForceY = ALIGNMENT_FORCE_CONSTANT * (averageDirection[1] - (*boidDirections->GetArrayY())[i]);
+        auto alignmentForceZ = ALIGNMENT_FORCE_CONSTANT * (averageDirection[2] - (*boidDirections->GetArrayZ())[i]);
 
         (*alignmentForces->GetArrayX())[i] = alignmentForceX;
         (*alignmentForces->GetArrayY())[i] = alignmentForceY;
         (*alignmentForces->GetArrayZ())[i] = alignmentForceZ;
     }
+
+    if (DEBUG) alignmentForces->View(3, "Alignment Forces");
 
     addForce(*alignmentForces);
 
@@ -235,6 +233,10 @@ void BoidSim::applyAlignmentForce(){
 
 
 void BoidSim::applyTimeStep(){
+    auto xPosPtr = boidPositions->GetArrayX()->data();
+    auto yPosPtr = boidPositions->GetArrayX()->data();
+    auto zPosPtr = boidPositions->GetArrayZ()->data();
+
     auto xPositions = boidPositions->GetArrayX();
     auto yPositions = boidPositions->GetArrayY();
     auto zPositions = boidPositions->GetArrayZ();
@@ -243,6 +245,8 @@ void BoidSim::applyTimeStep(){
     auto yDirections = boidDirections->GetArrayY();
     auto zDirections = boidDirections->GetArrayZ();
 
+// #pragma omp parallel \
+         reduction(+:xPosPtr[:SIZE_OF_SIMULATION], yPosPtr[:SIZE_OF_SIMULATION], zPosPtr[:SIZE_OF_SIMULATION])
     for (int j = 0; j < SIZE_OF_SIMULATION; ++j) {
         // Then we must apply the physical movements from this time step
 

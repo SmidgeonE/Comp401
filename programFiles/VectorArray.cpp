@@ -2,7 +2,11 @@
 
 VectorArray::VectorArray() : arrayX(new std::array<double, SIZE_OF_SIMULATION>),
                              arrayY(new std::array<double, SIZE_OF_SIMULATION>),
-                             arrayZ(new std::array<double, SIZE_OF_SIMULATION>) {}
+                             arrayZ(new std::array<double, SIZE_OF_SIMULATION>) {
+    arrayX->fill(0.0);
+    arrayY->fill(0.0);
+    arrayZ->fill(0.0);
+                             }
                             
 
 VectorArray::~VectorArray() { delete arrayX; delete arrayY; delete arrayZ; }
