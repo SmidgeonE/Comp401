@@ -5,6 +5,7 @@ void initialiseRandomScalars(std::array<double, SIZE_OF_SIMULATION>* scalarArray
     std::mt19937 gen(rd());
     std::uniform_real_distribution<> dis(lowerBound, upperBound);
 
+#pragma omp parallel for
     for (int i = 0; i < SIZE_OF_SIMULATION; ++i) {
         (*scalarArray)[i] = dis(gen);
     }
@@ -36,7 +37,7 @@ double runAndTimeSimulation(int timeSteps, bool writeToFile){
 
     auto end = omp_get_wtime() - start;
 
-    std::cout << "Time taken for time steps: " << timeSteps << " is " << end << " seconds" << std::endl;
+    std::cout << "---Time taken for time steps is: " << end << " seconds" << std::endl;
     
     return end;
 }

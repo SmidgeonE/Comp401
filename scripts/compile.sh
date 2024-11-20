@@ -5,56 +5,65 @@
 # fi
 
 if [[ "$1" == "-h" || "$1" == "--h" || "$1" == "--help" ]]; then
-    echo "Usage: $0 -1 -> This compiles 6 executables, with each having a different SIZE_OF_SIMULATION"
-    echo "Usage: $0 <simSize> -> This compiles the executable with SIZE_OF_SIMULATION=num"
-    echo "Usage: $0 <simSize> <numThreads> -> This compiles multithreaded"
+    echo "Usage: $0 -> This compiles 6 executables, with each having a different SIZE_OF_SIMULATION. Uses the most number of threads available."
+    echo "Usage: $0 -t <numThreads> -> This compiles multithreaded with a given number of threads"
+    echo "Usage: $0 -n <numBoids> -> This compiles with a given number of boids (SIZE_OF_SIMULATION)"
     echo "Usage: $0 -d -> This sets it up in debug mode"
     exit
 fi
 
-debug=false
+customFlags=""
+customBoidNum=false
 
-for arg in "$@"; do
-    if [[ "$arg" == "-d" ]]; then
-        debug=true
-        break
-    fi
+while [[ "$#" -gt 0 ]]; do
+    case $1 in
+        -t)
+            if [[ "$2" =~ ^[0-9]+$ ]]; then
+                echo "changing num of threads"
+                customFlags+=" -DNUM_THREADS=$2"
+                shift
+            else
+                echo "Error: -t flag requires a numeric argument."
+                exit 1
+            fi
+            ;;
+        -n)
+            if [[ "$2" =~ ^[0-9]+$ ]]; then
+                echo "changing num of obids"
+                customFlags+=" -DSIZE_OF_SIMULATION=$2"
+                customBoidNum=true
+                numBoids=$2
+                shift
+            else
+                echo "Error: -n flag requires a numeric argument."
+                exit 1
+            fi
+            ;;
+        -d)
+            customFlags+=" -DDEBUG=true"
+            ;;
+    esac
+    shift
 done
 
-numThreads=1
+echo "compiling with MPI to target file(s)"
 
-if [[ "$2" =~ ^[0-9]+$ ]]; then
-    numThreads=$2
-fi
+echo "custom flags:" $customFlags
 
+if [[ $customBoidNum == true ]]; then
+    echo "setting num boids to " $numBoids
 
-if [[ "$1" == "-1" ]]; then
-    echo "compiling with MPI to target file"
-    echo "setting debug to" $debug
-    echo "setting num threads to " $numThreads
+    mpiicpx $customFlags -O3 -qopenmp -lgsl -lgslcblas -xHost ./programFiles/*.cpp -o $numBoids.exe
+else
+    echo "setting up 6 executables with different SIZE_OF_SIMULATION"
 
     numbers=(5 20 50 100 200 500)
 
     for number in "${numbers[@]}"; do
-        mpiicpx -DSIZE_OF_SIMULATION=$number -O3 -qopenmp -lgsl -lgslcblas -xHost ./programFiles/*.cpp -o $number.exe
+        mpiicpx -DSIZE_OF_SIMULATION=$number $customFlags -O3 -qopenmp -lgsl -lgslcblas -xHost ./programFiles/*.cpp -o $number.exe
 
         echo finished compiling to $(pwd)/$number.exe
     done
 
-
-    exit
-
-
-elif [[ "$1" =~ ^[0-9]+$ ]]; then
-    echo "setting debug to" $debug
-    echo "setting num threads to" $numThreads
-
-    mpiicpx -DSIZE_OF_SIMULATION=$1 -DDEBUG=$debug -DNUM_THREADS=$numThreads -O3 -qopenmp -lgsl -lgslcblas -xHost ./programFiles/*.cpp -o $1.exe
-    echo finished compiling to $(pwd)/$1.exe
     exit
 fi
-
-
-# echo compiling target file $1
-# icpx -O3 -lgsl -lgslcblas -qopenmp -xHost $1 -o output.exe 
-# echo finished compiling to output.exe

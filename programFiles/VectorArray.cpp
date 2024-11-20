@@ -17,6 +17,7 @@ std::array<double, 3> VectorArray::GetVectorAverage() {
     double averageY = 0;
     double averageZ = 0;
 
+#pragma omp parallel reduction(+: averageX, averageY, averageZ) 
     for (int i = 0; i < SIZE_OF_SIMULATION; ++i){
         averageX += (*arrayX)[i];
         averageY += (*arrayY)[i];
@@ -64,8 +65,8 @@ void VectorArray::InitialiseVectorsToLine(const int gridSize) {
 
     for (int i = 0; i < SIZE_OF_SIMULATION; ++i) {
         GetArrayX()->at(i) = i * spacing;
-        GetArrayY()->at(i) = i;
-        GetArrayZ()->at(i) = i;
+        GetArrayY()->at(i) = i * spacing;
+        GetArrayZ()->at(i) = i * spacing;
     }
 }
 

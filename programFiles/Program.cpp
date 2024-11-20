@@ -17,9 +17,7 @@ int main(int argc, char* argv[]) {
 
         std::cout << "Num of time Steps : " << 100 * std::pow(10, i) << std::endl;
 
-        timeTakenArray[i] = runAndTimeSimulation(100 * std::pow(10, i), true);
-
-        break;
+        timeTakenArray[i] = runAndTimeSimulation(100 * std::pow(10, i), false);
     }
 
 
