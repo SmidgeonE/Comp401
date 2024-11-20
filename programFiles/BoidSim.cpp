@@ -9,34 +9,32 @@
 #include <bits/algorithmfwd.h>
 
 
-BoidSim::BoidSim() : boidPositions(new VectorArray),
-                     boidDirections(new VectorArray),
-                     boidMasses(new std::array<double, SIZE_OF_SIMULATION>),
-                     boidSpeeds(new std::array<double, SIZE_OF_SIMULATION>), 
-                     boidForces(new VectorArray),
-                     writeToFile(false){
+BoidSim::BoidSim(){
+    boidPositions = new VectorArray;
+    boidDirections = new VectorArray;
+    boidForces = new VectorArray;
+
     boidPositions->InitialiseRandomVectors(-10.0, 10.0, false);
     boidDirections->InitialiseRandomVectors(-1.0, 1.0, true);
-    boidSpeeds->fill(0.0);
-    boidMasses->fill(1.0);
+
+    boidSpeeds.fill(0.0);
+    boidMasses.fill(1.0);
 }
 
 
 void BoidSim::StartSimulation(const long timeSteps) {
     if (writeToFile) {
-        // We need to write the initial state of the simulation
-
         writeBoidSimulation();
     }
 
 
-    for (double i = 0.0; i < timeSteps * DT; i += DT) {
-        if (DEBUG && i < 2 * (DT + std::numeric_limits<double>::epsilon())) {
+    for (int i = 0; i < DT; ++i) {
+        if (DEBUG && i < 2 * DT) {
             std::cout << "\n\nNext Time Step: \n\n";
             SimView(3);
         }
 
-        if (DEBUG && i > 2 * (DT + std::numeric_limits<double>::epsilon())) {
+        if (DEBUG && i > 2 * DT) {
             std::cout << "Debug has finished: 3 time steps have occured." << std::endl;
             return;
         }
@@ -44,7 +42,7 @@ void BoidSim::StartSimulation(const long timeSteps) {
 
         resetForces();
 
-        startTime = omp_get_wtime();
+        if (DEBUG) startTime = omp_get_wtime();
 
         applySeparationForce();
         applyAlignmentForce();
@@ -65,14 +63,14 @@ void BoidSim::writeBoidSimulation() {
     std::string outputStr = "";
 
     for (int i = 0; i < SIZE_OF_SIMULATION; ++i) {
-        outputStr += "[" + std::to_string((*boidPositions->GetArrayX())[i]) + "," 
-            + std::to_string((*boidPositions->GetArrayY())[i]) + "," 
-            + std::to_string((*boidPositions->GetArrayZ())[i]) + ","
-            + std::to_string((*boidDirections->GetArrayX())[i]) + ","
-            + std::to_string((*boidDirections->GetArrayY())[i]) + ","
-            + std::to_string((*boidDirections->GetArrayZ())[i]) + ","
-            + std::to_string((*boidSpeeds)[i]) + ","
-            + std::to_string((*boidMasses)[i]) + "],";
+        outputStr += "[" + std::to_string(boidPositions->GetArrayX()[i]) + "," 
+            + std::to_string(boidPositions->GetArrayY()[i]) + "," 
+            + std::to_string(boidPositions->GetArrayZ()[i]) + ","
+            + std::to_string(boidDirections->GetArrayX()[i]) + ","
+            + std::to_string(boidDirections->GetArrayY()[i]) + ","
+            + std::to_string(boidDirections->GetArrayZ()[i]) + ","
+            + std::to_string(boidSpeeds[i]) + ","
+            + std::to_string(boidMasses[i]) + "],";
     }
 
     outputStream << outputStr << "\n";
@@ -91,13 +89,13 @@ void BoidSim::SetWriteToFile(const bool writeToFile) {
 
 
 void BoidSim::SimView(int viewNum) const {
-    const auto boidPositionsX = boidPositions->GetArrayX();
-    const auto boidPositionsY = boidPositions->GetArrayY();
-    const auto boidPositionsZ = boidPositions->GetArrayZ();
+    auto boidPositionsX = boidPositions->GetArrayX();
+    auto boidPositionsY = boidPositions->GetArrayY();
+    auto boidPositionsZ = boidPositions->GetArrayZ();
 
-    const auto boidDirectionsX = boidDirections->GetArrayX();
-    const auto boidDirectionsY = boidDirections->GetArrayY();
-    const auto boidDirectionsZ = boidDirections->GetArrayZ();
+    auto boidDirectionsX = boidDirections->GetArrayX();
+    auto boidDirectionsY = boidDirections->GetArrayY();
+    auto boidDirectionsZ = boidDirections->GetArrayZ();
 
     if (viewNum >= SIZE_OF_SIMULATION) {
         std::cout << "View number is greater than the number of boids in the simulation\n";
@@ -110,11 +108,11 @@ void BoidSim::SimView(int viewNum) const {
 
     for (int i = 0; i < viewNum; ++i){
         std::cout << i << "th Boid:" 
-        << "\n   -- position: " << (*boidPositionsX)[i] << ", " << (*boidPositionsY)[i] << ", " << (*boidPositionsZ)[i]
-        << "\n   -- direction: " << (*boidDirectionsX)[i] << ", " << (*boidDirectionsY)[i] << ", " << (*boidDirectionsZ)[i]
-        << "\n   -- direction magnitude: " << std::sqrt((*boidDirectionsX)[i]*(*boidDirectionsX)[i] + (*boidDirectionsY)[i]*(*boidDirectionsY)[i] + (*boidDirectionsZ)[i]*(*boidDirectionsZ)[i])
-        << "\n   -- speed: " << (*this->boidSpeeds)[i]
-        << "\n   -- mass: " << (*this->boidMasses)[i] << "\n";
+        << "\n   -- position: " << boidPositionsX[i] << ", " << boidPositionsY[i] << ", " << boidPositionsZ[i]
+        << "\n   -- direction: " << boidDirectionsX[i] << ", " << boidDirectionsY[i] << ", " << boidDirectionsZ[i]
+        << "\n   -- direction magnitude: " << std::sqrt(boidDirectionsX[i]*boidDirectionsX[i] + boidDirectionsY[i]*boidDirectionsY[i] + boidDirectionsZ[i]*boidDirectionsZ[i])
+        << "\n   -- speed: " << this->boidSpeeds[i]
+        << "\n   -- mass: " << this->boidMasses[i] << "\n";
     }
 }
 
@@ -136,11 +134,11 @@ void BoidSim::applyCohesionForce(){
 
 #pragma omp parallel for reduction(+:comX, comY, comZ, totalMass)
     for (int i = 0; i < SIZE_OF_SIMULATION; ++i){
-        comX += (*positionsX)[i] * (*boidMasses)[i];
-        comY += (*positionsY)[i] * (*boidMasses)[i];
-        comZ += (*positionsZ)[i] * (*boidMasses)[i];
+        comX += positionsX[i] * boidMasses[i];
+        comY += positionsY[i] * boidMasses[i];
+        comZ += positionsZ[i] * boidMasses[i];
 
-        totalMass += (*boidMasses)[i];
+        totalMass += boidMasses[i];
     }
 
     if (DEBUG) std::cout << "Total Mass: " << totalMass << std::endl;
@@ -155,13 +153,13 @@ void BoidSim::applyCohesionForce(){
 
 #pragma omp for
     for (int i = 0; i < SIZE_OF_SIMULATION; ++i){
-        auto comDirectionX = comX - (*positionsX)[i];
-        auto comDirectionY = comY - (*positionsY)[i];
-        auto comDirectionZ = comZ - (*positionsZ)[i];
+        auto comDirectionX = comX - positionsX[i];
+        auto comDirectionY = comY - positionsY[i];
+        auto comDirectionZ = comZ - positionsZ[i];
 
-        (*comForces->GetArrayX())[i] = COHESION_FORCE_CONSTANT * comDirectionX;
-        (*comForces->GetArrayY())[i] = COHESION_FORCE_CONSTANT * comDirectionY;
-        (*comForces->GetArrayZ())[i] = COHESION_FORCE_CONSTANT * comDirectionZ;
+        comForces->GetArrayX()[i] = COHESION_FORCE_CONSTANT * comDirectionX;
+        comForces->GetArrayY()[i] = COHESION_FORCE_CONSTANT * comDirectionY;
+        comForces->GetArrayZ()[i] = COHESION_FORCE_CONSTANT * comDirectionZ;
     }
 
     if (DEBUG) comForces->View(3, "COM Forces");
@@ -200,9 +198,9 @@ void BoidSim::applySeparationForce(){
         for (int j = 0; j < SIZE_OF_SIMULATION; ++j){
             if (i == j) continue;
             
-            auto separationX = (*positionsX)[j] - (*positionsX)[i];
-            auto separationY = (*positionsY)[j] - (*positionsY)[i];
-            auto separationZ = (*positionsZ)[j] - (*positionsZ)[i];
+            auto separationX = positionsX[j] - positionsX[i];
+            auto separationY = positionsY[j] - positionsY[i];
+            auto separationZ = positionsZ[j] - positionsZ[i];
         
             auto magnitudeFactor = std::sqrt(magSquared({separationX, separationY, separationZ}));
             magnitudeFactor *= magnitudeFactor * magnitudeFactor;
@@ -211,9 +209,9 @@ void BoidSim::applySeparationForce(){
             auto repulsionY = std::min(-SEPARATION_FORCE_CONSTANT * separationY / magnitudeFactor, 10.0);
             auto repulsionZ = std::min(-SEPARATION_FORCE_CONSTANT * separationZ / magnitudeFactor, 10.0);
 
-            (*repulsionForces->GetArrayX())[i] += repulsionX;
-            (*repulsionForces->GetArrayY())[i] += repulsionY;
-            (*repulsionForces->GetArrayZ())[i] += repulsionZ;
+            repulsionForces->GetArrayX()[i] += repulsionX;
+            repulsionForces->GetArrayY()[i] += repulsionY;
+            repulsionForces->GetArrayZ()[i] += repulsionZ;
         }
     }
 
@@ -238,13 +236,13 @@ void BoidSim::applyAlignmentForce(){
 
 #pragma omp parallel for 
     for (int i = 0; i < SIZE_OF_SIMULATION; ++i){
-        auto alignmentForceX = ALIGNMENT_FORCE_CONSTANT * (averageDirection[0] - (*boidDirections->GetArrayX())[i]);
-        auto alignmentForceY = ALIGNMENT_FORCE_CONSTANT * (averageDirection[1] - (*boidDirections->GetArrayY())[i]);
-        auto alignmentForceZ = ALIGNMENT_FORCE_CONSTANT * (averageDirection[2] - (*boidDirections->GetArrayZ())[i]);
+        auto alignmentForceX = ALIGNMENT_FORCE_CONSTANT * (averageDirection[0] - boidDirections->GetArrayX()[i]);
+        auto alignmentForceY = ALIGNMENT_FORCE_CONSTANT * (averageDirection[1] - boidDirections->GetArrayY()[i]);
+        auto alignmentForceZ = ALIGNMENT_FORCE_CONSTANT * (averageDirection[2] - boidDirections->GetArrayZ()[i]);
 
-        (*alignmentForces->GetArrayX())[i] = alignmentForceX;
-        (*alignmentForces->GetArrayY())[i] = alignmentForceY;
-        (*alignmentForces->GetArrayZ())[i] = alignmentForceZ;
+        alignmentForces->GetArrayX()[i] = alignmentForceX;
+        alignmentForces->GetArrayY()[i] = alignmentForceY;
+        alignmentForces->GetArrayZ()[i] = alignmentForceZ;
     }
 
     if (DEBUG) alignmentForces->View(3, "Alignment Forces");
@@ -275,9 +273,9 @@ void BoidSim::applyTimeStep(){
         // Then we must apply the physical movements from this time step
 
 
-        (*xPositions)[j] += (*xDirections)[j] * (*boidSpeeds)[j];
-        (*yPositions)[j] += (*yDirections)[j] * (*boidSpeeds)[j];
-        (*zPositions)[j] += (*zDirections)[j] * (*boidSpeeds)[j];
+        xPositions[j] += xDirections[j] * boidSpeeds[j];
+        yPositions[j] += yDirections[j] * boidSpeeds[j];
+        zPositions[j] += zDirections[j] * boidSpeeds[j];
     }
 
     if (DEBUG){
@@ -295,40 +293,45 @@ void BoidSim::calculateBoidVelocity(){
     for (int j = 0; j < SIZE_OF_SIMULATION; ++j) {
         // We have now calculated the total force for this time step, now we must calculate the new velocity because of that
 
-        auto newVelocityX = (*xDirections)[j] * (*boidMasses)[j] + (*boidForces->GetArrayX())[j] * DT / (*boidMasses)[j];
-        auto newVelocityY = (*yDirections)[j] * (*boidMasses)[j] + (*boidForces->GetArrayY())[j] * DT / (*boidMasses)[j];
-        auto newVelocityZ = (*zDirections)[j] * (*boidMasses)[j] + (*boidForces->GetArrayZ())[j] * DT / (*boidMasses)[j];
+        auto newVelocityX = xDirections[j] * boidMasses[j] + boidForces->GetArrayX()[j] * DT / boidMasses[j];
+        auto newVelocityY = yDirections[j] * boidMasses[j] + boidForces->GetArrayY()[j] * DT / boidMasses[j];
+        auto newVelocityZ = zDirections[j] * boidMasses[j] + boidForces->GetArrayZ()[j] * DT / boidMasses[j];
 
         auto velocity = std::array<double, 3> {newVelocityX, newVelocityY, newVelocityZ};
         
-        (*boidSpeeds)[j] = std::sqrt(magSquared(velocity));
+        boidSpeeds[j] = std::sqrt(magSquared(velocity));
         
         auto velocityNormalised = normaliseVector(velocity);
 
-        (*xDirections)[j] = velocityNormalised[0];
-        (*yDirections)[j] = velocityNormalised[1];
-        (*zDirections)[j] = velocityNormalised[2];
+        xDirections[j] = velocityNormalised[0];
+        yDirections[j] = velocityNormalised[1];
+        zDirections[j] = velocityNormalised[2];
     }
 }
 
 
 void BoidSim::resetForces(){
-    boidForces->GetArrayX()->fill(0.0);
-    boidForces->GetArrayY()->fill(0.0);
-    boidForces->GetArrayZ()->fill(0.0);
+    std::cout << "Resetting Forces" << std::endl;
+    auto arrayX = boidForces->GetArrayX();
+    std::cout << "Array: " << arrayX[0] << std::endl;
+    boidForces->GetArrayX().fill(0.0);
+
+    std::cout << "X Forces reset" << std::endl;
+    boidForces->GetArrayY().fill(0.0);
+    boidForces->GetArrayZ().fill(0.0);
 }
 
 
-void BoidSim::addForce(const VectorArray& force){
-    const auto forcesX = boidForces->GetArrayX();
-    const auto forcesY = boidForces->GetArrayY();
-    const auto forcesZ = boidForces->GetArrayZ();
+void BoidSim::addForce(VectorArray& force){
+    auto forcesX = boidForces->GetArrayX();
+    auto forcesY = boidForces->GetArrayY();
+    auto forcesZ = boidForces->GetArrayZ();
 
 #pragma omp parallel for
     for (int i = 0; i < SIZE_OF_SIMULATION; ++i){
-        (*forcesX)[i] += (*force.GetArrayX())[i];
-        (*forcesY)[i] += (*force.GetArrayY())[i];
-        (*forcesZ)[i] += (*force.GetArrayZ())[i];
+        forcesX[i] += force.GetArrayX()[i];
+        forcesY[i] += force.GetArrayY()[i];
+        forcesZ[i] += force.GetArrayZ()[i];
     }
 }
 
@@ -388,8 +391,7 @@ std::array<double, 3> BoidSim::getAverageFlockDirection(){
 BoidSim::~BoidSim() { 
     delete boidPositions; 
     delete boidDirections; 
-    delete boidMasses; 
-    delete boidSpeeds; 
+    delete boidForces;
 
     if (DEBUG) {
         std::cout << "Time taken for Separation Force: " << sepTime << " seconds" << std::endl;

@@ -36,17 +36,16 @@ constexpr int NUM_SIMULATIONS = 6;
 
 class VectorArray {
 private:
-    std::array<double, SIZE_OF_SIMULATION>* arrayX;
-    std::array<double, SIZE_OF_SIMULATION>* arrayY;
-    std::array<double, SIZE_OF_SIMULATION>* arrayZ;
+    std::array<double, SIZE_OF_SIMULATION> arrayX;
+    std::array<double, SIZE_OF_SIMULATION> arrayY;
+    std::array<double, SIZE_OF_SIMULATION> arrayZ;
 
 public:
     VectorArray();
-    ~VectorArray();
 
-    std::array<double, SIZE_OF_SIMULATION>* GetArrayX() const { return arrayX; };
-    std::array<double, SIZE_OF_SIMULATION>* GetArrayY() const { return arrayY; };
-    std::array<double, SIZE_OF_SIMULATION>* GetArrayZ() const { return arrayZ; };
+    std::array<double, SIZE_OF_SIMULATION>& GetArrayX() { return arrayX; };
+    std::array<double, SIZE_OF_SIMULATION>& GetArrayY() { return arrayY; };
+    std::array<double, SIZE_OF_SIMULATION>& GetArrayZ() { return arrayZ; };
 
     std::array<double, 3> GetVectorAverage();
 
@@ -64,17 +63,17 @@ private:
     VectorArray* boidDirections;
     VectorArray* boidForces;
 
-    std::array<double, SIZE_OF_SIMULATION>* boidMasses;
-    std::array<double, SIZE_OF_SIMULATION>* boidSpeeds;
+    std::array<double, SIZE_OF_SIMULATION> boidMasses;
+    std::array<double, SIZE_OF_SIMULATION> boidSpeeds;
 
-    std::array<std::array<std::array<std::vector<int>, CELL_NUMBER>, CELL_NUMBER>, CELL_NUMBER>* cellList;
+    std::array<std::array<std::array<std::vector<int>, CELL_NUMBER>, CELL_NUMBER>, CELL_NUMBER> cellList;
 
-    std::array<int, SIZE_OF_SIMULATION>* filledCellsX;
-    std::array<int, SIZE_OF_SIMULATION>* filledCellsY;
-    std::array<int, SIZE_OF_SIMULATION>* filledCellsZ;
+    std::array<int, SIZE_OF_SIMULATION> filledCellsX;
+    std::array<int, SIZE_OF_SIMULATION> filledCellsY;
+    std::array<int, SIZE_OF_SIMULATION> filledCellsZ;
 
-    std::array<double, 3>* cellMinima;
-    std::array<double, 3>* cellMaxima;
+    std::array<double, 3> cellMinima;
+    std::array<double, 3> cellMaxima;
 
     bool writeToFile;
     std::ofstream outputStream;
@@ -90,7 +89,7 @@ private:
 
     void calculateBoidVelocity();
     void resetForces();
-    void addForce(const VectorArray& force);
+    void addForce(VectorArray& force);
     
     void applyAlignmentForce();
     void applyCohesionForce();
@@ -112,7 +111,7 @@ public:
 
 
 
-void initialiseRandomScalars(std::array<double, SIZE_OF_SIMULATION>* scalarArray, double lowerBound, double upperBound);
+void initialiseRandomScalars(std::array<double, SIZE_OF_SIMULATION>& scalarArray, double lowerBound, double upperBound);
 
 std::array<double, 3> normaliseVector(const std::array<double, 3>& vector);
 
@@ -120,6 +119,6 @@ double magSquared(const std::array<double, 3>& vector);
 
 double runAndTimeSimulation(int timeSteps, bool writeToFile);
 
-std::array<double, 2> minMaxOfArray(std::array<double, SIZE_OF_SIMULATION>* array);
+std::array<double, 2> minMaxOfArray(std::array<double, SIZE_OF_SIMULATION>& array);
 
 #endif

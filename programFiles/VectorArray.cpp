@@ -1,16 +1,13 @@
 #include "BoidSim.h"
 
-VectorArray::VectorArray() : arrayX(new std::array<double, SIZE_OF_SIMULATION>),
-                             arrayY(new std::array<double, SIZE_OF_SIMULATION>),
-                             arrayZ(new std::array<double, SIZE_OF_SIMULATION>) {
-    arrayX->fill(0.0);
-    arrayY->fill(0.0);
-    arrayZ->fill(0.0);
-                             }
+VectorArray::VectorArray() {
+    std::cout << "Initialising Vector Array" << std::endl;
+    arrayX.fill(0.0);
+    arrayY.fill(0.0);
+    arrayZ.fill(0.0);
+    std::cout << "Vector Array Initialised" << std::endl;
+}
                             
-
-VectorArray::~VectorArray() { delete arrayX; delete arrayY; delete arrayZ; }
-
 
 std::array<double, 3> VectorArray::GetVectorAverage() {
     double averageX = 0;
@@ -19,9 +16,9 @@ std::array<double, 3> VectorArray::GetVectorAverage() {
 
 #pragma omp parallel reduction(+: averageX, averageY, averageZ) 
     for (int i = 0; i < SIZE_OF_SIMULATION; ++i){
-        averageX += (*arrayX)[i];
-        averageY += (*arrayY)[i];
-        averageZ += (*arrayZ)[i];
+        averageX += arrayX[i];
+        averageY += arrayY[i];
+        averageZ += arrayZ[i];
     }
 
     averageX /= SIZE_OF_SIMULATION;
@@ -51,9 +48,9 @@ void VectorArray::InitialiseRandomVectors(const double lowerBound, const double 
         }
 
 
-        GetArrayX()->at(i) = vector[0];
-        GetArrayY()->at(i) = vector[1];
-        GetArrayZ()->at(i) = vector[2];
+        GetArrayX().at(i) = vector[0];
+        GetArrayY().at(i) = vector[1];
+        GetArrayZ().at(i) = vector[2];
     }
 }
 
@@ -64,18 +61,18 @@ void VectorArray::InitialiseVectorsToLine(const int gridSize) {
     auto spacing = gridSize / SIZE_OF_SIMULATION;
 
     for (int i = 0; i < SIZE_OF_SIMULATION; ++i) {
-        GetArrayX()->at(i) = i * spacing;
-        GetArrayY()->at(i) = i * spacing;
-        GetArrayZ()->at(i) = i * spacing;
+        GetArrayX().at(i) = i * spacing;
+        GetArrayY().at(i) = i * spacing;
+        GetArrayZ().at(i) = i * spacing;
     }
 }
 
 
 void VectorArray::InitaliseVectorsToZHat() {
     for (int i = 0; i < SIZE_OF_SIMULATION; ++i) {
-        GetArrayX()->at(i) = 0;
-        GetArrayY()->at(i) = 0;
-        GetArrayZ()->at(i) = 1;
+        GetArrayX().at(i) = 0;
+        GetArrayY().at(i) = 0;
+        GetArrayZ().at(i) = 1;
     }
 }
 
@@ -86,7 +83,7 @@ void VectorArray::View(const int viewNum, const std::string& name) {
     auto maxViewNum = std::min(viewNum, SIZE_OF_SIMULATION);
 
     for (int i = 0; i < maxViewNum; ++i) {
-        std::cout << "Vector " << i << ": " << (*GetArrayX())[i] << ", " << (*GetArrayY())[i] << ", " << (*GetArrayZ())[i] << std::endl;
+        std::cout << "Vector " << i << ": " << GetArrayX()[i] << ", " << GetArrayY()[i] << ", " << GetArrayZ()[i] << std::endl;
     }
 
     std::cout << std::endl;
