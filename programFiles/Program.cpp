@@ -3,6 +3,19 @@
 
 int main(int argc, char* argv[]) {
     int numThreads = NUM_THREADS == -1 ? omp_get_max_threads() : NUM_THREADS;
+
+    int numProcesses, rank, nameLen;
+    char processor_name[MPI_MAX_PROCESSOR_NAME];
+
+    MPI_Init(&argc, &argv);
+    MPI_Comm_size(MPI_COMM_WORLD, &numProcesses);
+    MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+    MPI_Get_processor_name(processor_name, &nameLen);
+
+    const std::string outputString = "Hello from process " + std::to_string(rank) + " out of " +
+    std::to_string(numProcesses) + " process on node " + processor_name + "\n";
+    std::cout << outputString;
+
     
 
     omp_set_num_threads(numThreads);
@@ -41,6 +54,9 @@ int main(int argc, char* argv[]) {
     }
     
     std::cout << "]" << std::endl;
+
+    
+    MPI_Finalize();
 
    return 0;
 }
