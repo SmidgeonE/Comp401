@@ -154,7 +154,7 @@ void BoidSim::applyCohesionForce(){
     auto comForces = new VectorArray();
 
 
-// #pragma omp parallel for reduction(+:comX, comY, comZ, totalMass)
+#pragma omp parallel for reduction(+:comX, comY, comZ, totalMass)
     for (int i = 0; i < SIZE_OF_SIMULATION; ++i){
         comX += positionsX[i] * boidMasses[i];
         comY += positionsY[i] * boidMasses[i];
@@ -173,7 +173,7 @@ void BoidSim::applyCohesionForce(){
 
     // Now we have the COM we need to add a linear force based on the distance from the COM
 
-// #pragma omp for
+#pragma omp for
     for (int i = 0; i < SIZE_OF_SIMULATION; ++i){
         auto comDirectionX = comX - positionsX[i];
         auto comDirectionY = comY - positionsY[i];
@@ -206,7 +206,7 @@ void BoidSim::applySeparationForceCellList(){
  
     constructCellList();
 
-// #pragma omp parallel for
+#pragma omp parallel for
     for (int i = 0; i < SIZE_OF_SIMULATION; ++i){
         auto adjacentBoids = getAdjacentBoids(i);
 
@@ -250,7 +250,7 @@ void BoidSim::applySeparationForce(){
 
     auto repulsionForces = new VectorArray();
 
-// #pragma omp parallel for
+#pragma omp parallel for
     for (int i = 0; i < SIZE_OF_SIMULATION; ++i){
         for (int j = 0; j < SIZE_OF_SIMULATION; ++j){
             if (i == j) continue;
@@ -291,7 +291,7 @@ void BoidSim::applyAlignmentForce(){
 
     auto alignmentForces = new VectorArray();
 
-// #pragma omp parallel for 
+#pragma omp parallel for 
     for (int i = 0; i < SIZE_OF_SIMULATION; ++i){
         auto alignmentForceX = ALIGNMENT_FORCE_CONSTANT * (averageDirection[0] - boidDirections->GetArrayX()[i]);
         auto alignmentForceY = ALIGNMENT_FORCE_CONSTANT * (averageDirection[1] - boidDirections->GetArrayY()[i]);
@@ -323,7 +323,7 @@ void BoidSim::applyTimeStep(){
     auto& zDirections = boidDirections->GetArrayZ();
 
 
-// #pragma omp parallel for
+#pragma omp parallel for
     for (int j = 0; j < SIZE_OF_SIMULATION; ++j) {
         // Then we must apply the physical movements from this time step
 
@@ -344,7 +344,7 @@ void BoidSim::calculateBoidVelocity(){
     auto& yDirections = boidDirections->GetArrayY();
     auto& zDirections = boidDirections->GetArrayZ();
 
-// #pragma omp parallel for
+#pragma omp parallel for
     for (int j = 0; j < SIZE_OF_SIMULATION; ++j) {
         // We have now calculated the total force for this time step, now we must calculate the new velocity because of that
 
@@ -383,7 +383,7 @@ void BoidSim::addForce(VectorArray& force){
     auto& forcesY = boidForces->GetArrayY();
     auto& forcesZ = boidForces->GetArrayZ();
 
-// #pragma omp parallel for
+#pragma omp parallel for
     for (int i = 0; i < SIZE_OF_SIMULATION; ++i){
         // std::cout << "adding force: " << force.GetArrayX()[i] << ", " << force.GetArrayY()[i] << ", " << force.GetArrayZ()[i] << std::endl;
         forcesX[i] += force.GetArrayX()[i];
@@ -419,7 +419,7 @@ void BoidSim::constructCellList(){
     cellMaxima[1] = minMaxY[1];
     cellMaxima[2] = minMaxZ[1];
 
-// #pragma omp parallel for
+#pragma omp parallel for
     for (int i = 0; i < SIZE_OF_SIMULATION; ++i){
         auto boidCell = getBoidCell(i);
 

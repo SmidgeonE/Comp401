@@ -9,6 +9,16 @@ int main(int argc, char* argv[]) {
     std::cout << "Number of threads to use : " << numThreads << std::endl;
     std::cout << "Number of boids supplied : " << SIZE_OF_SIMULATION << std::endl;
 
+
+    if (!DO_MULTIPLE_SIMS){
+        std::cout << "Only doing one timeSteps = 1000" << std::endl;
+
+        runAndTimeSimulation(1000, WRITE_SIM);
+
+        return 0;
+    }
+
+    
     std::array<double, NUM_SIMULATIONS> timeTakenArray;
     timeTakenArray.fill(0.0);
 
@@ -17,7 +27,9 @@ int main(int argc, char* argv[]) {
 
         std::cout << "Num of time Steps : " << 100 * std::pow(10, i) << std::endl;
 
-        timeTakenArray[i] = runAndTimeSimulation(100 * std::pow(10, i), false);
+        timeTakenArray[i] = runAndTimeSimulation(100 * std::pow(10, i), WRITE_SIM);
+
+        if (WRITE_SIM) break;
     }
 
 

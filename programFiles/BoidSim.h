@@ -21,7 +21,15 @@
 #   define DEBUG false
 #endif
 
+#ifndef WRITE_SIM
+#   define WRITE_SIM false
+#endif
+
 #define CELL_NUMBER 10
+
+#ifndef DO_MULTIPLE_SIMS
+#   define DO_MULTIPLE_SIMS false
+#endif
 
 
 constexpr double DT = 0.01f;

@@ -36,7 +36,7 @@ double runAndTimeSimulation(int timeSteps, bool writeToFile){
 
     auto end = omp_get_wtime() - start;
 
-    std::cout << "---Time taken for time steps is: " << end << " seconds" << std::endl;
+    std::cout << "---Time taken is: " << end << " seconds" << std::endl;
 
     delete boidSim;
     
