@@ -21,7 +21,7 @@
 #   define DEBUG false
 #endif
 
-#define CELL_NUMBER SIZE_OF_SIMULATION * SIZE_OF_SIMULATION
+#define CELL_NUMBER 10
 
 
 constexpr double DT = 0.01f;
@@ -29,7 +29,6 @@ constexpr double DT = 0.01f;
 constexpr double SEPARATION_FORCE_CONSTANT = 1;
 constexpr double ALIGNMENT_FORCE_CONSTANT = 1;
 constexpr double COHESION_FORCE_CONSTANT = 1;
-
 
 
 constexpr int NUM_SIMULATIONS = 6;
@@ -50,7 +49,7 @@ public:
     std::array<double, 3> GetVectorAverage();
 
     void InitialiseRandomVectors(double lowerBound, double upperBound, bool normalise);
-    void InitialiseVectorsToLine(int lineLength);
+    void InitialiseVectorsToLine(const double lineLength);
     void InitaliseVectorsToZHat();
 
     void View(const int viewNum, const std::string& name);
@@ -100,6 +99,9 @@ private:
     void constructCellList();
     void wipeCellList();
 
+    std::vector<int> getAdjacentBoids(const int boidIndex);
+    std::array<int, 3> getBoidCell(const int boidIndex);
+
 public:
     BoidSim();
     ~BoidSim();
@@ -121,4 +123,4 @@ double runAndTimeSimulation(int timeSteps, bool writeToFile);
 
 std::array<double, 2> minMaxOfArray(std::array<double, SIZE_OF_SIMULATION>& array);
 
-#endif
+#endif // BOIDSIM_H

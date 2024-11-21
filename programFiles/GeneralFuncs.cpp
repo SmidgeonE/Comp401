@@ -33,22 +33,23 @@ double runAndTimeSimulation(int timeSteps, bool writeToFile){
 
     boidSim->StartSimulation(timeSteps);
 
-    delete boidSim;
 
     auto end = omp_get_wtime() - start;
 
     std::cout << "---Time taken for time steps is: " << end << " seconds" << std::endl;
+
+    delete boidSim;
     
     return end;
 }
 
 
-std::array<double, 2> minMaxOfArray(std::array<double, SIZE_OF_SIMULATION>* array){
-    double min = (*array)[0];
-    double max = (*array)[0];
+std::array<double, 2> minMaxOfArray(std::array<double, SIZE_OF_SIMULATION>& array){
+    auto min = array[0];
+    auto max = array[0];
 
     for (int i = 1; i < SIZE_OF_SIMULATION; ++i){
-        auto value = (*array)[i];
+        auto value = array[i];
 
         if (value < min){
             min = value;

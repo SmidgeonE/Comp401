@@ -53,14 +53,14 @@ echo "custom flags:" $customFlags
 if [[ $customBoidNum == true ]]; then
     echo "setting num boids to " $numBoids
 
-    mpiicpx $customFlags -O3 -qopenmp -lgsl -lgslcblas -xHost ./programFiles/*.cpp -o $numBoids.exe
+    mpiicpx $customFlags -static-libstdc++ -O3 -qopenmp -lgsl -lgslcblas -xHost ./programFiles/*.cpp -o $numBoids.exe
 else
     echo "setting up 6 executables with different SIZE_OF_SIMULATION"
 
-    numbers=(5 20 50 100 200 500)
+    numbers=(5 20 50 100 200 500 2000 5000)
 
     for number in "${numbers[@]}"; do
-        mpiicpx -DSIZE_OF_SIMULATION=$number $customFlags -O3 -qopenmp -lgsl -lgslcblas -xHost ./programFiles/*.cpp -o $number.exe
+        mpiicpx -DSIZE_OF_SIMULATION=$number $customFlags -static-libstdc++ -O3 -qopenmp -lgsl -lgslcblas -xHost ./programFiles/*.cpp -o $number.exe
 
         echo finished compiling to $(pwd)/$number.exe
     done

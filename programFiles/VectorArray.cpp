@@ -1,11 +1,9 @@
 #include "BoidSim.h"
 
 VectorArray::VectorArray() {
-    std::cout << "Initialising Vector Array" << std::endl;
     arrayX.fill(0.0);
     arrayY.fill(0.0);
     arrayZ.fill(0.0);
-    std::cout << "Vector Array Initialised" << std::endl;
 }
                             
 
@@ -55,15 +53,15 @@ void VectorArray::InitialiseRandomVectors(const double lowerBound, const double 
 }
 
 
-void VectorArray::InitialiseVectorsToLine(const int gridSize) {
+void VectorArray::InitialiseVectorsToLine(const double gridSize) {
     // Sets vectors to the line y=x=z
 
     auto spacing = gridSize / SIZE_OF_SIMULATION;
 
     for (int i = 0; i < SIZE_OF_SIMULATION; ++i) {
-        GetArrayX().at(i) = i * spacing;
-        GetArrayY().at(i) = i * spacing;
-        GetArrayZ().at(i) = i * spacing;
+        GetArrayX()[i] = i * spacing;
+        GetArrayY()[i] = i * spacing;
+        GetArrayZ()[i] = i * spacing;
     }
 }
 
