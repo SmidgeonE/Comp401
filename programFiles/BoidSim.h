@@ -32,9 +32,13 @@
 #   define DO_MULTIPLE_SIMS false
 #endif
 
+#ifndef BOX_SIZE
+#   define BOX_SIZE 30
+#endif
+
 constexpr double SEPARATION_FORCE_CONSTANT = 1;
-constexpr double ALIGNMENT_FORCE_CONSTANT = 0.000001;
-constexpr double COHESION_FORCE_CONSTANT = 0.0001;
+constexpr double ALIGNMENT_FORCE_CONSTANT = 0.00001;
+constexpr double COHESION_FORCE_CONSTANT = 0.001;
 
 
 constexpr int NUM_SIMULATIONS = 6;
@@ -82,6 +86,8 @@ private:
 
     std::array<double, 3> cellMinima;
     std::array<double, 3> cellMaxima;
+
+    std::array<double, 3> simulationBoundaries;
 
     bool writeToFile;
     std::ofstream outputStream;

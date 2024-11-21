@@ -11,6 +11,7 @@ if [[ "$1" == "-h" || "$1" == "--h" || "$1" == "--help" ]]; then
     echo "Usage: $0 -d -> This sets it up in debug mode"
     echo "Usage: $0 -o -> This outputs the sim data to a .csv file"
     echo "Usage: $0 -ms -> This performs multiple simulations at different time steps. Without it defaults to just steps=1000"
+    echo "Usage: $0 -b <num> -> This changes the default bounds of the simulation."
     exit
 fi
 
@@ -49,6 +50,16 @@ while [[ "$#" -gt 0 ]]; do
             ;;
         -ms)
             customFlags+=" -DDO_MULTIPLE_SIMS=true"
+            ;;
+        -b)
+            if [[ "$2" =~ ^[0-9]+$ ]]; then
+                echo "changing bounds to $2"
+                customFlags+=" -DBOX_SIZE=$2"
+                shift
+            else
+                echo "Error: -b flag requires a numeric argument."
+                exit 1
+            fi
             ;;
     esac
     shift

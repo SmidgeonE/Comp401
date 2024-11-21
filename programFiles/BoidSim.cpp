@@ -25,6 +25,10 @@ BoidSim::BoidSim(int numProcesses, int thisProcess) {
     cellMinima.fill(0.0);
     cellMaxima.fill(0.0);
 
+    simulationBoundaries[0] = BOX_SIZE/2;
+    simulationBoundaries[1] = BOX_SIZE/2;
+    simulationBoundaries[2] = BOX_SIZE/2;
+
     for (int i = 0; i < CELL_NUMBER; ++i){
         for (int j = 0; j < CELL_NUMBER; ++j){
             for (int k = 0; k < CELL_NUMBER; ++k){
@@ -76,10 +80,8 @@ void BoidSim::StartSimulation(const long timeSteps) {
 
         if (DEBUG) startTime = omp_get_wtime();
 
-        // applySeparationForce();
-
-
         // applySeparationForceCellList();
+        applySeparationForce();
         applyAlignmentForce();
         applyCohesionForce();
 
@@ -306,8 +308,6 @@ void BoidSim::applyAlignmentForce(){
 
     auto alignmentForces = new VectorArray();
 
-    std::cout << "Average Direction: " << averageDirection[0] << ", " << averageDirection[1] << ", " << averageDirection[2] << std::endl;
-
 #pragma omp parallel for 
     for (int i = 0; i < SIZE_OF_SIMULATION; ++i){
         auto alignmentForceX = ALIGNMENT_FORCE_CONSTANT * (averageDirection[0] - boidDirections.GetArrayX()[i]);
@@ -367,19 +367,9 @@ void BoidSim::calculateBoidVelocity(){
     for (int j = 0; j < SIZE_OF_SIMULATION; ++j) {
         // We have now calculated the total force for this time step, now we must calculate the new velocity because of that
 
-
-        // if (j == 0) {
-        //     std::cout << std::endl << "Previous Speed : " << boidSpeeds[j] << std::endl;
-        //     std::cout << "Boid " << j << " has force: " << boidForces->GetArrayX()[j] << ", " << boidForces->GetArrayY()[j] << ", " << boidForces->GetArrayZ()[j] << std::endl;
-        // }
-
         auto addVelX = boidForces.GetArrayX()[j] / boidMasses[j];
         auto addVelY = boidForces.GetArrayY()[j] / boidMasses[j];
         auto addVelZ = boidForces.GetArrayZ()[j] / boidMasses[j];
-
-        // if (j == 0) {
-        //     std::cout << "Add velocity : " << std::sqrt(magSquared({addVelX, addVelY, addVelZ})) << std::endl;
-        // }
 
         auto newVelocityX = xDirections[j] * boidSpeeds[j] + boidForces.GetArrayX()[j] / boidMasses[j];
         auto newVelocityY = yDirections[j] * boidSpeeds[j] + boidForces.GetArrayY()[j] / boidMasses[j];
@@ -390,15 +380,25 @@ void BoidSim::calculateBoidVelocity(){
         
         boidSpeeds[j] = std::sqrt(magSquared(velocity));
 
-        if (j==0) {
-            std::cout << "New Speed : " << boidSpeeds[j] << std::endl;
-        }
-
         auto velocityNormalised = normaliseVector(velocity);
 
         xDirections[j] = velocityNormalised[0];
         yDirections[j] = velocityNormalised[1];
         zDirections[j] = velocityNormalised[2];
+
+        // Now we can apply the walls of the simulation
+
+        if (std::abs(boidPositions.GetArrayX()[j]) > simulationBoundaries[0]){
+            xDirections[j] *= -1.0;
+        }
+
+        if (std::abs(boidPositions.GetArrayY()[j]) > simulationBoundaries[1]){
+            yDirections[j] *= -1.0;
+        }
+
+        if (std::abs(boidPositions.GetArrayZ()[j]) > simulationBoundaries[2]){
+            zDirections[j] *= -1.0;
+        }
     }
 }
 
