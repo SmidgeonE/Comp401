@@ -8,22 +8,15 @@
 #include <random>
 
 
-BoidSim::BoidSim(){
-    boidPositions = new VectorArray;
-    boidDirections = new VectorArray;
-    boidForces = new VectorArray;
+BoidSim::BoidSim(int numProcesses, int thisProcess) {
+    this->numProcesses = numProcesses;
+    this->thisProcess = thisProcess;
 
-    if (DEBUG) { 
-    boidPositions->InitialiseVectorsToLine(10);
-    boidDirections->InitaliseVectorsToZHat();
-    }
-    else {
-        boidPositions->InitialiseRandomVectors(-10.0, 10.0, false);
-        boidDirections->InitialiseRandomVectors(-1.0, 1.0, true);
-    }
+    calculateProcessStartEndIndices();
 
-    boidSpeeds.fill(0.0);
-    boidMasses.fill(1.0);
+    boidPositions = VectorArray();
+    boidDirections = VectorArray();
+    boidForces = VectorArray();
 
     filledCellsX.fill(0);
     filledCellsY.fill(0);
@@ -39,32 +32,51 @@ BoidSim::BoidSim(){
             }
         }
     }
+
+    
+    // Now we must either generate and broadcast state or receive state
+
+    if (thisProcess == 0){
+        generateInitialState();
+    }
+
+    // We broadcast the initial state to all other processes, note this doesnt need a MPI_Recv() call
+
+    boidPositions.BroadcastVectorArray(0);
+    boidDirections.BroadcastVectorArray(0);
 }
 
 
 void BoidSim::StartSimulation(const long timeSteps) {
+    if (thisProcess == 0){
+        std::cout << "Starting Simulation with on master process " << std::endl;
+    }
+    else {
+        std::cout << "starting worker process " << thisProcess << std::endl;
+        return;
+    }
+
     if (writeToFile) {
         writeBoidSimulation();
     }
 
 
     for (int i = 0; i < timeSteps; ++i) {
-        if (DEBUG && i <= 2 * DT) {
+        if (DEBUG && i <= 2) {
             std::cout << "\n\nNext Time Step: \n\n";
             SimView(3);
         }
 
-        if (DEBUG && i > 2 * DT) {
+        if (DEBUG && i > 2) {
             std::cout << "Debug has finished: 3 time steps have occured." << std::endl;
             return;
         }
-
 
         resetForces();
 
         if (DEBUG) startTime = omp_get_wtime();
 
-        applySeparationForce();
+        // applySeparationForce();
 
 
         // applySeparationForceCellList();
@@ -86,12 +98,12 @@ void BoidSim::writeBoidSimulation() {
     std::string outputStr = "";
 
     for (int i = 0; i < SIZE_OF_SIMULATION; ++i) {
-        outputStr += "[" + std::to_string(boidPositions->GetArrayX()[i]) + "," 
-            + std::to_string(boidPositions->GetArrayY()[i]) + "," 
-            + std::to_string(boidPositions->GetArrayZ()[i]) + ","
-            + std::to_string(boidDirections->GetArrayX()[i]) + ","
-            + std::to_string(boidDirections->GetArrayY()[i]) + ","
-            + std::to_string(boidDirections->GetArrayZ()[i]) + ","
+        outputStr += "[" + std::to_string(boidPositions.GetArrayX()[i]) + "," 
+            + std::to_string(boidPositions.GetArrayY()[i]) + "," 
+            + std::to_string(boidPositions.GetArrayZ()[i]) + ","
+            + std::to_string(boidDirections.GetArrayX()[i]) + ","
+            + std::to_string(boidDirections.GetArrayY()[i]) + ","
+            + std::to_string(boidDirections.GetArrayZ()[i]) + ","
             + std::to_string(boidSpeeds[i]) + ","
             + std::to_string(boidMasses[i]) + "],";
     }
@@ -111,14 +123,14 @@ void BoidSim::SetWriteToFile(const bool writeToFile) {
 }
 
 
-void BoidSim::SimView(int viewNum) const {
-    auto boidPositionsX = boidPositions->GetArrayX();
-    auto boidPositionsY = boidPositions->GetArrayY();
-    auto boidPositionsZ = boidPositions->GetArrayZ();
+void BoidSim::SimView(int viewNum) {
+    auto& boidPositionsX = boidPositions.GetArrayX();
+    auto& boidPositionsY = boidPositions.GetArrayY();
+    auto& boidPositionsZ = boidPositions.GetArrayZ();
 
-    auto boidDirectionsX = boidDirections->GetArrayX();
-    auto boidDirectionsY = boidDirections->GetArrayY();
-    auto boidDirectionsZ = boidDirections->GetArrayZ();
+    auto& boidDirectionsX = boidDirections.GetArrayX();
+    auto& boidDirectionsY = boidDirections.GetArrayY();
+    auto& boidDirectionsZ = boidDirections.GetArrayZ();
 
     if (viewNum >= SIZE_OF_SIMULATION) {
         std::cout << "View number is greater than the number of boids in the simulation\n";
@@ -140,9 +152,9 @@ void BoidSim::SimView(int viewNum) const {
 
 
 void BoidSim::applyCohesionForce(){    
-    const auto positionsX = boidPositions->GetArrayX();
-    const auto positionsY = boidPositions->GetArrayY();
-    const auto positionsZ = boidPositions->GetArrayZ();
+    const auto& positionsX = boidPositions.GetArrayX();
+    const auto& positionsY = boidPositions.GetArrayY();
+    const auto& positionsZ = boidPositions.GetArrayZ();
     
     // Calculate COM of the flock
 
@@ -198,9 +210,9 @@ void BoidSim::applyCohesionForce(){
 
 
 void BoidSim::applySeparationForceCellList(){
-    const auto positionsX = boidPositions->GetArrayX();
-    const auto positionsY = boidPositions->GetArrayY();
-    const auto positionsZ = boidPositions->GetArrayZ();
+    const auto& positionsX = boidPositions.GetArrayX();
+    const auto& positionsY = boidPositions.GetArrayY();
+    const auto& positionsZ = boidPositions.GetArrayZ();
 
     auto repulsionForces = new VectorArray();
  
@@ -244,9 +256,9 @@ void BoidSim::applySeparationForceCellList(){
 
 
 void BoidSim::applySeparationForce(){
-    const auto positionsX = boidPositions->GetArrayX();
-    const auto positionsY = boidPositions->GetArrayY();
-    const auto positionsZ = boidPositions->GetArrayZ();
+    const auto& positionsX = boidPositions.GetArrayX();
+    const auto& positionsY = boidPositions.GetArrayY();
+    const auto& positionsZ = boidPositions.GetArrayZ();
 
     auto repulsionForces = new VectorArray();
 
@@ -259,12 +271,15 @@ void BoidSim::applySeparationForce(){
             auto separationY = positionsY[j] - positionsY[i];
             auto separationZ = positionsZ[j] - positionsZ[i];
         
-            auto magnitudeFactor = std::sqrt(magSquared({separationX, separationY, separationZ}));
-            magnitudeFactor *= magnitudeFactor * magnitudeFactor;
+            auto distance = std::sqrt(magSquared({separationX, separationY, separationZ}));
 
-            auto repulsionX = std::min(-SEPARATION_FORCE_CONSTANT * separationX / magnitudeFactor, 10.0);
-            auto repulsionY = std::min(-SEPARATION_FORCE_CONSTANT * separationY / magnitudeFactor, 10.0);
-            auto repulsionZ = std::min(-SEPARATION_FORCE_CONSTANT * separationZ / magnitudeFactor, 10.0);
+            if (distance > 1 or std::abs(distance) < std::numeric_limits<double>::epsilon()) continue;
+
+            auto magnitudeFactor = distance * distance * distance;
+
+            auto repulsionX = std::min(-SEPARATION_FORCE_CONSTANT * separationX / magnitudeFactor, 1000.0);
+            auto repulsionY = std::min(-SEPARATION_FORCE_CONSTANT * separationY / magnitudeFactor, 1000.0);
+            auto repulsionZ = std::min(-SEPARATION_FORCE_CONSTANT * separationZ / magnitudeFactor, 1000.0);
 
             repulsionForces->GetArrayX()[i] += repulsionX;
             repulsionForces->GetArrayY()[i] += repulsionY;
@@ -287,15 +302,17 @@ void BoidSim::applySeparationForce(){
 
 
 void BoidSim::applyAlignmentForce(){
-    const auto averageDirection = getAverageFlockDirection();
+    auto averageDirection = getAverageFlockDirection();
 
     auto alignmentForces = new VectorArray();
 
+    std::cout << "Average Direction: " << averageDirection[0] << ", " << averageDirection[1] << ", " << averageDirection[2] << std::endl;
+
 #pragma omp parallel for 
     for (int i = 0; i < SIZE_OF_SIMULATION; ++i){
-        auto alignmentForceX = ALIGNMENT_FORCE_CONSTANT * (averageDirection[0] - boidDirections->GetArrayX()[i]);
-        auto alignmentForceY = ALIGNMENT_FORCE_CONSTANT * (averageDirection[1] - boidDirections->GetArrayY()[i]);
-        auto alignmentForceZ = ALIGNMENT_FORCE_CONSTANT * (averageDirection[2] - boidDirections->GetArrayZ()[i]);
+        auto alignmentForceX = ALIGNMENT_FORCE_CONSTANT * (averageDirection[0] - boidDirections.GetArrayX()[i]);
+        auto alignmentForceY = ALIGNMENT_FORCE_CONSTANT * (averageDirection[1] - boidDirections.GetArrayY()[i]);
+        auto alignmentForceZ = ALIGNMENT_FORCE_CONSTANT * (averageDirection[2] - boidDirections.GetArrayZ()[i]);
 
         alignmentForces->GetArrayX()[i] = alignmentForceX;
         alignmentForces->GetArrayY()[i] = alignmentForceY;
@@ -310,17 +327,19 @@ void BoidSim::applyAlignmentForce(){
         alignTime += omp_get_wtime() - startTime;
         startTime = omp_get_wtime();
     }
+
+    delete alignmentForces;
 }
 
 
 void BoidSim::applyTimeStep(){
-    auto& xPositions = boidPositions->GetArrayX();
-    auto& yPositions = boidPositions->GetArrayY();
-    auto& zPositions = boidPositions->GetArrayZ();
+    auto& xPositions = boidPositions.GetArrayX();
+    auto& yPositions = boidPositions.GetArrayY();
+    auto& zPositions = boidPositions.GetArrayZ();
 
-    auto& xDirections = boidDirections->GetArrayX();
-    auto& yDirections = boidDirections->GetArrayY();
-    auto& zDirections = boidDirections->GetArrayZ();
+    auto& xDirections = boidDirections.GetArrayX();
+    auto& yDirections = boidDirections.GetArrayY();
+    auto& zDirections = boidDirections.GetArrayZ();
 
 
 #pragma omp parallel for
@@ -340,24 +359,41 @@ void BoidSim::applyTimeStep(){
 }
 
 void BoidSim::calculateBoidVelocity(){
-    auto& xDirections = boidDirections->GetArrayX();
-    auto& yDirections = boidDirections->GetArrayY();
-    auto& zDirections = boidDirections->GetArrayZ();
+    auto& xDirections = boidDirections.GetArrayX();
+    auto& yDirections = boidDirections.GetArrayY();
+    auto& zDirections = boidDirections.GetArrayZ();
 
 #pragma omp parallel for
     for (int j = 0; j < SIZE_OF_SIMULATION; ++j) {
         // We have now calculated the total force for this time step, now we must calculate the new velocity because of that
 
-        // std::cout << "Boid " << j << " has force: " << boidForces->GetArrayX()[j] << ", " << boidForces->GetArrayY()[j] << ", " << boidForces->GetArrayZ()[j] << std::endl;
 
-        auto newVelocityX = xDirections[j] * boidSpeeds[j] + boidForces->GetArrayX()[j] * DT / boidMasses[j];
-        auto newVelocityY = yDirections[j] * boidSpeeds[j] + boidForces->GetArrayY()[j] * DT / boidMasses[j];
-        auto newVelocityZ = zDirections[j] * boidSpeeds[j] + boidForces->GetArrayZ()[j] * DT / boidMasses[j];
+        // if (j == 0) {
+        //     std::cout << std::endl << "Previous Speed : " << boidSpeeds[j] << std::endl;
+        //     std::cout << "Boid " << j << " has force: " << boidForces->GetArrayX()[j] << ", " << boidForces->GetArrayY()[j] << ", " << boidForces->GetArrayZ()[j] << std::endl;
+        // }
+
+        auto addVelX = boidForces.GetArrayX()[j] / boidMasses[j];
+        auto addVelY = boidForces.GetArrayY()[j] / boidMasses[j];
+        auto addVelZ = boidForces.GetArrayZ()[j] / boidMasses[j];
+
+        // if (j == 0) {
+        //     std::cout << "Add velocity : " << std::sqrt(magSquared({addVelX, addVelY, addVelZ})) << std::endl;
+        // }
+
+        auto newVelocityX = xDirections[j] * boidSpeeds[j] + boidForces.GetArrayX()[j] / boidMasses[j];
+        auto newVelocityY = yDirections[j] * boidSpeeds[j] + boidForces.GetArrayY()[j] / boidMasses[j];
+        auto newVelocityZ = zDirections[j] * boidSpeeds[j] + boidForces.GetArrayZ()[j] / boidMasses[j];
+
 
         auto velocity = std::array<double, 3> {newVelocityX, newVelocityY, newVelocityZ};
         
         boidSpeeds[j] = std::sqrt(magSquared(velocity));
-        
+
+        if (j==0) {
+            std::cout << "New Speed : " << boidSpeeds[j] << std::endl;
+        }
+
         auto velocityNormalised = normaliseVector(velocity);
 
         xDirections[j] = velocityNormalised[0];
@@ -368,9 +404,9 @@ void BoidSim::calculateBoidVelocity(){
 
 
 void BoidSim::resetForces(){
-    auto& arrayX = boidForces->GetArrayX();
-    auto& arrayY = boidForces->GetArrayY();
-    auto& arrayZ = boidForces->GetArrayZ();
+    auto& arrayX = boidForces.GetArrayX();
+    auto& arrayY = boidForces.GetArrayY();
+    auto& arrayZ = boidForces.GetArrayZ();
 
     arrayX.fill(0.0);
     arrayY.fill(0.0);
@@ -379,9 +415,9 @@ void BoidSim::resetForces(){
 
 
 void BoidSim::addForce(VectorArray& force){
-    auto& forcesX = boidForces->GetArrayX();
-    auto& forcesY = boidForces->GetArrayY();
-    auto& forcesZ = boidForces->GetArrayZ();
+    auto& forcesX = boidForces.GetArrayX();
+    auto& forcesY = boidForces.GetArrayY();
+    auto& forcesZ = boidForces.GetArrayZ();
 
 #pragma omp parallel for
     for (int i = 0; i < SIZE_OF_SIMULATION; ++i){
@@ -396,16 +432,16 @@ void BoidSim::addForce(VectorArray& force){
 
 
 std::array<double, 3> BoidSim::getAverageFlockDirection(){
-    std::array<double, 3> averageDirection = boidDirections->GetVectorAverage();
+    auto averageDirection = boidDirections.GetVectorAverage();
 
     return normaliseVector(averageDirection);
 }
 
 
 void BoidSim::constructCellList(){
-    auto positionsX = boidPositions->GetArrayX();
-    auto positionsY = boidPositions->GetArrayY();
-    auto positionsZ = boidPositions->GetArrayZ();
+    auto& positionsX = boidPositions.GetArrayX();
+    auto& positionsY = boidPositions.GetArrayY();
+    auto& positionsZ = boidPositions.GetArrayZ();
 
     auto minMaxX = minMaxOfArray(positionsX);
     auto minMaxY = minMaxOfArray(positionsY);
@@ -436,9 +472,9 @@ void BoidSim::constructCellList(){
 
 
 std::array<int, 3> BoidSim::getBoidCell(const int boidIndex){
-    auto positionsX = boidPositions->GetArrayX();
-    auto positionsY = boidPositions->GetArrayY();
-    auto positionsZ = boidPositions->GetArrayZ();
+    auto positionsX = boidPositions.GetArrayX();
+    auto positionsY = boidPositions.GetArrayY();
+    auto positionsZ = boidPositions.GetArrayZ();
 
     auto cellX = (int) (((positionsX[boidIndex] - cellMinima[0]) / (cellMaxima[0] - cellMinima[0])) * CELL_NUMBER);
     auto cellY = (int) (((positionsY[boidIndex] - cellMinima[1]) / (cellMaxima[1] - cellMinima[1])) * CELL_NUMBER);
@@ -492,11 +528,26 @@ std::vector<int> BoidSim::getAdjacentBoids(const int boidIndex){
 }
 
 
-BoidSim::~BoidSim() { 
-    delete boidPositions; 
-    delete boidDirections; 
-    delete boidForces;
+void BoidSim::generateInitialState() {
+    if (DEBUG) { 
+        boidPositions.InitialiseVectorsToLine(10);
+        boidDirections.InitaliseVectorsToZHat();
+        // boidSpeeds.fill(0.0);
 
+        // boidPositions->InitialiseRandomVectors(-10.0, 10.0, false);
+        // boidDirections->InitialiseRandomVectors(-1.0, 1.0, true);
+    }
+    else {
+        boidPositions.InitialiseRandomVectors(-10.0, 10.0, false);
+        boidDirections.InitialiseRandomVectors(-1.0, 1.0, true);
+        initialiseRandomScalars(boidSpeeds, 0.0, 1.0);
+    }
+
+    boidMasses.fill(1.0);
+}
+
+
+BoidSim::~BoidSim() { 
     if (DEBUG) {
         std::cout << "Time taken for Separation Force: " << sepTime << " seconds" << std::endl;
         std::cout << "Time taken for Alignment Force: " << alignTime << " seconds" << std::endl;
@@ -507,4 +558,16 @@ BoidSim::~BoidSim() {
     if (writeToFile) {
         outputStream.close();
     }
+}
+
+
+void BoidSim::calculateProcessStartEndIndices(){
+    thisProcessStartIndex = (int) ((thisProcess / (double)numProcesses) * SIZE_OF_SIMULATION);
+    thisProcessEndIndex = (int) ((((thisProcess+1) / (double)numProcesses) * SIZE_OF_SIMULATION)-1);
+
+    if (thisProcess == numProcesses - 1){
+        thisProcessEndIndex = SIZE_OF_SIMULATION - 1;
+    }
+
+    if (DEBUG) std::cout << "Process " << thisProcess << " has indices " << thisProcessStartIndex << " to " << thisProcessEndIndex << std::endl;
 }

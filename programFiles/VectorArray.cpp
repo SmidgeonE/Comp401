@@ -87,6 +87,8 @@ void VectorArray::View(const int viewNum, const std::string& name) {
     std::cout << std::endl;
 }
 
-
-
-
+void VectorArray::BroadcastVectorArray(int rootProcess) {
+    MPI_Bcast(GetArrayX().data(), SIZE_OF_SIMULATION, MPI_DOUBLE, rootProcess, MPI_COMM_WORLD);
+    MPI_Bcast(GetArrayY().data(), SIZE_OF_SIMULATION, MPI_DOUBLE, rootProcess, MPI_COMM_WORLD);
+    MPI_Bcast(GetArrayZ().data(), SIZE_OF_SIMULATION, MPI_DOUBLE, rootProcess, MPI_COMM_WORLD);
+}
