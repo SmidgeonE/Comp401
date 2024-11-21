@@ -9,6 +9,8 @@ if [[ "$1" == "-h" || "$1" == "--h" || "$1" == "--help" ]]; then
     echo "Usage: $0 -t <numThreads> -> This compiles multithreaded with a given number of threads"
     echo "Usage: $0 -n <numBoids> -> This compiles with a given number of boids (SIZE_OF_SIMULATION)"
     echo "Usage: $0 -d -> This sets it up in debug mode"
+    echo "Usage: $0 -o -> This outputs the sim data to a .csv file"
+    echo "Usage: $0 -ms -> This performs multiple simulations at different time steps. Without it defaults to just steps=1000"
     exit
 fi
 
@@ -29,7 +31,7 @@ while [[ "$#" -gt 0 ]]; do
             ;;
         -n)
             if [[ "$2" =~ ^[0-9]+$ ]]; then
-                echo "changing num of obids"
+                echo "changing num of boids"
                 customFlags+=" -DSIZE_OF_SIMULATION=$2"
                 customBoidNum=true
                 numBoids=$2
@@ -41,6 +43,12 @@ while [[ "$#" -gt 0 ]]; do
             ;;
         -d)
             customFlags+=" -DDEBUG=true"
+            ;;
+        -o)
+            customFlags+=" -DWRITE_SIM=true"
+            ;;
+        -ms)
+            customFlags+=" -DDO_MULTIPLE_SIMS=true"
             ;;
     esac
     shift
