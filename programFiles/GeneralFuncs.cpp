@@ -49,8 +49,6 @@ double runAndTimeSimulation(int timeSteps, bool writeToFile, int totalNumProcess
 
     std::cout << "---Time taken by process " << thisProcess << " was " << end << " seconds" << std::endl;
 
-    MPI_Barrier(MPI_COMM_WORLD);
-
     delete boidSim;
     
     return end;

@@ -26,8 +26,6 @@
 #   define WRITE_SIM false
 #endif
 
-#define CELL_NUMBER 10
-
 #ifndef DO_MULTIPLE_SIMS
 #   define DO_MULTIPLE_SIMS false
 #endif
@@ -35,6 +33,16 @@
 #ifndef BOX_SIZE
 #   define BOX_SIZE 30
 #endif
+
+#ifndef NON_RANDOM
+#   define NON_RANDOM false
+#endif
+
+
+#define MASTER_PROCESS 0
+
+#define CELL_NUMBER 10
+
 
 constexpr double SEPARATION_FORCE_CONSTANT = 1;
 constexpr double ALIGNMENT_FORCE_CONSTANT = 0.00001;
@@ -63,9 +71,13 @@ public:
     void InitialiseVectorsToLine(const double lineLength);
     void InitaliseVectorsToZHat();
 
-    void View(const int viewNum, const std::string& name);
+    void View(const int viewNum, const std::string& name, std::ofstream& debugStream);
 
-    void BroadcastVectorArray(int rootProcess);
+    void BroadcastVectorArray(const int rootProcess);
+
+    void SendVectorArray(const int destinationProcess, const int currentProcess);
+
+    static VectorArray ReceiveVectorArray(const int sourceProcess, const int currentProcess);
 };
 
 
@@ -91,6 +103,8 @@ private:
 
     bool writeToFile;
     std::ofstream outputStream;
+
+    std::ofstream debugStream;
 
     double startTime;
     double sepTime;
@@ -125,6 +139,10 @@ private:
     std::array<int, 3> getBoidCell(const int boidIndex);
     
     void calculateProcessStartEndIndices();
+
+    void gatherAndApplyAllProcessForces();
+
+    void broadcastState();
 
 public:
     BoidSim(int numProcesses, int thisProcess);

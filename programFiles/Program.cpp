@@ -33,7 +33,6 @@ int main(int argc, char* argv[]) {
         return 0;
     }
 
-    MPI_Barrier(MPI_COMM_WORLD);
     // std::array<double, NUM_SIMULATIONS> timeTakenArray;
     // timeTakenArray.fill(0.0);
 
@@ -59,6 +58,8 @@ int main(int argc, char* argv[]) {
 
     
     MPI_Finalize();
+
+    std::cout << "MPI Finalised" << std::endl;
 
     return 0;
 }

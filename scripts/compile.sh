@@ -12,6 +12,7 @@ if [[ "$1" == "-h" || "$1" == "--h" || "$1" == "--help" ]]; then
     echo "Usage: $0 -o -> This outputs the sim data to a .csv file"
     echo "Usage: $0 -ms -> This performs multiple simulations at different time steps. Without it defaults to just steps=1000"
     echo "Usage: $0 -b <num> -> This changes the default bounds of the simulation."
+    echo "Usage $0 -nr -> This makes the initial state non-random. Useful for debugging."
     exit
 fi
 
@@ -61,6 +62,9 @@ while [[ "$#" -gt 0 ]]; do
                 exit 1
             fi
             ;;
+        -nr)
+            customFlags+=" -DNON_RANDOM=true"
+            ;;
     esac
     shift
 done
@@ -70,8 +74,6 @@ echo "compiling with MPI to target file(s)"
 echo "custom flags:" $customFlags
 
 if [[ $customBoidNum == true ]]; then
-    echo "setting num boids to " $numBoids
-
     mpiicpx $customFlags -static-libstdc++ -O3 -qopenmp -lgsl -lgslcblas -xHost ./programFiles/*.cpp -o $numBoids.exe
 else
     echo "setting up 6 executables with different SIZE_OF_SIMULATION"
