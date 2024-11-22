@@ -27,10 +27,6 @@ BoidSim::BoidSim(int numProcesses, int thisProcess) {
     cellMinima.fill(0.0);
     cellMaxima.fill(0.0);
 
-    simulationBoundaries[0] = BOX_SIZE/2;
-    simulationBoundaries[1] = BOX_SIZE/2;
-    simulationBoundaries[2] = BOX_SIZE/2;
-
     for (int i = 0; i < CELL_NUMBER; ++i){
         for (int j = 0; j < CELL_NUMBER; ++j){
             for (int k = 0; k < CELL_NUMBER; ++k){
@@ -368,6 +364,7 @@ void BoidSim::calculateBoidVelocity(){
 
 #pragma omp parallel for
     for (int j = 0; j < SIZE_OF_SIMULATION; ++j) {
+        const auto boxBoundaries = BOX_SIZE / 2.0;
         // We have now calculated the total force for this time step, now we must calculate the new velocity because of that
 
         auto addVelX = boidForces.GetArrayX()[j] / boidMasses[j];
@@ -378,8 +375,7 @@ void BoidSim::calculateBoidVelocity(){
         auto newVelocityY = yDirections[j] * boidSpeeds[j] + boidForces.GetArrayY()[j] / boidMasses[j];
         auto newVelocityZ = zDirections[j] * boidSpeeds[j] + boidForces.GetArrayZ()[j] / boidMasses[j];
 
-
-        auto velocity = std::array<double, 3> {newVelocityX, newVelocityY, newVelocityZ};
+        auto velocity = std::array<double, 3>{newVelocityX, newVelocityY, newVelocityZ};
         
         boidSpeeds[j] = std::sqrt(magSquared(velocity));
 
@@ -391,19 +387,19 @@ void BoidSim::calculateBoidVelocity(){
 
         // Now we can apply the walls of the simulation
 
-        if (std::abs(xPositions[j]) > simulationBoundaries[0]){
+        if (std::abs(xPositions[j]) > boxBoundaries) {
             xDirections[j] *= -1.0;
-            xPositions[j] = std::signbit(xPositions[j]) ? -BOX_SIZE+0.01 : BOX_SIZE-0.01;
+            xPositions[j] = std::signbit(xPositions[j]) ? -boxBoundaries + 0.01 : boxBoundaries - 0.01;
         }
 
-        if (std::abs(yPositions[j]) > simulationBoundaries[1]){
+        if (std::abs(yPositions[j]) > boxBoundaries) {
             yDirections[j] *= -1.0;
-            yPositions[j] = std::signbit(yPositions[j]) ? -BOX_SIZE+0.01 : BOX_SIZE-0.01;
+            yPositions[j] = std::signbit(yPositions[j]) ? -boxBoundaries + 0.01 : boxBoundaries - 0.01;
         }
 
-        if (std::abs(zPositions[j]) > simulationBoundaries[2]){
+        if (std::abs(zPositions[j]) > boxBoundaries) {
             zDirections[j] *= -1.0;
-           zPositions[j] = std::signbit(zPositions[j]) ? -BOX_SIZE+0.01 : BOX_SIZE-0.01;
+            zPositions[j] = std::signbit(zPositions[j]) ? -boxBoundaries + 0.01 : boxBoundaries - 0.01;
         }
     }
 }

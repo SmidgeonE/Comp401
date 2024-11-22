@@ -116,8 +116,6 @@ private:
     std::array<double, 3> cellMinima;
     std::array<double, 3> cellMaxima;
 
-    std::array<double, 3> simulationBoundaries;
-
     bool writeToFile;
     std::ofstream outputStream;
 
