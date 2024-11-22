@@ -1,5 +1,6 @@
 #include "BoidSim.h"
 
+
 VectorArray::VectorArray() {
     arrayX.fill(0.0);
     arrayY.fill(0.0);
@@ -75,20 +76,34 @@ void VectorArray::InitaliseVectorsToZHat() {
 }
 
 
-void VectorArray::View(const int viewNum, const std::string& name) {
-    std::cout << "Viewing " << name << std::endl;
-    
-    auto maxViewNum = std::min(viewNum, SIZE_OF_SIMULATION);
-
-    for (int i = 0; i < maxViewNum; ++i) {
-        std::cout << "Vector " << i << ": " << GetArrayX()[i] << ", " << GetArrayY()[i] << ", " << GetArrayZ()[i] << std::endl;
-    }
-
-    std::cout << std::endl;
-}
-
-void VectorArray::BroadcastVectorArray(int rootProcess) {
+void VectorArray::BroadcastVectorArray(const int rootProcess) {
     MPI_Bcast(GetArrayX().data(), SIZE_OF_SIMULATION, MPI_DOUBLE, rootProcess, MPI_COMM_WORLD);
     MPI_Bcast(GetArrayY().data(), SIZE_OF_SIMULATION, MPI_DOUBLE, rootProcess, MPI_COMM_WORLD);
     MPI_Bcast(GetArrayZ().data(), SIZE_OF_SIMULATION, MPI_DOUBLE, rootProcess, MPI_COMM_WORLD);
+}
+
+
+void VectorArray::SendVectorArray(const int destinationProcess, const int currentProcess) {
+    // The tag schema is the following : 
+    // currentProcess -> the process id
+    // what is sent: "tag" + either "0", "1", or "2" for x, y, z respectively
+
+    MPI_Send(GetArrayX().data(), SIZE_OF_SIMULATION, MPI_DOUBLE, destinationProcess, currentProcess*10, MPI_COMM_WORLD);
+    MPI_Send(GetArrayY().data(), SIZE_OF_SIMULATION, MPI_DOUBLE, destinationProcess, currentProcess*10+1, MPI_COMM_WORLD);
+    MPI_Send(GetArrayZ().data(), SIZE_OF_SIMULATION, MPI_DOUBLE, destinationProcess, currentProcess*10+2, MPI_COMM_WORLD);
+}
+
+
+VectorArray VectorArray::ReceiveVectorArray(const int sourceProcess, const int currentProcess) {
+    // The tag schema is the following : 
+    // sourceProcess -> the process id
+    // what is received: "tag" + either "0", "1", or "2" for x, y, z respectively
+    
+    VectorArray receivedArray;
+
+    MPI_Recv(receivedArray.GetArrayX().data(), SIZE_OF_SIMULATION, MPI_DOUBLE, sourceProcess, sourceProcess*10, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+    MPI_Recv(receivedArray.GetArrayY().data(), SIZE_OF_SIMULATION, MPI_DOUBLE, sourceProcess, sourceProcess*10+1, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+    MPI_Recv(receivedArray.GetArrayZ().data(), SIZE_OF_SIMULATION, MPI_DOUBLE, sourceProcess, sourceProcess*10+2, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+
+    return receivedArray;
 }

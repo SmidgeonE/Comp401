@@ -12,23 +12,22 @@ int main(int argc, char* argv[]) {
     MPI_Comm_rank(MPI_COMM_WORLD, &thisProcess);
     MPI_Get_processor_name(processor_name, &nameLen);
 
-    const std::string outputString = "Hello from process " + std::to_string(thisProcess) + " out of " +
-    std::to_string(numProcesses) + " process on node " + processor_name + "\n";
-    std::cout << outputString;
-
-
     omp_set_num_threads(numThreads);
 
-    if (thisProcess == 0){
+    if (thisProcess == MASTER_PROCESS){
         std::cout << "Number of threads to use : " << numThreads << std::endl;
         std::cout << "Number of boids supplied : " << SIZE_OF_SIMULATION << std::endl;
     }
 
 
     if (!DO_MULTIPLE_SIMS){
-        if (thisProcess == 0) std::cout << "Only doing one timeSteps = 1000" << std::endl;
+        if (thisProcess == MASTER_PROCESS) std::cout << "Only doing one timeSteps = 1000" << std::endl;
 
-        runAndTimeSimulation(1000, WRITE_SIM, numProcesses, thisProcess);
+        BoidSim newSim(numProcesses, thisProcess);
+
+        newSim.SetWriteToFile(WRITE_SIM);
+
+        newSim.StartSimulation(1000);
 
         return 0;
     }

@@ -81,6 +81,22 @@ public:
 };
 
 
+class Logger {  
+    private: 
+        bool logToFile;
+        std::ofstream logFile;
+
+    public:
+        Logger();
+        ~Logger();
+
+        void SetLogFile(const int fileNum, const std::string& directory="/user/home/oz21652/Comp401/debugStream");
+        void logArr(std::array<double, SIZE_OF_SIMULATION>& arr, int numToLog, const std::string& name);
+        void logVecArr(VectorArray& vecArr, int numToLog, const std::string& name);
+        void WriteToLog(const std::string& outputString);
+};
+
+
 class BoidSim {
 private:
     VectorArray boidPositions;
@@ -104,9 +120,9 @@ private:
     bool writeToFile;
     std::ofstream outputStream;
 
-    std::ofstream debugStream;
+    Logger logger;
 
-    double startTime;
+    double frameStartTime;
     double sepTime;
     double alignTime;
     double cohTime;
@@ -139,9 +155,7 @@ private:
     std::array<int, 3> getBoidCell(const int boidIndex);
     
     void calculateProcessStartEndIndices();
-
     void gatherAndApplyAllProcessForces();
-
     void broadcastState();
 
 public:
@@ -149,10 +163,10 @@ public:
     ~BoidSim();
 
     void SetWriteToFile(const bool writeToFile);
-    void SimView(int viewNum);
     void StartSimulation(long timeSteps);
-};
 
+    std::string GenerateSimView(const int viewNum);
+};
 
 
 void initialiseRandomScalars(std::array<double, SIZE_OF_SIMULATION>& scalarArray, double lowerBound, double upperBound);

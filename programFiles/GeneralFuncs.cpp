@@ -34,27 +34,6 @@ double magSquared(const std::array<double, 3>& vector) {
 }
 
 
-double runAndTimeSimulation(int timeSteps, bool writeToFile, int totalNumProcesses, int thisProcess) {
-    auto start = omp_get_wtime();
-    auto boidSim = new BoidSim(totalNumProcesses, thisProcess);
-    
-    if (writeToFile) {
-        boidSim->SetWriteToFile(true);
-    }
-
-    boidSim->StartSimulation(timeSteps);
-
-
-    auto end = omp_get_wtime() - start;
-
-    std::cout << "---Time taken by process " << thisProcess << " was " << end << " seconds" << std::endl;
-
-    delete boidSim;
-    
-    return end;
-}
-
-
 std::array<double, 2> minMaxOfArray(std::array<double, SIZE_OF_SIMULATION>& array){
     auto min = array[0];
     auto max = array[0];

@@ -12,7 +12,7 @@ BoidSim::BoidSim(int numProcesses, int thisProcess) {
     this->numProcesses = numProcesses;
     this->thisProcess = thisProcess;
 
-    if (DEBUG) debugStream = std::ofstream("/user/home/oz21652/Comp401/debugStream" + std::to_string(thisProcess) + ".txt");
+    logger.SetLogFile(thisProcess);
 
     calculateProcessStartEndIndices();
 
@@ -53,85 +53,67 @@ BoidSim::BoidSim(int numProcesses, int thisProcess) {
 
 
 void BoidSim::StartSimulation(const long timeSteps) {
+    auto simulationStartTime = omp_get_wtime();
+
     if (thisProcess == MASTER_PROCESS){
-        debugStream << "Starting Simulation with on master process " << std::endl;
+        logger.WriteToLog("Starting Simulation");
         
         for (int i = 0; i < timeSteps; ++i) {
             if (DEBUG && i <= 2) {
-                debugStream << "\n\nNext Time Step: \n\n";
-                SimView(3);
+                logger.WriteToLog("\n\nNext Time Step: \n\n");
+                logger.WriteToLog(GenerateSimView(3));
             }
-
-            if (DEBUG && i > 2) {
-                debugStream << "Debug has finished: 3 time steps have occured." << std::endl;
+            else if (DEBUG) {
+                logger.WriteToLog("\n\nExiting Early Due to Debug Mode");
                 return;
             }
 
             resetForces();
 
-            if (DEBUG) startTime = omp_get_wtime();
+            frameStartTime = omp_get_wtime();
 
             // applySeparationForceCellList();
             applySeparationForce();
             applyAlignmentForce();
             applyCohesionForce();
-
-            // Gather all processes
-
             gatherAndApplyAllProcessForces();
-
-            debugStream << "Gathered and Applied Forces" << std::endl;
-
 
             calculateBoidVelocity();
 
             applyTimeStep();
-
-            // Broadcast state back to all processes
-
             broadcastState();
 
-            debugStream << "Broadcasted State" << std::endl;
-            
             if (writeToFile) {
                 writeBoidSimulation();
             }
         }
     }
     else {
-        debugStream << "starting worker process " << thisProcess << std::endl;
+        logger.WriteToLog("starting worker process " + std::to_string(thisProcess) + "\n");
 
         for (int i = 0; i < timeSteps; ++i) {
-            debugStream << std::endl << "Time Step: " << i << std::endl;
-            SimView(3);
+            if (DEBUG && i <= 2) {
+                logger.WriteToLog("\n\nNext Time Step: \n\n");
+                logger.WriteToLog(GenerateSimView(3));
+            }
+            else if (DEBUG) {
+                logger.WriteToLog("\n\nExiting Early Due to Debug Mode");
+                return;
+            }
+
 
             resetForces();
-
-            debugStream << "Reset Forces " << std::endl;
-
-            if (DEBUG) startTime = omp_get_wtime();
+            frameStartTime = omp_get_wtime();
 
             // applySeparationForceCellList();
             applySeparationForce();
-
-            debugStream << "Applied Separation Force " << std::endl;
-
-            // Transmit forces to master process
             boidForces.SendVectorArray(MASTER_PROCESS, thisProcess);
-
-            debugStream << "Sent Forces " << std::endl;
-
-            
-            // Receive new state from master process
-
             broadcastState();
-
-            debugStream << "Received new state " << std::endl;
         }
     }
 
-
-    debugStream << "Simulation has finished" << std::endl;
+    logger.WriteToLog("Time taken for simulation: " + std::to_string(omp_get_wtime() - simulationStartTime) + " seconds\n");
+    logger.WriteToLog("Simulation Complete");
 }
 
 
@@ -164,7 +146,7 @@ void BoidSim::SetWriteToFile(const bool writeToFile) {
 }
 
 
-void BoidSim::SimView(int viewNum) {
+std::string BoidSim::GenerateSimView(int viewNum) {
     auto& boidPositionsX = boidPositions.GetArrayX();
     auto& boidPositionsY = boidPositions.GetArrayY();
     auto& boidPositionsZ = boidPositions.GetArrayZ();
@@ -173,18 +155,19 @@ void BoidSim::SimView(int viewNum) {
     auto& boidDirectionsY = boidDirections.GetArrayY();
     auto& boidDirectionsZ = boidDirections.GetArrayZ();
 
+    std::string outputString = "";
+
+
     if (viewNum >= SIZE_OF_SIMULATION) {
-        std::cout << "View number is greater than the number of boids in the simulation\n";
-        std::cout << "Defaulting to view all boids\n";
+        outputString += "View number is greater than the number of boids in the simulation\n";
+        outputString += "Defaulting to view all boids\n";
+
+        viewNum = SIZE_OF_SIMULATION-1;
     }
 
-    viewNum = std::min(viewNum, SIZE_OF_SIMULATION);
 
-    std::string debugString = "";
-
-
-    for (int i = 0; i < viewNum; ++i){
-        debugString += std::to_string(i) + "th Boid:" 
+    for (int i = 0; i < viewNum+1; ++i){
+        outputString += std::to_string(i) + "th Boid:" 
         + "\n   -- position: " + std::to_string(boidPositionsX[i]) + ", " + std::to_string(boidPositionsY[i]) + ", " + std::to_string(boidPositionsZ[i])
         + "\n   -- direction: " + std::to_string(boidDirectionsX[i]) + ", " + std::to_string(boidDirectionsY[i]) + ", " + std::to_string(boidDirectionsZ[i])
         + "\n   -- direction magnitude: " + std::to_string(std::sqrt(boidDirectionsX[i]*boidDirectionsX[i] + boidDirectionsY[i]*boidDirectionsY[i] + boidDirectionsZ[i]*boidDirectionsZ[i]))
@@ -192,8 +175,7 @@ void BoidSim::SimView(int viewNum) {
         + "\n   -- mass: " + std::to_string(this->boidMasses[i]) + "\n";
     }
 
-    if (DEBUG) debugStream << debugString << std::endl;
-    else std::cout << debugString << std::endl;
+    return outputString;
 }
 
 
@@ -221,13 +203,9 @@ void BoidSim::applyCohesionForce(){
         totalMass += boidMasses[i];
     }
 
-    if (DEBUG) debugStream << "Total Mass: " << totalMass << std::endl;
-
     comX /= totalMass;
     comY /= totalMass;
     comZ /= totalMass;
-
-    if (DEBUG) debugStream << "COM: " << comX << ", " << comY << ", " << comZ << std::endl;
 
     // Now we have the COM we need to add a linear force based on the distance from the COM
 
@@ -242,14 +220,10 @@ void BoidSim::applyCohesionForce(){
         comForces->GetArrayZ()[i] = COHESION_FORCE_CONSTANT * comDirectionZ;
     }
 
-    if (DEBUG) comForces->View(3, "COM Forces", debugStream);
-
     addForce(*comForces);
 
-    if (DEBUG) {
-        cohTime += omp_get_wtime() - startTime;
-        startTime = omp_get_wtime();
-    }
+    cohTime += omp_get_wtime() - frameStartTime;
+    frameStartTime = omp_get_wtime();
 
     delete comForces;
 }
@@ -286,14 +260,10 @@ void BoidSim::applySeparationForceCellList(){
         }
     }
 
-    if (DEBUG) repulsionForces->View(3, "Repulsion Forces", debugStream);
-
     addForce(*repulsionForces);
-
-    if (DEBUG){ 
-        sepTime += omp_get_wtime() - startTime;
-        startTime = omp_get_wtime();
-    }
+ 
+    sepTime += omp_get_wtime() - frameStartTime;
+    frameStartTime = omp_get_wtime();
 
     wipeCellList();
 
@@ -333,14 +303,10 @@ void BoidSim::applySeparationForce(){
         }
     }
 
-    if (DEBUG) repulsionForces->View(SIZE_OF_SIMULATION, "Repulsion Forces", debugStream);
-
     addForce(*repulsionForces);
-
-    if (DEBUG){ 
-        sepTime += omp_get_wtime() - startTime;
-        startTime = omp_get_wtime();
-    }
+ 
+    sepTime += omp_get_wtime() - frameStartTime;
+    frameStartTime = omp_get_wtime();
 
     delete repulsionForces;
 }
@@ -363,14 +329,10 @@ void BoidSim::applyAlignmentForce(){
         alignmentForces->GetArrayZ()[i] = alignmentForceZ;
     }
 
-    if (DEBUG) alignmentForces->View(3, "Alignment Forces", debugStream);
-
     addForce(*alignmentForces);
 
-    if (DEBUG) {
-        alignTime += omp_get_wtime() - startTime;
-        startTime = omp_get_wtime();
-    }
+    alignTime += omp_get_wtime() - frameStartTime;
+    frameStartTime = omp_get_wtime();
 
     delete alignmentForces;
 }
@@ -396,8 +358,8 @@ void BoidSim::applyTimeStep(){
     }
 
     if (DEBUG){
-        velTime += omp_get_wtime() - startTime;
-        startTime = omp_get_wtime();
+        velTime += omp_get_wtime() - frameStartTime;
+        frameStartTime = omp_get_wtime();
     }
 
 }
@@ -448,7 +410,7 @@ void BoidSim::calculateBoidVelocity(){
 
         if (std::abs(zPositions[j]) > simulationBoundaries[2]){
             zDirections[j] *= -1.0;
-            yPositions[j] = std::signbit(yPositions[j]) ? -BOX_SIZE+0.01 : BOX_SIZE-0.01;
+           zPositions[j] = std::signbit(zPositions[j]) ? -BOX_SIZE+0.01 : BOX_SIZE-0.01;
         }
     }
 }
@@ -472,12 +434,9 @@ void BoidSim::addForce(VectorArray& force){
 
 #pragma omp parallel for
     for (int i = 0; i < SIZE_OF_SIMULATION; ++i){
-        // std::cout << "adding force: " << force.GetArrayX()[i] << ", " << force.GetArrayY()[i] << ", " << force.GetArrayZ()[i] << std::endl;
         forcesX[i] += force.GetArrayX()[i];
         forcesY[i] += force.GetArrayY()[i];
         forcesZ[i] += force.GetArrayZ()[i];
-
-        // std::cout << "forces after adding : " << forcesX[i] << ", " << forcesY[i] << ", " << forcesZ[i] << std::endl;
     }
 }
 
@@ -596,12 +555,11 @@ void BoidSim::generateInitialState() {
 
 
 BoidSim::~BoidSim() { 
-    if (DEBUG) {
-        debugStream << "Time taken for Separation Force: " << sepTime << " seconds" << std::endl;
-        debugStream << "Time taken for Alignment Force: " << alignTime << " seconds" << std::endl;
-        debugStream << "Time taken for Cohesion Force: " << cohTime << " seconds" << std::endl;
-        debugStream << "Time taken for Velocity Calculation: " << velTime << " seconds" << std::endl;
-    }
+    logger.WriteToLog("Time taken for Separation Force: " + std::to_string(sepTime) + " seconds\n");
+    logger.WriteToLog("Time taken for Alignment Force: " + std::to_string(alignTime) + " seconds\n");
+    logger.WriteToLog("Time taken for Cohesion Force: " + std::to_string(cohTime) + " seconds\n");
+    logger.WriteToLog("Time taken for Velocity Calculation: " + std::to_string(velTime) + " seconds\n");
+    
 
     if (writeToFile) {
         outputStream.close();
@@ -617,7 +575,7 @@ void BoidSim::calculateProcessStartEndIndices(){
         thisProcessEndIndex = SIZE_OF_SIMULATION - 1;
     }
 
-    if (DEBUG) debugStream << "Process " << thisProcess << " has indices " << thisProcessStartIndex << " to " << thisProcessEndIndex << std::endl;
+    logger.WriteToLog("Process " + std::to_string(thisProcess) + " has indices " + std::to_string(thisProcessStartIndex) + " to " + std::to_string(thisProcessEndIndex) + "\n");
 }
 
 
@@ -634,8 +592,6 @@ void BoidSim::gatherAndApplyAllProcessForces() {
 
     for (auto force : allForces){
         addForce(force);
-
-        if (DEBUG) force.View(3, "Received Force", debugStream);
     }
 }
 
