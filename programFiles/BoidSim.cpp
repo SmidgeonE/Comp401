@@ -363,6 +363,10 @@ void BoidSim::calculateBoidVelocity(){
     auto& yDirections = boidDirections.GetArrayY();
     auto& zDirections = boidDirections.GetArrayZ();
 
+    auto& xPositions = boidPositions.GetArrayX();
+    auto& yPositions = boidPositions.GetArrayY();
+    auto& zPositions = boidPositions.GetArrayZ();
+
 #pragma omp parallel for
     for (int j = 0; j < SIZE_OF_SIMULATION; ++j) {
         // We have now calculated the total force for this time step, now we must calculate the new velocity because of that
@@ -388,16 +392,19 @@ void BoidSim::calculateBoidVelocity(){
 
         // Now we can apply the walls of the simulation
 
-        if (std::abs(boidPositions.GetArrayX()[j]) > simulationBoundaries[0]){
+        if (std::abs(xPositions[j]) > simulationBoundaries[0]){
             xDirections[j] *= -1.0;
+            xPositions[j] = std::signbit(xPositions[j]) ? -BOX_SIZE+0.01 : BOX_SIZE-0.01;
         }
 
-        if (std::abs(boidPositions.GetArrayY()[j]) > simulationBoundaries[1]){
+        if (std::abs(yPositions[j]) > simulationBoundaries[1]){
             yDirections[j] *= -1.0;
+            yPositions[j] = std::signbit(yPositions[j]) ? -BOX_SIZE+0.01 : BOX_SIZE-0.01;
         }
 
-        if (std::abs(boidPositions.GetArrayZ()[j]) > simulationBoundaries[2]){
+        if (std::abs(zPositions[j]) > simulationBoundaries[2]){
             zDirections[j] *= -1.0;
+            yPositions[j] = std::signbit(yPositions[j]) ? -BOX_SIZE+0.01 : BOX_SIZE-0.01;
         }
     }
 }
