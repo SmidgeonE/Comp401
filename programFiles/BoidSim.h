@@ -94,6 +94,7 @@ class Logger {
         void logArr(std::array<double, SIZE_OF_SIMULATION>& arr, int numToLog, const std::string& name);
         void logVecArr(VectorArray& vecArr, int numToLog, const std::string& name);
         void WriteToLog(const std::string& outputString);
+        void DebugLog(const std::string& outputString);
 };
 
 

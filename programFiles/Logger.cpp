@@ -22,6 +22,13 @@ void Logger::WriteToLog(const std::string& outputString) {
 }
 
 
+void Logger::DebugLog(const std::string& outputString) {
+    if (DEBUG) {
+        WriteToLog(outputString);
+    }
+}
+
+
 void Logger::SetLogFile(const int fileNum, const std::string& directory) {
     this->logToFile = true;
 

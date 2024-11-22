@@ -60,11 +60,11 @@ void BoidSim::StartSimulation(const long timeSteps) {
         
         for (int i = 0; i < timeSteps; ++i) {
             if (DEBUG && i <= 2) {
-                logger.WriteToLog("\n\nNext Time Step: \n\n");
-                logger.WriteToLog(GenerateSimView(3));
+                logger.DebugLog("\n\nNext Time Step: \n\n");
+                logger.DebugLog(GenerateSimView(3));
             }
             else if (DEBUG) {
-                logger.WriteToLog("\n\nExiting Early Due to Debug Mode");
+                logger.DebugLog("\n\nExiting Early Due to Debug Mode");
                 return;
             }
 
@@ -93,11 +93,11 @@ void BoidSim::StartSimulation(const long timeSteps) {
 
         for (int i = 0; i < timeSteps; ++i) {
             if (DEBUG && i <= 2) {
-                logger.WriteToLog("\n\nNext Time Step: \n\n");
-                logger.WriteToLog(GenerateSimView(3));
+                logger.DebugLog("\n\nNext Time Step: \n\n");
+                logger.DebugLog(GenerateSimView(3));
             }
             else if (DEBUG) {
-                logger.WriteToLog("\n\nExiting Early Due to Debug Mode");
+                logger.DebugLog("\n\nExiting Early Due to Debug Mode");
                 return;
             }
 
