@@ -191,7 +191,7 @@ void BoidSim::applyCohesionForce(){
     double comZ = 0.0;
 
     double totalMass = 0.0;
-    auto comForces = new VectorArray();
+    VectorArray comForces;
 
 
 #pragma omp parallel for reduction(+:comX, comY, comZ, totalMass)
@@ -215,18 +215,17 @@ void BoidSim::applyCohesionForce(){
         auto comDirectionY = comY - positionsY[i];
         auto comDirectionZ = comZ - positionsZ[i];
 
-        comForces->GetArrayX()[i] = COHESION_FORCE_CONSTANT * comDirectionX;
-        comForces->GetArrayY()[i] = COHESION_FORCE_CONSTANT * comDirectionY;
-        comForces->GetArrayZ()[i] = COHESION_FORCE_CONSTANT * comDirectionZ;
+        comForces.GetArrayX()[i] = COHESION_FORCE_CONSTANT * comDirectionX;
+        comForces.GetArrayY()[i] = COHESION_FORCE_CONSTANT * comDirectionY;
+        comForces.GetArrayZ()[i] = COHESION_FORCE_CONSTANT * comDirectionZ;
     }
 
-    addForce(*comForces);
+    addForce(comForces);
 
     cohTime += omp_get_wtime() - frameStartTime;
     frameStartTime = omp_get_wtime();
-
-    delete comForces;
 }
+
 
 
 void BoidSim::applySeparationForceCellList(){
@@ -234,7 +233,7 @@ void BoidSim::applySeparationForceCellList(){
     const auto& positionsY = boidPositions.GetArrayY();
     const auto& positionsZ = boidPositions.GetArrayZ();
 
-    auto repulsionForces = new VectorArray();
+    VectorArray repulsionForces;
  
     constructCellList();
 
@@ -254,20 +253,18 @@ void BoidSim::applySeparationForceCellList(){
             auto repulsionY = std::min(-SEPARATION_FORCE_CONSTANT * separationY / magnitudeFactor, 10.0);
             auto repulsionZ = std::min(-SEPARATION_FORCE_CONSTANT * separationZ / magnitudeFactor, 10.0);
 
-            repulsionForces->GetArrayX()[i] += repulsionX;
-            repulsionForces->GetArrayY()[i] += repulsionY;
-            repulsionForces->GetArrayZ()[i] += repulsionZ;
+            repulsionForces.GetArrayX()[i] += repulsionX;
+            repulsionForces.GetArrayY()[i] += repulsionY;
+            repulsionForces.GetArrayZ()[i] += repulsionZ;
         }
     }
 
-    addForce(*repulsionForces);
+    addForce(repulsionForces);
  
     sepTime += omp_get_wtime() - frameStartTime;
     frameStartTime = omp_get_wtime();
 
     wipeCellList();
-
-    delete repulsionForces;
 }
 
 
@@ -276,7 +273,7 @@ void BoidSim::applySeparationForce(){
     const auto& positionsY = boidPositions.GetArrayY();
     const auto& positionsZ = boidPositions.GetArrayZ();
 
-    auto repulsionForces = new VectorArray();
+    VectorArray repulsionForces;
 
 #pragma omp parallel for
     for (int i = thisProcessStartIndex; i < thisProcessEndIndex+1; ++i){
@@ -297,18 +294,16 @@ void BoidSim::applySeparationForce(){
             auto repulsionY = std::min(-SEPARATION_FORCE_CONSTANT * separationY / magnitudeFactor, 1000.0);
             auto repulsionZ = std::min(-SEPARATION_FORCE_CONSTANT * separationZ / magnitudeFactor, 1000.0);
 
-            repulsionForces->GetArrayX()[i] += repulsionX;
-            repulsionForces->GetArrayY()[i] += repulsionY;
-            repulsionForces->GetArrayZ()[i] += repulsionZ;
+            repulsionForces.GetArrayX()[i] += repulsionX;
+            repulsionForces.GetArrayY()[i] += repulsionY;
+            repulsionForces.GetArrayZ()[i] += repulsionZ;
         }
     }
 
-    addForce(*repulsionForces);
+    addForce(repulsionForces);
  
     sepTime += omp_get_wtime() - frameStartTime;
     frameStartTime = omp_get_wtime();
-
-    delete repulsionForces;
 }
 
 
@@ -316,7 +311,7 @@ void BoidSim::applySeparationForce(){
 void BoidSim::applyAlignmentForce(){
     auto averageDirection = getAverageFlockDirection();
 
-    auto alignmentForces = new VectorArray();
+    VectorArray alignmentForces;
 
 #pragma omp parallel for 
     for (int i = 0; i < SIZE_OF_SIMULATION; ++i){
@@ -324,17 +319,15 @@ void BoidSim::applyAlignmentForce(){
         auto alignmentForceY = ALIGNMENT_FORCE_CONSTANT * (averageDirection[1] - boidDirections.GetArrayY()[i]);
         auto alignmentForceZ = ALIGNMENT_FORCE_CONSTANT * (averageDirection[2] - boidDirections.GetArrayZ()[i]);
 
-        alignmentForces->GetArrayX()[i] = alignmentForceX;
-        alignmentForces->GetArrayY()[i] = alignmentForceY;
-        alignmentForces->GetArrayZ()[i] = alignmentForceZ;
+        alignmentForces.GetArrayX()[i] = alignmentForceX;
+        alignmentForces.GetArrayY()[i] = alignmentForceY;
+        alignmentForces.GetArrayZ()[i] = alignmentForceZ;
     }
 
-    addForce(*alignmentForces);
+    addForce(alignmentForces);
 
     alignTime += omp_get_wtime() - frameStartTime;
     frameStartTime = omp_get_wtime();
-
-    delete alignmentForces;
 }
 
 
