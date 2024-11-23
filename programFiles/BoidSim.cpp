@@ -44,7 +44,7 @@ BoidSim::BoidSim(int numProcesses, int thisProcess) {
 
     // We broadcast the initial state to all other processes, note this doesnt need a MPI_Recv() call
 
-    broadcastState();
+    broadcastStateNonBlocking();
 }
 
 
@@ -57,7 +57,7 @@ void BoidSim::StartSimulation(const long timeSteps) {
         for (int i = 0; i < timeSteps; ++i) {
             if (DEBUG && i <= 2) {
                 logger.DebugLog("\n\nNext Time Step: \n\n");
-                logger.DebugLog(GenerateSimView(3));
+                logger.DebugLog(GenerateSimView(5));
             }
             else if (DEBUG) {
                 logger.DebugLog("\n\nExiting Early Due to Debug Mode");
@@ -66,18 +66,22 @@ void BoidSim::StartSimulation(const long timeSteps) {
 
             resetForces();
 
-            frameStartTime = omp_get_wtime();
+            forceCalcTimer = omp_get_wtime();
 
             // applySeparationForceCellList();
             applySeparationForce();
             applyAlignmentForce();
             applyCohesionForce();
+
+            // We need to wait for all the previous state broadcasts to finish before we can broadcast the new state
+
+            awaitStateBroadcasts();
+
             gatherAndApplyAllProcessForces();
-
             calculateBoidVelocity();
-
             applyTimeStep();
-            broadcastState();
+
+            broadcastStateNonBlocking();
 
             if (writeToFile) {
                 writeBoidSimulation();
@@ -85,12 +89,14 @@ void BoidSim::StartSimulation(const long timeSteps) {
         }
     }
     else {
-        logger.WriteToLog("starting worker process " + std::to_string(thisProcess) + "\n");
+        logger.WriteToLog("Starting worker process " + std::to_string(thisProcess) + "\n");
 
         for (int i = 0; i < timeSteps; ++i) {
+            awaitStateBroadcasts();
+
             if (DEBUG && i <= 2) {
                 logger.DebugLog("\n\nNext Time Step: \n\n");
-                logger.DebugLog(GenerateSimView(3));
+                logger.DebugLog(GenerateSimView(5));
             }
             else if (DEBUG) {
                 logger.DebugLog("\n\nExiting Early Due to Debug Mode");
@@ -99,12 +105,12 @@ void BoidSim::StartSimulation(const long timeSteps) {
 
 
             resetForces();
-            frameStartTime = omp_get_wtime();
+            forceCalcTimer = omp_get_wtime();
 
             // applySeparationForceCellList();
             applySeparationForce();
             boidForces.SendVectorArray(MASTER_PROCESS, thisProcess);
-            broadcastState();
+            broadcastStateNonBlocking();
         }
     }
 
@@ -218,8 +224,8 @@ void BoidSim::applyCohesionForce(){
 
     addForce(comForces);
 
-    cohTime += omp_get_wtime() - frameStartTime;
-    frameStartTime = omp_get_wtime();
+    cohTime += omp_get_wtime() - forceCalcTimer;
+    forceCalcTimer = omp_get_wtime();
 }
 
 
@@ -257,8 +263,8 @@ void BoidSim::applySeparationForceCellList(){
 
     addForce(repulsionForces);
  
-    sepTime += omp_get_wtime() - frameStartTime;
-    frameStartTime = omp_get_wtime();
+    sepTime += omp_get_wtime() - forceCalcTimer;
+    forceCalcTimer = omp_get_wtime();
 
     wipeCellList();
 }
@@ -282,7 +288,7 @@ void BoidSim::applySeparationForce(){
         
             auto distance = std::sqrt(magSquared({separationX, separationY, separationZ}));
 
-            if (distance > 1 or std::abs(distance) < std::numeric_limits<double>::epsilon()) continue;
+            // if (distance > 1 or std::abs(distance) < std::numeric_limits<double>::epsilon()) continue;
 
             auto magnitudeFactor = distance * distance * distance;
 
@@ -298,8 +304,8 @@ void BoidSim::applySeparationForce(){
 
     addForce(repulsionForces);
  
-    sepTime += omp_get_wtime() - frameStartTime;
-    frameStartTime = omp_get_wtime();
+    sepTime += omp_get_wtime() - forceCalcTimer;
+    forceCalcTimer = omp_get_wtime();
 }
 
 
@@ -322,8 +328,8 @@ void BoidSim::applyAlignmentForce(){
 
     addForce(alignmentForces);
 
-    alignTime += omp_get_wtime() - frameStartTime;
-    frameStartTime = omp_get_wtime();
+    alignTime += omp_get_wtime() - forceCalcTimer;
+    forceCalcTimer = omp_get_wtime();
 }
 
 
@@ -347,8 +353,8 @@ void BoidSim::applyTimeStep(){
     }
 
     if (DEBUG){
-        velTime += omp_get_wtime() - frameStartTime;
-        frameStartTime = omp_get_wtime();
+        velTime += omp_get_wtime() - forceCalcTimer;
+        forceCalcTimer = omp_get_wtime();
     }
 
 }
@@ -591,4 +597,20 @@ void BoidSim::broadcastState() {
 
     MPI_Bcast(boidSpeeds.data(), SIZE_OF_SIMULATION, MPI_DOUBLE, MASTER_PROCESS, MPI_COMM_WORLD);
     MPI_Bcast(boidMasses.data(), SIZE_OF_SIMULATION, MPI_DOUBLE, MASTER_PROCESS, MPI_COMM_WORLD);
+}
+
+
+void BoidSim::broadcastStateNonBlocking() {
+    stateBroadcastRequests.fill(MPI_REQUEST_NULL);
+
+    boidPositions.BroadcastVectorArrayNonBlocking(MASTER_PROCESS, stateBroadcastRequests, 0);
+    boidDirections.BroadcastVectorArrayNonBlocking(MASTER_PROCESS, stateBroadcastRequests, 3);
+
+    MPI_Ibcast(boidSpeeds.data(), SIZE_OF_SIMULATION, MPI_DOUBLE, MASTER_PROCESS, MPI_COMM_WORLD, &stateBroadcastRequests[6]);
+    MPI_Ibcast(boidMasses.data(), SIZE_OF_SIMULATION, MPI_DOUBLE, MASTER_PROCESS, MPI_COMM_WORLD, &stateBroadcastRequests[7]);
+}
+
+
+void BoidSim::awaitStateBroadcasts() {
+    MPI_Waitall(8, stateBroadcastRequests.data(), MPI_STATUSES_IGNORE);
 }

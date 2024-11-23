@@ -19,6 +19,7 @@ int main(int argc, char* argv[]) {
         std::cout << "Number of boids supplied : " << SIZE_OF_SIMULATION << std::endl;
     }
 
+    auto startTime = MPI_Wtime();
 
     if (!DO_MULTIPLE_SIMS){
         if (thisProcess == MASTER_PROCESS) std::cout << "Only doing one timeSteps = 1000" << std::endl;
@@ -28,8 +29,6 @@ int main(int argc, char* argv[]) {
         newSim.SetWriteToFile(WRITE_SIM);
 
         newSim.StartSimulation(1000);
-
-        return 0;
     }
 
     // std::array<double, NUM_SIMULATIONS> timeTakenArray;
@@ -55,10 +54,12 @@ int main(int argc, char* argv[]) {
     
     // std::cout << "]" << std::endl;
 
+
+    if (thisProcess == MASTER_PROCESS) {
+        std::cout << "Simulation Complete. Time Taken: " << MPI_Wtime() - startTime << " seconds" << std::endl;
+    }
     
     MPI_Finalize();
-
-    std::cout << "MPI Finalised" << std::endl;
 
     return 0;
 }

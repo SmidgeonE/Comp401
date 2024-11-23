@@ -13,6 +13,8 @@ Logger::~Logger() {
 
 
 void Logger::WriteToLog(const std::string& outputString) {
+    if (not DEBUG) return;
+    
     if (logToFile) {
         logFile << outputString << std::endl;
     }

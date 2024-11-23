@@ -83,6 +83,14 @@ void VectorArray::BroadcastVectorArray(const int rootProcess) {
 }
 
 
+void VectorArray::BroadcastVectorArrayNonBlocking(const int rootProcess, std::array<MPI_Request, 8>& newStateBroadcastRequests, const int broadcastArrayIndex) {
+    MPI_Ibcast(GetArrayX().data(), SIZE_OF_SIMULATION, MPI_DOUBLE, rootProcess, MPI_COMM_WORLD, &newStateBroadcastRequests[broadcastArrayIndex]);
+    MPI_Ibcast(GetArrayY().data(), SIZE_OF_SIMULATION, MPI_DOUBLE, rootProcess, MPI_COMM_WORLD, &newStateBroadcastRequests[broadcastArrayIndex+1]);
+    MPI_Ibcast(GetArrayZ().data(), SIZE_OF_SIMULATION, MPI_DOUBLE, rootProcess, MPI_COMM_WORLD, &newStateBroadcastRequests[broadcastArrayIndex+2]);
+}
+
+
+
 void VectorArray::SendVectorArray(const int destinationProcess, const int currentProcess) {
     // The tag schema is the following : 
     // currentProcess -> the process id

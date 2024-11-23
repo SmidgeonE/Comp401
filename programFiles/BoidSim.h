@@ -74,6 +74,7 @@ public:
     void View(const int viewNum, const std::string& name, std::ofstream& debugStream);
 
     void BroadcastVectorArray(const int rootProcess);
+    void BroadcastVectorArrayNonBlocking(const int rootProcess, std::array<MPI_Request, 8>& newStateBroadcastRequests, const int broadcastArrayIndex);
 
     void SendVectorArray(const int destinationProcess, const int currentProcess);
 
@@ -121,7 +122,7 @@ private:
 
     Logger logger;
 
-    double frameStartTime;
+    double forceCalcTimer;
     double sepTime;
     double alignTime;
     double cohTime;
@@ -132,6 +133,8 @@ private:
 
     int thisProcessStartIndex;
     int thisProcessEndIndex;
+
+    std::array<MPI_Request, 8> stateBroadcastRequests;
 
     std::array<double, 3> getAverageFlockDirection();
 
@@ -156,6 +159,8 @@ private:
     void calculateProcessStartEndIndices();
     void gatherAndApplyAllProcessForces();
     void broadcastState();
+    void broadcastStateNonBlocking();
+    void awaitStateBroadcasts();
 
 public:
     BoidSim(int numProcesses, int thisProcess);
