@@ -43,10 +43,9 @@
 
 #define CELL_NUMBER 10
 
-
-constexpr double SEPARATION_FORCE_CONSTANT = 1;
-constexpr double ALIGNMENT_FORCE_CONSTANT = 0.00001;
-constexpr double COHESION_FORCE_CONSTANT = 0.001;
+constexpr double SEPARATION_FORCE_CONSTANT = 0.1;
+constexpr double ALIGNMENT_FORCE_CONSTANT = 0.01;
+constexpr double COHESION_FORCE_CONSTANT = 0.01;
 
 
 constexpr int NUM_SIMULATIONS = 6;

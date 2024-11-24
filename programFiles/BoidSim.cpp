@@ -12,7 +12,7 @@ BoidSim::BoidSim(int numProcesses, int thisProcess) {
     this->numProcesses = numProcesses;
     this->thisProcess = thisProcess;
 
-    logger.SetLogFile(thisProcess);
+    if (DEBUG) logger.SetLogFile(thisProcess);
 
     calculateProcessStartEndIndices();
 
@@ -287,8 +287,9 @@ void BoidSim::applySeparationForce(){
             auto separationZ = positionsZ[j] - positionsZ[i];
         
             auto distance = std::sqrt(magSquared({separationX, separationY, separationZ}));
+ 
 
-            // if (distance > 1 or std::abs(distance) < std::numeric_limits<double>::epsilon()) continue;
+            if (distance > (BOX_SIZE / 2.0) or std::abs(distance) < std::numeric_limits<double>::epsilon()) continue;
 
             auto magnitudeFactor = distance * distance * distance;
 
@@ -359,6 +360,7 @@ void BoidSim::applyTimeStep(){
 
 }
 
+
 void BoidSim::calculateBoidVelocity(){
     auto& xDirections = boidDirections.GetArrayX();
     auto& yDirections = boidDirections.GetArrayY();
@@ -373,13 +375,9 @@ void BoidSim::calculateBoidVelocity(){
         const auto boxBoundaries = BOX_SIZE / 2.0;
         // We have now calculated the total force for this time step, now we must calculate the new velocity because of that
 
-        auto addVelX = boidForces.GetArrayX()[j] / boidMasses[j];
-        auto addVelY = boidForces.GetArrayY()[j] / boidMasses[j];
-        auto addVelZ = boidForces.GetArrayZ()[j] / boidMasses[j];
-
-        auto newVelocityX = xDirections[j] * boidSpeeds[j] + boidForces.GetArrayX()[j] / boidMasses[j];
-        auto newVelocityY = yDirections[j] * boidSpeeds[j] + boidForces.GetArrayY()[j] / boidMasses[j];
-        auto newVelocityZ = zDirections[j] * boidSpeeds[j] + boidForces.GetArrayZ()[j] / boidMasses[j];
+        auto newVelocityX = xDirections[j] * boidSpeeds[j] + boidForces.GetArrayX()[j] / (boidMasses[j] * 2);
+        auto newVelocityY = yDirections[j] * boidSpeeds[j] + boidForces.GetArrayY()[j] / (boidMasses[j] * 2);
+        auto newVelocityZ = zDirections[j] * boidSpeeds[j] + boidForces.GetArrayZ()[j] / (boidMasses[j] * 2);
 
         auto velocity = std::array<double, 3>{newVelocityX, newVelocityY, newVelocityZ};
         
@@ -396,16 +394,19 @@ void BoidSim::calculateBoidVelocity(){
         if (std::abs(xPositions[j]) > boxBoundaries) {
             xDirections[j] *= -1.0;
             xPositions[j] = std::signbit(xPositions[j]) ? -boxBoundaries + 0.01 : boxBoundaries - 0.01;
+            boidSpeeds[j] *= 0.5;
         }
 
         if (std::abs(yPositions[j]) > boxBoundaries) {
             yDirections[j] *= -1.0;
             yPositions[j] = std::signbit(yPositions[j]) ? -boxBoundaries + 0.01 : boxBoundaries - 0.01;
+            boidSpeeds[j] *= 0.5;
         }
 
         if (std::abs(zPositions[j]) > boxBoundaries) {
             zDirections[j] *= -1.0;
             zPositions[j] = std::signbit(zPositions[j]) ? -boxBoundaries + 0.01 : boxBoundaries - 0.01;
+            boidSpeeds[j] *= 0.5;
         }
     }
 }
@@ -439,7 +440,7 @@ void BoidSim::addForce(VectorArray& force){
 std::array<double, 3> BoidSim::getAverageFlockDirection(){
     auto averageDirection = boidDirections.GetVectorAverage();
 
-    return normaliseVector(averageDirection);
+    return averageDirection;
 }
 
 
@@ -542,7 +543,7 @@ void BoidSim::generateInitialState() {
     else {
         boidPositions.InitialiseRandomVectors(-10.0, 10.0, false);
         boidDirections.InitialiseRandomVectors(-1.0, 1.0, true);
-        initialiseRandomScalars(boidSpeeds, 0.0, 1.0);
+        initialiseRandomScalars(boidSpeeds, 0.0, 5.0);
     }
 
     boidMasses.fill(1.0);
