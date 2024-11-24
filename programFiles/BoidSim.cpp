@@ -9,6 +9,8 @@
 
 
 BoidSim::BoidSim(int numProcesses, int thisProcess) {
+    // setting up simulation
+
     this->numProcesses = numProcesses;
     this->thisProcess = thisProcess;
 
@@ -23,6 +25,9 @@ BoidSim::BoidSim(int numProcesses, int thisProcess) {
     filledCellsX.fill(0);
     filledCellsY.fill(0);
     filledCellsZ.fill(0);
+
+
+    // Setting up cells for Cell List
 
     cellMinima.fill(0.0);
     cellMaxima.fill(0.0);
@@ -44,12 +49,15 @@ BoidSim::BoidSim(int numProcesses, int thisProcess) {
 
     // We broadcast the initial state to all other processes, note this doesnt need a MPI_Recv() call
 
-    broadcastStateNonBlocking();
+    // broadcastStateNonBlocking();
+    broadcastState();
 }
 
 
 void BoidSim::StartSimulation(const long timeSteps) {
     auto simulationStartTime = omp_get_wtime();
+
+    // Here we branch off if either we are the master process in MPI, or a worker.
 
     if (thisProcess == MASTER_PROCESS){
         logger.WriteToLog("Starting Simulation");
@@ -75,13 +83,15 @@ void BoidSim::StartSimulation(const long timeSteps) {
 
             // We need to wait for all the previous state broadcasts to finish before we can broadcast the new state
 
-            awaitStateBroadcasts();
+            // awaitStateBroadcasts();
 
             gatherAndApplyAllProcessForces();
             calculateBoidVelocity();
             applyTimeStep();
 
-            broadcastStateNonBlocking();
+            // broadcastStateNonBlocking();
+
+            broadcastState();
 
             if (writeToFile) {
                 writeBoidSimulation();
@@ -92,7 +102,7 @@ void BoidSim::StartSimulation(const long timeSteps) {
         logger.WriteToLog("Starting worker process " + std::to_string(thisProcess) + "\n");
 
         for (int i = 0; i < timeSteps; ++i) {
-            awaitStateBroadcasts();
+            // awaitStateBroadcasts();
 
             if (DEBUG && i <= 2) {
                 logger.DebugLog("\n\nNext Time Step: \n\n");
@@ -110,7 +120,8 @@ void BoidSim::StartSimulation(const long timeSteps) {
             // applySeparationForceCellList();
             applySeparationForce();
             boidForces.SendVectorArray(MASTER_PROCESS, thisProcess);
-            broadcastStateNonBlocking();
+            // broadcastStateNonBlocking();
+            broadcastState();
         }
     }
 
@@ -122,6 +133,7 @@ void BoidSim::StartSimulation(const long timeSteps) {
 void BoidSim::writeBoidSimulation() {
     std::string outputStr = "";
 
+    // Iterating over all the boids and writing their state to the file
     for (int i = 0; i < SIZE_OF_SIMULATION; ++i) {
         outputStr += "[" + std::to_string(boidPositions.GetArrayX()[i]) + "," 
             + std::to_string(boidPositions.GetArrayY()[i]) + "," 
@@ -222,6 +234,9 @@ void BoidSim::applyCohesionForce(){
         comForces.GetArrayZ()[i] = COHESION_FORCE_CONSTANT * comDirectionZ;
     }
 
+
+    // Add force, and time how long the calc took
+
     addForce(comForces);
 
     cohTime += omp_get_wtime() - forceCalcTimer;
@@ -239,10 +254,15 @@ void BoidSim::applySeparationForceCellList(){
  
     constructCellList();
 
+
+    // We need to iterate over every boid in the sim, then get each adjacent boid.
+    // SHOULD be lower than O(n^2).
+
 #pragma omp parallel for
     for (int i = 0; i < SIZE_OF_SIMULATION; ++i){
         auto adjacentBoids = getAdjacentBoids(i);
 
+        // Then we iterate over every boid we find, and calc the force due to them.
         for (auto adjacentBoid : adjacentBoids){
             auto separationX = positionsX[adjacentBoid] - positionsX[i];
             auto separationY = positionsY[adjacentBoid] - positionsY[i];
@@ -260,6 +280,8 @@ void BoidSim::applySeparationForceCellList(){
             repulsionForces.GetArrayZ()[i] += repulsionZ;
         }
     }
+
+    // Add force, check timer.
 
     addForce(repulsionForces);
  
@@ -288,8 +310,11 @@ void BoidSim::applySeparationForce(){
         
             auto distance = std::sqrt(magSquared({separationX, separationY, separationZ}));
  
+            if (distance > 1 or std::abs(distance) < std::numeric_limits<double>::epsilon()) continue;
+            // if (distance > (BOX_SIZE / 2.0) or std::abs(distance) < std::numeric_limits<double>::epsilon()) continue;
 
-            if (distance > (BOX_SIZE / 2.0) or std::abs(distance) < std::numeric_limits<double>::epsilon()) continue;
+
+            // magnitude factor allows us to make it an inverse square force.
 
             auto magnitudeFactor = distance * distance * distance;
 
@@ -315,6 +340,8 @@ void BoidSim::applyAlignmentForce(){
     auto averageDirection = getAverageFlockDirection();
 
     VectorArray alignmentForces;
+
+    // This force is quite straight forward, just the difference between the average direction and the boid's direction.
 
 #pragma omp parallel for 
     for (int i = 0; i < SIZE_OF_SIMULATION; ++i){
@@ -353,11 +380,8 @@ void BoidSim::applyTimeStep(){
         zPositions[j] += zDirections[j] * boidSpeeds[j];
     }
 
-    if (DEBUG){
-        velTime += omp_get_wtime() - forceCalcTimer;
-        forceCalcTimer = omp_get_wtime();
-    }
-
+    velTime += omp_get_wtime() - forceCalcTimer;
+    forceCalcTimer = omp_get_wtime();
 }
 
 
@@ -374,12 +398,16 @@ void BoidSim::calculateBoidVelocity(){
     for (int j = 0; j < SIZE_OF_SIMULATION; ++j) {
         const auto boxBoundaries = BOX_SIZE / 2.0;
         // We have now calculated the total force for this time step, now we must calculate the new velocity because of that
+        // Using the equation in the report: 
 
         auto newVelocityX = xDirections[j] * boidSpeeds[j] + boidForces.GetArrayX()[j] / (boidMasses[j] * 2);
         auto newVelocityY = yDirections[j] * boidSpeeds[j] + boidForces.GetArrayY()[j] / (boidMasses[j] * 2);
         auto newVelocityZ = zDirections[j] * boidSpeeds[j] + boidForces.GetArrayZ()[j] / (boidMasses[j] * 2);
 
         auto velocity = std::array<double, 3>{newVelocityX, newVelocityY, newVelocityZ};
+
+        // Once we have the velocity, we find the magnitude, and store that in the BoidSpeeds
+        // Then we normalise the velocity and store that in the boidDirections
         
         boidSpeeds[j] = std::sqrt(magSquared(velocity));
 
@@ -449,6 +477,9 @@ void BoidSim::constructCellList(){
     auto& positionsY = boidPositions.GetArrayY();
     auto& positionsZ = boidPositions.GetArrayZ();
 
+    // We break down the space into chunks, where the start and end of the cells are the max and min of the positions of the Boids.
+    // This means we can have a theoretically unbounded sim space.
+
     auto minMaxX = minMaxOfArray(positionsX);
     auto minMaxY = minMaxOfArray(positionsY);
     auto minMaxZ = minMaxOfArray(positionsZ);
@@ -482,6 +513,9 @@ std::array<int, 3> BoidSim::getBoidCell(const int boidIndex){
     auto positionsY = boidPositions.GetArrayY();
     auto positionsZ = boidPositions.GetArrayZ();
 
+    // strange int casting to perfectly arrange each Boid into a cell based on the min and max of the cells
+    // As well as the size of the cells.
+
     auto cellX = (int) (((positionsX[boidIndex] - cellMinima[0]) / (cellMaxima[0] - cellMinima[0])) * CELL_NUMBER);
     auto cellY = (int) (((positionsY[boidIndex] - cellMinima[1]) / (cellMaxima[1] - cellMinima[1])) * CELL_NUMBER);
     auto cellZ = (int) (((positionsZ[boidIndex] - cellMinima[2]) / (cellMaxima[2] - cellMinima[2])) * CELL_NUMBER);
@@ -511,6 +545,8 @@ std::vector<int> BoidSim::getAdjacentBoids(const int boidIndex){
     auto boidCell = getBoidCell(boidIndex);
     std::vector<int> adjacentBoids = {};
 
+
+    // Looks like an O(n^3) operation, but in reality it is O(27) as we are only iterating over the 27 cells around (the boids and the 26 around it)
 
     for (int ix = boidCell[0]-1; ix < boidCell[0]+2; ++ix){
         for (int iy = boidCell[1]-1; iy < boidCell[1]+2; ++iy){
@@ -564,6 +600,9 @@ BoidSim::~BoidSim() {
 
 
 void BoidSim::calculateProcessStartEndIndices(){
+
+
+    // Dividing the sim space into chunks for each process
     thisProcessStartIndex = (int) ((thisProcess / (double)numProcesses) * SIZE_OF_SIMULATION);
     thisProcessEndIndex = (int) ((((thisProcess+1) / (double)numProcesses) * SIZE_OF_SIMULATION)-1);
 
@@ -602,6 +641,9 @@ void BoidSim::broadcastState() {
 
 
 void BoidSim::broadcastStateNonBlocking() {
+
+    // The same as above, but now we need a referecnce to the MPI_Requests to wait for them later
+    
     stateBroadcastRequests.fill(MPI_REQUEST_NULL);
 
     boidPositions.BroadcastVectorArrayNonBlocking(MASTER_PROCESS, stateBroadcastRequests, 0);

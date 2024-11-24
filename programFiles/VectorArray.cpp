@@ -54,6 +54,8 @@ void VectorArray::InitialiseRandomVectors(const double lowerBound, const double 
 }
 
 
+
+
 void VectorArray::InitialiseVectorsToLine(const double gridSize) {
     // Sets vectors to the line y=x=z
 
@@ -77,6 +79,8 @@ void VectorArray::InitaliseVectorsToZHat() {
 
 
 void VectorArray::BroadcastVectorArray(const int rootProcess) {
+    // As we can't broadcast custom classes, we need to broadcast each array individually.
+
     MPI_Bcast(GetArrayX().data(), SIZE_OF_SIMULATION, MPI_DOUBLE, rootProcess, MPI_COMM_WORLD);
     MPI_Bcast(GetArrayY().data(), SIZE_OF_SIMULATION, MPI_DOUBLE, rootProcess, MPI_COMM_WORLD);
     MPI_Bcast(GetArrayZ().data(), SIZE_OF_SIMULATION, MPI_DOUBLE, rootProcess, MPI_COMM_WORLD);
@@ -84,6 +88,8 @@ void VectorArray::BroadcastVectorArray(const int rootProcess) {
 
 
 void VectorArray::BroadcastVectorArrayNonBlocking(const int rootProcess, std::array<MPI_Request, 8>& newStateBroadcastRequests, const int broadcastArrayIndex) {
+    // As we can't broadcast custom classes, we need to broadcast each array individually.
+
     MPI_Ibcast(GetArrayX().data(), SIZE_OF_SIMULATION, MPI_DOUBLE, rootProcess, MPI_COMM_WORLD, &newStateBroadcastRequests[broadcastArrayIndex]);
     MPI_Ibcast(GetArrayY().data(), SIZE_OF_SIMULATION, MPI_DOUBLE, rootProcess, MPI_COMM_WORLD, &newStateBroadcastRequests[broadcastArrayIndex+1]);
     MPI_Ibcast(GetArrayZ().data(), SIZE_OF_SIMULATION, MPI_DOUBLE, rootProcess, MPI_COMM_WORLD, &newStateBroadcastRequests[broadcastArrayIndex+2]);

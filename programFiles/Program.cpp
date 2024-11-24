@@ -1,7 +1,9 @@
 #include "BoidSim.h"
 
-
 int main(int argc, char* argv[]) {
+
+    // Here we init OpenMP, MPI
+
     int numThreads = NUM_THREADS == -1 ? omp_get_max_threads() : NUM_THREADS;
 
     int nameLen, numProcesses, thisProcess;
@@ -21,6 +23,8 @@ int main(int argc, char* argv[]) {
 
     auto startTime = MPI_Wtime();
 
+
+    // Then we start the Sim using BoidSim
     if (!DO_MULTIPLE_SIMS){
         if (thisProcess == MASTER_PROCESS) std::cout << "Only doing one timeSteps = 1000" << std::endl;
 
