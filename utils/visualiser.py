@@ -1,9 +1,22 @@
+import argparse
+import os
 from matplotlib import pyplot as plt
 import matplotlib.animation as animation
 import polars as pl
 from mpl_toolkits.mplot3d import Axes3D
 
-file_path = '/user/home/oz21652/Comp401/BoidSimulation.csv'
+# Set up argument parser
+parser = argparse.ArgumentParser(description='Boid Simulation Visualiser')
+parser.add_argument('--file_path', type=str, help='Path to the CSV file')
+args = parser.parse_args()
+
+# Default file path
+file_path = './../BoidSimulation.csv'
+
+# Check if the optional argument is provided and is a valid file path
+if args.file_path and os.path.isfile(args.file_path):
+    file_path = args.file_path
+
 dfs = []
 
 columnDict = {
@@ -47,7 +60,6 @@ figure = plt.figure()
 
 ax = figure.add_subplot(111, projection='3d')
 
-
 allXVals = [val for df in dfs for val in df['posX'].to_list()]
 allYVals = [val for df in dfs for val in df['posY'].to_list()]
 allZVals = [val for df in dfs for val in df['posZ'].to_list()]
@@ -65,7 +77,6 @@ def update(frame):
     ax.grid(True)
 
     return [scat]
-
 
 ani = animation.FuncAnimation(figure, update, frames=len(dfs), repeat=False, blit=True)
 
