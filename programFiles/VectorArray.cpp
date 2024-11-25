@@ -13,7 +13,7 @@ std::array<double, 3> VectorArray::GetVectorAverage() {
     double averageY = 0;
     double averageZ = 0;
 
-#pragma omp parallel reduction(+: averageX, averageY, averageZ) 
+#pragma omp parallel for schedule(dynamic, CHUNK_SIZE) reduction(+: averageX, averageY, averageZ) 
     for (int i = 0; i < SIZE_OF_SIMULATION; ++i){
         averageX += arrayX[i];
         averageY += arrayY[i];

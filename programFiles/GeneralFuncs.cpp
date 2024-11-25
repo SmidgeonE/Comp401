@@ -5,7 +5,7 @@ void initialiseRandomScalars(std::array<double, SIZE_OF_SIMULATION>& scalarArray
     std::mt19937 gen(rd());
     std::uniform_real_distribution<> dis(lowerBound, upperBound);
 
-#pragma omp parallel for
+#pragma omp parallel for schedule(dynamic, CHUNK_SIZE)
     for (int i = 0; i < SIZE_OF_SIMULATION; ++i) {
         scalarArray[i] = dis(gen);
     }

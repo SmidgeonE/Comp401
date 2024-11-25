@@ -15,7 +15,7 @@
 #endif
 
 #ifndef NUM_THREADS
-#   define NUM_THREADS -1
+#   define NUM_THREADS 28
 #endif
 
 #ifndef DEBUG
@@ -36,6 +36,10 @@
 
 #ifndef NON_RANDOM
 #   define NON_RANDOM false
+#endif
+
+#ifndef CHUNK_SIZE
+#   define CHUNK_SIZE 1
 #endif
 
 
@@ -474,15 +478,5 @@ double runAndTimeSimulation(int timeSteps, bool writeToFile, int totalNumProcess
  *         and the second element is the maximum value of the input array.
  */
 std::array<double, 2> minMaxOfArray(std::array<double, SIZE_OF_SIMULATION>& array);
-
-/**
- * @brief Main function for the simulation program.
- * 
- * This function initializes the simulation. Note I have removed the ability to run multiple simulations
- * because it is no longer useful.
- * 
- * 
- **/
-int main();
 
 #endif // BOIDSIM_H

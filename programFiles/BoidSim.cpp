@@ -45,12 +45,14 @@ BoidSim::BoidSim(int numProcesses, int thisProcess) {
 
     if (thisProcess == MASTER_PROCESS){
         generateInitialState();
+
+        logger.DebugLog("Size of Chunks : " + std::to_string(CHUNK_SIZE));
     }
 
     // We broadcast the initial state to all other processes, note this doesnt need a MPI_Recv() call
 
-    // broadcastStateNonBlocking();
-    broadcastState();
+    broadcastStateNonBlocking();
+    // broadcastState();
 }
 
 
@@ -83,15 +85,15 @@ void BoidSim::StartSimulation(const long timeSteps) {
 
             // We need to wait for all the previous state broadcasts to finish before we can broadcast the new state
 
-            // awaitStateBroadcasts();
+            awaitStateBroadcasts();
 
             gatherAndApplyAllProcessForces();
             calculateBoidVelocity();
             applyTimeStep();
 
-            // broadcastStateNonBlocking();
+            broadcastStateNonBlocking();
 
-            broadcastState();
+            // broadcastState();
 
             if (writeToFile) {
                 writeBoidSimulation();
@@ -102,7 +104,7 @@ void BoidSim::StartSimulation(const long timeSteps) {
         logger.WriteToLog("Starting worker process " + std::to_string(thisProcess) + "\n");
 
         for (int i = 0; i < timeSteps; ++i) {
-            // awaitStateBroadcasts();
+            awaitStateBroadcasts();
 
             if (DEBUG && i <= 2) {
                 logger.DebugLog("\n\nNext Time Step: \n\n");
@@ -120,8 +122,8 @@ void BoidSim::StartSimulation(const long timeSteps) {
             // applySeparationForceCellList();
             applySeparationForce();
             boidForces.SendVectorArray(MASTER_PROCESS, thisProcess);
-            // broadcastStateNonBlocking();
-            broadcastState();
+            broadcastStateNonBlocking();
+            // broadcastState();
         }
     }
 
@@ -208,7 +210,7 @@ void BoidSim::applyCohesionForce(){
     VectorArray comForces;
 
 
-#pragma omp parallel for reduction(+:comX, comY, comZ, totalMass)
+#pragma omp parallel for schedule(dynamic, CHUNK_SIZE) reduction(+:comX, comY, comZ, totalMass)
     for (int i = 0; i < SIZE_OF_SIMULATION; ++i){
         comX += positionsX[i] * boidMasses[i];
         comY += positionsY[i] * boidMasses[i];
@@ -223,7 +225,7 @@ void BoidSim::applyCohesionForce(){
 
     // Now we have the COM we need to add a linear force based on the distance from the COM
 
-#pragma omp for
+#pragma omp for schedule(dynamic, CHUNK_SIZE)
     for (int i = 0; i < SIZE_OF_SIMULATION; ++i){
         auto comDirectionX = comX - positionsX[i];
         auto comDirectionY = comY - positionsY[i];
@@ -258,7 +260,7 @@ void BoidSim::applySeparationForceCellList(){
     // We need to iterate over every boid in the sim, then get each adjacent boid.
     // SHOULD be lower than O(n^2).
 
-#pragma omp parallel for
+#pragma omp parallel for schedule(dynamic, CHUNK_SIZE)
     for (int i = 0; i < SIZE_OF_SIMULATION; ++i){
         auto adjacentBoids = getAdjacentBoids(i);
 
@@ -299,7 +301,7 @@ void BoidSim::applySeparationForce(){
 
     VectorArray repulsionForces;
 
-#pragma omp parallel for
+#pragma omp parallel for schedule(dynamic, CHUNK_SIZE)
     for (int i = thisProcessStartIndex; i < thisProcessEndIndex+1; ++i){
         for (int j = 0; j < SIZE_OF_SIMULATION; ++j){
             if (i == j) continue;
@@ -343,7 +345,7 @@ void BoidSim::applyAlignmentForce(){
 
     // This force is quite straight forward, just the difference between the average direction and the boid's direction.
 
-#pragma omp parallel for 
+#pragma omp parallel for schedule(dynamic, CHUNK_SIZE)
     for (int i = 0; i < SIZE_OF_SIMULATION; ++i){
         auto alignmentForceX = ALIGNMENT_FORCE_CONSTANT * (averageDirection[0] - boidDirections.GetArrayX()[i]);
         auto alignmentForceY = ALIGNMENT_FORCE_CONSTANT * (averageDirection[1] - boidDirections.GetArrayY()[i]);
@@ -371,7 +373,7 @@ void BoidSim::applyTimeStep(){
     auto& zDirections = boidDirections.GetArrayZ();
 
 
-#pragma omp parallel for
+#pragma omp parallel for schedule(dynamic, CHUNK_SIZE)
     for (int j = 0; j < SIZE_OF_SIMULATION; ++j) {
         // Then we must apply the physical movements from this time step
 
@@ -394,7 +396,7 @@ void BoidSim::calculateBoidVelocity(){
     auto& yPositions = boidPositions.GetArrayY();
     auto& zPositions = boidPositions.GetArrayZ();
 
-#pragma omp parallel for
+#pragma omp parallel for schedule(dynamic, CHUNK_SIZE)
     for (int j = 0; j < SIZE_OF_SIMULATION; ++j) {
         const auto boxBoundaries = BOX_SIZE / 2.0;
         // We have now calculated the total force for this time step, now we must calculate the new velocity because of that
@@ -456,7 +458,7 @@ void BoidSim::addForce(VectorArray& force){
     auto& forcesY = boidForces.GetArrayY();
     auto& forcesZ = boidForces.GetArrayZ();
 
-#pragma omp parallel for
+#pragma omp parallel for schedule(dynamic, CHUNK_SIZE)
     for (int i = 0; i < SIZE_OF_SIMULATION; ++i){
         forcesX[i] += force.GetArrayX()[i];
         forcesY[i] += force.GetArrayY()[i];
@@ -492,7 +494,7 @@ void BoidSim::constructCellList(){
     cellMaxima[1] = minMaxY[1];
     cellMaxima[2] = minMaxZ[1];
 
-#pragma omp parallel for
+#pragma omp parallel for schedule(dynamic, CHUNK_SIZE)
     for (int i = 0; i < SIZE_OF_SIMULATION; ++i){
         auto boidCell = getBoidCell(i);
 

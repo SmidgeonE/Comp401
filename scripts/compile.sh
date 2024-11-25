@@ -13,6 +13,7 @@ if [[ "$1" == "-h" || "$1" == "--h" || "$1" == "--help" ]]; then
     echo "Usage: $0 -ms -> This performs multiple simulations at different time steps. Without it defaults to just steps=1000"
     echo "Usage: $0 -b <num> -> This changes the default bounds of the simulation."
     echo "Usage $0 -nr -> This makes the initial state non-random. Useful for debugging."
+    echo "Usage: $0 -c <num> -> This changes the default chunk size for dynamic scheduling. Defaults to SIZE_OF_SIMULATION/NUM_THREADS"
     exit
 fi
 
@@ -64,6 +65,15 @@ while [[ "$#" -gt 0 ]]; do
             ;;
         -nr)
             customFlags+=" -DNON_RANDOM=true"
+            ;;
+        -c)
+            if [[ "$2" =~ ^[0-9]+$ ]]; then
+                customFlags+=" -DCHUNK_SIZE=$2"
+                shift
+            else
+                echo "Error: -c flag requires a numeric argument."
+                exit 1
+            fi
             ;;
     esac
     shift

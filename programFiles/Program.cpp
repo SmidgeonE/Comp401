@@ -19,6 +19,7 @@ int main(int argc, char* argv[]) {
     if (thisProcess == MASTER_PROCESS){
         std::cout << "Number of threads to use : " << numThreads << std::endl;
         std::cout << "Number of boids supplied : " << SIZE_OF_SIMULATION << std::endl;
+        std::cout << "Chunk Size : " << CHUNK_SIZE << std::endl;
     }
 
     auto startTime = MPI_Wtime();
