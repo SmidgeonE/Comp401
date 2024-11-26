@@ -75,14 +75,26 @@ Some premade gifs of the simulations are in ./visualisationExamples
 
 It will take like 10-20 secs. Once its done, a simulation.gif file will appear in the base directory.
 
+
 The default parameters will showcase a fairly normal behaviour: a sort of bifurcating flocking pattern.
+
+![Simulation Example](./visualisationExamples/standard20.gif)
 
 If you increase the separation parameter (by around 100x), you get this sort of spiralling flock behaviour.
 
+
+![Simulation Example](./visualisationExamples/highSeparation.gif)
+
+
+
 If you increase cohesion by about 10x, you get a very aggressive close flocking, which seems to in radius over time.
 
-High Alignment (3x default), will give a similar pattern, but it often decays to a straight line path for the flock.
+![Simulation Example](./visualisationExamples/highCohesion.gif)
 
+
+High Alignment (3x default), will give a similar pattern, but it often decays to a straight line path for the flock. Low alignment will cause them to have a much more sporadic path.
+
+![Simulation Example](./visualisationExamples/lowAlignment.gif)
 
 
 
