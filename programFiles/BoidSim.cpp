@@ -199,7 +199,6 @@ std::string BoidSim::GenerateSimView(int viewNum) {
 
 
 void BoidSim::applyCohesionForce(){    
-    std::cout << separationForceConstant << std::endl;
     const auto& positionsX = boidPositions.GetArrayX();
     const auto& positionsY = boidPositions.GetArrayY();
     const auto& positionsZ = boidPositions.GetArrayZ();

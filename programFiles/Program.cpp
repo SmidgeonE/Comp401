@@ -40,6 +40,10 @@ int main(int argc, char* argv[]) {
         std::cout << "Number of threads to use : " << numThreads << std::endl;
         std::cout << "Number of boids supplied : " << SIZE_OF_SIMULATION << std::endl;
         std::cout << "Chunk Size : " << CHUNK_SIZE << std::endl;
+
+        std::cout << "Using Separation Force Constant : " << separationForceConstant << std::endl;
+        std::cout << "Using Cohesion Force Constant : " << cohesionForceConstant << std::endl;
+        std::cout << "Using Alignment Force Constant : " << alignmentForceConstant << std::endl;
     }
 
     auto startTime = MPI_Wtime();
