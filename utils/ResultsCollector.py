@@ -3,15 +3,15 @@ import sys
 
 def process_files():
     result = {}
-    current_directory = os.getcwd() + '/../'
+    current_directory = os.getcwd()
     for filename in os.listdir(current_directory):
         if filename.endswith(".out"):
             with open(filename, 'r') as file:
                 lines = file.readlines()
                 if len(lines) < 3:
                     continue
-                third_last_line = lines[-3]
-                last_word = int(third_last_line.split()[-1])
+                fourth_last_line = lines[-4]
+                last_word = int(fourth_last_line.split()[-1])
                 
                 last_line = lines[-1]
                 time_part = float(last_line.split()[-2])
@@ -28,7 +28,6 @@ if __name__ == "__main__":
         print("Note: It assumes the output files are in the parent directory.")
         sys.exit(0)
 
-
     collected_data = process_files()
-    for key, value in collected_data.items():
-        print(f"{key}: {value}\n")
+    for key in sorted(collected_data.keys()):
+        print(f"{key}: {collected_data[key]}\n")

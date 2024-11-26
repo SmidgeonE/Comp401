@@ -11,7 +11,7 @@ parser.add_argument('--file_path', type=str, help='Path to the CSV file')
 args = parser.parse_args()
 
 # Default file path
-file_path = './../BoidSimulation.csv'
+file_path = './BoidSimulation.csv'
 
 # Check if the optional argument is provided and is a valid file path
 if args.file_path and os.path.isfile(args.file_path):
@@ -80,5 +80,5 @@ def update(frame):
 
 ani = animation.FuncAnimation(figure, update, frames=len(dfs), repeat=False, blit=True)
 
-ani.save('simulation.gif', writer='pillow', fps=100)
+ani.save('simulation.gif', writer='pillow', fps=20)
 plt.show()

@@ -276,9 +276,9 @@ void BoidSim::applySeparationForceCellList(){
             auto magnitudeFactor = std::sqrt(magSquared({separationX, separationY, separationZ}));
             magnitudeFactor *= magnitudeFactor * magnitudeFactor;
 
-            auto repulsionX = std::min(-separationForceConstant * separationX / magnitudeFactor, 10.0);
-            auto repulsionY = std::min(-separationForceConstant * separationY / magnitudeFactor, 10.0);
-            auto repulsionZ = std::min(-separationForceConstant * separationZ / magnitudeFactor, 10.0);
+            auto repulsionX = std::min(-separationForceConstant * separationX / magnitudeFactor, 3.0);
+            auto repulsionY = std::min(-separationForceConstant * separationY / magnitudeFactor, 3.0);
+            auto repulsionZ = std::min(-separationForceConstant * separationZ / magnitudeFactor, 3.0);
 
             repulsionForces.GetArrayX()[i] += repulsionX;
             repulsionForces.GetArrayY()[i] += repulsionY;
@@ -315,17 +315,17 @@ void BoidSim::applySeparationForce(){
         
             auto distance = std::sqrt(magSquared({separationX, separationY, separationZ}));
  
-            if (distance > 1 or std::abs(distance) < std::numeric_limits<double>::epsilon()) continue;
-            // if (distance > (BOX_SIZE / 2.0) or std::abs(distance) < std::numeric_limits<double>::epsilon()) continue;
+            // if (distance > 1 or std::abs(distance) < std::numeric_limits<double>::epsilon()) continue;
+            if (distance > (BOX_SIZE / 3.0) or std::abs(distance) < std::numeric_limits<double>::epsilon()) continue;
 
 
             // magnitude factor allows us to make it an inverse square force.
 
             auto magnitudeFactor = distance * distance * distance;
 
-            auto repulsionX = std::min(-separationForceConstant * separationX / magnitudeFactor, 1000.0);
-            auto repulsionY = std::min(-separationForceConstant * separationY / magnitudeFactor, 1000.0);
-            auto repulsionZ = std::min(-separationForceConstant * separationZ / magnitudeFactor, 1000.0);
+            auto repulsionX = std::min(-separationForceConstant * separationX / magnitudeFactor, 10.0);
+            auto repulsionY = std::min(-separationForceConstant * separationY / magnitudeFactor, 10.0);
+            auto repulsionZ = std::min(-separationForceConstant * separationZ / magnitudeFactor, 10.0);
 
             repulsionForces.GetArrayX()[i] += repulsionX;
             repulsionForces.GetArrayY()[i] += repulsionY;
@@ -423,23 +423,24 @@ void BoidSim::calculateBoidVelocity(){
         zDirections[j] = velocityNormalised[2];
 
         // Now we can apply the walls of the simulation
+        // Optionally, the speed can be reduced after a collision to simulate a more realistic action.
 
         if (std::abs(xPositions[j]) > boxBoundaries) {
             xDirections[j] *= -1.0;
             xPositions[j] = std::signbit(xPositions[j]) ? -boxBoundaries + 0.01 : boxBoundaries - 0.01;
-            boidSpeeds[j] *= 0.5;
+            boidSpeeds[j] *= 1.0;
         }
 
         if (std::abs(yPositions[j]) > boxBoundaries) {
             yDirections[j] *= -1.0;
             yPositions[j] = std::signbit(yPositions[j]) ? -boxBoundaries + 0.01 : boxBoundaries - 0.01;
-            boidSpeeds[j] *= 0.5;
+            boidSpeeds[j] *= 1.0;
         }
 
         if (std::abs(zPositions[j]) > boxBoundaries) {
             zDirections[j] *= -1.0;
             zPositions[j] = std::signbit(zPositions[j]) ? -boxBoundaries + 0.01 : boxBoundaries - 0.01;
-            boidSpeeds[j] *= 0.5;
+            boidSpeeds[j] *= 1.0;
         }
     }
 }
@@ -582,8 +583,8 @@ void BoidSim::generateInitialState() {
         boidSpeeds.fill(0.0);
     }
     else {
-        boidPositions.InitialiseRandomVectors(-10.0, 10.0, false);
-        boidDirections.InitialiseRandomVectors(-1.0, 1.0, true);
+        boidPositions.InitialiseRandomVectors(-BOX_SIZE/2, BOX_SIZE/2, false);
+        boidDirections.InitaliseVectorsToZHat();
         initialiseRandomScalars(boidSpeeds, 0.0, 5.0);
     }
 
