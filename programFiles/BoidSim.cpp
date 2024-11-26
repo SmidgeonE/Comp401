@@ -474,7 +474,7 @@ void BoidSim::addForce(VectorArray& force){
 std::array<double, 3> BoidSim::getAverageFlockDirection(){
     auto averageDirection = boidDirections.GetVectorAverage();
 
-    return averageDirection;
+    return normaliseVector(averageDirection);
 }
 
 

@@ -31,7 +31,7 @@ Here is an example of compiling an executable of 15 Boids with 4 OpenMP threads,
 ./scripts/compile.sh -t 4 -n 15 -b 30 -o
 ```
 
-This will produce a binary in the current directory with the name <numBoids>.exe . This can then be ran:
+This will produce a binary in the current directory with the name *numBoids*.exe . This can then be ran:
 
 ```
 ./15.exe
@@ -39,7 +39,7 @@ This will produce a binary in the current directory with the name <numBoids>.exe
 
 ## Note
 
-You can also add the separation, cohesion, and alignment constants at runtime as well to override the default values:
+I changed my mind, you can also add the separation, cohesion, and alignment constants at runtime as well to override the default values:
 
 ```
 ./15.exe <separationConstas> <cohesionConstant> <alignmentConstant>
@@ -49,7 +49,7 @@ You can also add the separation, cohesion, and alignment constants at runtime as
 Or, with MPI:
 
 ```
-mpiexec -n <numMPIcores> ./15.exe
+mpiexec -n <numMPIcores> ./15.exe <separationConstas> <cohesionConstant> <alignmentConstant>
 ```
 
 Alternatively, this can be ran as a job on BC4. There is an example BC4 script in ./bc4/ that you can use.
@@ -66,39 +66,38 @@ pip install polars
 Once the BoidSimulation.csv file has been made in the base directory, you can create a gif that shows whats happening. From the base directory you can run:
 
 ```
-python ./utils/visualise.py
+python3 ./utils/visualise.py
 ```
 
 # Examples:
 
 Some premade gifs of the simulations are in ./visualisationExamples
 
-It will take like 10-20 secs. Once its done, a simulation.gif file will appear in the base directory.
+It will take like 10-20 secs to render. Once its done, a simulation.gif file will appear in the base directory.
 
 
-The default parameters will showcase a fairly normal behaviour: a sort of bifurcating flocking pattern.
+The default parameters will showcase a fairly normal behaviour: a fairly well coupled group follow each other quite closely.
 
-![Simulation Example](./visualisationExamples/standard20.gif)
+![Simulation Example](./visualisationExamples/default.gif)
 
-If you increase the separation parameter (by around 100x), you get this sort of spiralling flock behaviour.
-
-
-![Simulation Example](./visualisationExamples/highSeparation.gif)
-
-
-
-If you increase cohesion by about 10x, you get a very aggressive close flocking, which seems to in radius over time.
+A high cohesion group will be extremely tight, but due to the separation force will be at a more unstable equilibrium. This instability causes some self-propelling effect of the group.
 
 ![Simulation Example](./visualisationExamples/highCohesion.gif)
 
+High separation causes the group to have a wider gap between the individual Boids, as per expectation.
 
-High Alignment (3x default), will give a similar pattern, but it often decays to a straight line path for the flock. Low alignment will cause them to have a much more sporadic path.
+![Simulation Example](./visualisationExamples/highSeparation.gif)
+
+Low Alignment means they do not form a coherent direction until much later in the simulation.
 
 ![Simulation Example](./visualisationExamples/lowAlignment.gif)
 
+High separation and high alignment causes a highly stable flock, with a very specific direction, and not much intra-flock variation.
 
+![Simulation Example](./visualisationExamples/highSeparationHighAlignment.gif)
 
+Low cohesion but high alignment has a vaguely similar effect, except there is much more 'lag' inside the flock, and occassionally it slingshots itself.
 
-
+![Simulation Example](./visualisationExamples/lowCohesionHighAlignment.gif)
 
 
