@@ -37,6 +37,15 @@ This will produce a binary in the current directory with the name <numBoids>.exe
 ./15.exe
 ```
 
+## Note
+
+You can also add the separation, cohesion, and alignment constants at runtime as well to override the default values:
+
+```
+./15.exe <separationConstas> <cohesionConstant> <alignmentConstant>
+```
+
+
 Or, with MPI:
 
 ```
