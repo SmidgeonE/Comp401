@@ -1,6 +1,26 @@
 #include "BoidSim.h"
 
 int main(int argc, char* argv[]) {
+    // Taking definitions from user, if supplied
+
+    auto separationForceConstant = DEFAULT_SEPARATION_FORCE_CONSTANT;
+    auto cohesionForceConstant = DEFAULT_COHESION_FORCE_CONSTANT;
+    auto alignmentForceConstant = DEFAULT_ALIGNMENT_FORCE_CONSTANT;
+
+    if (argc == 4) {
+        try {  
+            separationForceConstant = std::stod(argv[1]);
+            cohesionForceConstant = std::stod(argv[2]);
+            alignmentForceConstant = std::stod(argv[3]);
+        }
+        catch (const std::invalid_argument& e) {
+                std::cerr << "Invalid argument supplied. Using default values." << std::endl;
+
+                separationForceConstant = DEFAULT_SEPARATION_FORCE_CONSTANT;
+                cohesionForceConstant = DEFAULT_COHESION_FORCE_CONSTANT;
+                alignmentForceConstant = DEFAULT_ALIGNMENT_FORCE_CONSTANT;
+        }
+    }
 
     // Here we init OpenMP, MPI
 
@@ -29,7 +49,7 @@ int main(int argc, char* argv[]) {
     if (!DO_MULTIPLE_SIMS){
         if (thisProcess == MASTER_PROCESS) std::cout << "Only doing one timeSteps = 1000" << std::endl;
 
-        BoidSim newSim(numProcesses, thisProcess);
+        BoidSim newSim(numProcesses, thisProcess, separationForceConstant, alignmentForceConstant, cohesionForceConstant);
 
         newSim.SetWriteToFile(WRITE_SIM);
 

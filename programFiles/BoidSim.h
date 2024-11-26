@@ -47,9 +47,9 @@
 
 #define CELL_NUMBER 10
 
-constexpr double SEPARATION_FORCE_CONSTANT = 0.1;
-constexpr double ALIGNMENT_FORCE_CONSTANT = 0.01;
-constexpr double COHESION_FORCE_CONSTANT = 0.01;
+constexpr double DEFAULT_SEPARATION_FORCE_CONSTANT = 0.1;
+constexpr double DEFAULT_ALIGNMENT_FORCE_CONSTANT = 0.01;
+constexpr double DEFAULT_COHESION_FORCE_CONSTANT = 0.01;
 
 
 constexpr int NUM_SIMULATIONS = 6;
@@ -224,6 +224,10 @@ class Logger {
  */
 class BoidSim {
 private:
+    double separationForceConstant;
+    double alignmentForceConstant;
+    double cohesionForceConstant;
+
     VectorArray boidPositions;
     VectorArray boidDirections;
     VectorArray boidForces;
@@ -398,7 +402,7 @@ private:
     void awaitStateBroadcasts();
 
 public:
-    BoidSim(int numProcesses, int thisProcess);
+    BoidSim(int numProcesses, int thisProcess, double separationForceConstant, double alignmentForceConstant, double cohesionForceConstant);
     ~BoidSim();
 
     void SetWriteToFile(const bool writeToFile);

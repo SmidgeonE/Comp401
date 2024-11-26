@@ -8,8 +8,11 @@
 #include <random>
 
 
-BoidSim::BoidSim(int numProcesses, int thisProcess) {
+BoidSim::BoidSim(int numProcesses, int thisProcess, double separationForceConstant, double alignmentForceConstant, double cohesionForceConstant) {
     // setting up simulation
+    this->separationForceConstant = separationForceConstant;
+    this->alignmentForceConstant = alignmentForceConstant;
+    this->cohesionForceConstant = cohesionForceConstant;
 
     this->numProcesses = numProcesses;
     this->thisProcess = thisProcess;
@@ -196,6 +199,7 @@ std::string BoidSim::GenerateSimView(int viewNum) {
 
 
 void BoidSim::applyCohesionForce(){    
+    std::cout << separationForceConstant << std::endl;
     const auto& positionsX = boidPositions.GetArrayX();
     const auto& positionsY = boidPositions.GetArrayY();
     const auto& positionsZ = boidPositions.GetArrayZ();
@@ -231,9 +235,9 @@ void BoidSim::applyCohesionForce(){
         auto comDirectionY = comY - positionsY[i];
         auto comDirectionZ = comZ - positionsZ[i];
 
-        comForces.GetArrayX()[i] = COHESION_FORCE_CONSTANT * comDirectionX;
-        comForces.GetArrayY()[i] = COHESION_FORCE_CONSTANT * comDirectionY;
-        comForces.GetArrayZ()[i] = COHESION_FORCE_CONSTANT * comDirectionZ;
+        comForces.GetArrayX()[i] = cohesionForceConstant * comDirectionX;
+        comForces.GetArrayY()[i] = cohesionForceConstant * comDirectionY;
+        comForces.GetArrayZ()[i] = cohesionForceConstant * comDirectionZ;
     }
 
 
@@ -273,9 +277,9 @@ void BoidSim::applySeparationForceCellList(){
             auto magnitudeFactor = std::sqrt(magSquared({separationX, separationY, separationZ}));
             magnitudeFactor *= magnitudeFactor * magnitudeFactor;
 
-            auto repulsionX = std::min(-SEPARATION_FORCE_CONSTANT * separationX / magnitudeFactor, 10.0);
-            auto repulsionY = std::min(-SEPARATION_FORCE_CONSTANT * separationY / magnitudeFactor, 10.0);
-            auto repulsionZ = std::min(-SEPARATION_FORCE_CONSTANT * separationZ / magnitudeFactor, 10.0);
+            auto repulsionX = std::min(-separationForceConstant * separationX / magnitudeFactor, 10.0);
+            auto repulsionY = std::min(-separationForceConstant * separationY / magnitudeFactor, 10.0);
+            auto repulsionZ = std::min(-separationForceConstant * separationZ / magnitudeFactor, 10.0);
 
             repulsionForces.GetArrayX()[i] += repulsionX;
             repulsionForces.GetArrayY()[i] += repulsionY;
@@ -320,9 +324,9 @@ void BoidSim::applySeparationForce(){
 
             auto magnitudeFactor = distance * distance * distance;
 
-            auto repulsionX = std::min(-SEPARATION_FORCE_CONSTANT * separationX / magnitudeFactor, 1000.0);
-            auto repulsionY = std::min(-SEPARATION_FORCE_CONSTANT * separationY / magnitudeFactor, 1000.0);
-            auto repulsionZ = std::min(-SEPARATION_FORCE_CONSTANT * separationZ / magnitudeFactor, 1000.0);
+            auto repulsionX = std::min(-separationForceConstant * separationX / magnitudeFactor, 1000.0);
+            auto repulsionY = std::min(-separationForceConstant * separationY / magnitudeFactor, 1000.0);
+            auto repulsionZ = std::min(-separationForceConstant * separationZ / magnitudeFactor, 1000.0);
 
             repulsionForces.GetArrayX()[i] += repulsionX;
             repulsionForces.GetArrayY()[i] += repulsionY;
@@ -347,9 +351,9 @@ void BoidSim::applyAlignmentForce(){
 
 #pragma omp parallel for schedule(dynamic, CHUNK_SIZE)
     for (int i = 0; i < SIZE_OF_SIMULATION; ++i){
-        auto alignmentForceX = ALIGNMENT_FORCE_CONSTANT * (averageDirection[0] - boidDirections.GetArrayX()[i]);
-        auto alignmentForceY = ALIGNMENT_FORCE_CONSTANT * (averageDirection[1] - boidDirections.GetArrayY()[i]);
-        auto alignmentForceZ = ALIGNMENT_FORCE_CONSTANT * (averageDirection[2] - boidDirections.GetArrayZ()[i]);
+        auto alignmentForceX = alignmentForceConstant * (averageDirection[0] - boidDirections.GetArrayX()[i]);
+        auto alignmentForceY = alignmentForceConstant * (averageDirection[1] - boidDirections.GetArrayY()[i]);
+        auto alignmentForceZ = alignmentForceConstant * (averageDirection[2] - boidDirections.GetArrayZ()[i]);
 
         alignmentForces.GetArrayX()[i] = alignmentForceX;
         alignmentForces.GetArrayY()[i] = alignmentForceY;
